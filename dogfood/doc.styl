@@ -1,0 +1,137 @@
+@import 'var.styl'
+
+body
+  width 100%
+
+.olympic-emblem
+  margin  0
+  padding 0
+  display    block
+  position   relative
+  width      $base_len
+  height     $base_len
+  background transparent
+
+.part
+  margin  0
+  padding 0
+  display  block
+  position absolute
+  width    $1_3
+  height   $1_3
+  background transparent
+
+// overflow
+
+.arc
+  overflow hidden
+
+// color
+
+.gold
+  background $gold
+
+.silver
+  background $silver
+
+.gray
+  background $dark_gray
+
+.red
+  background $sun_red
+
+// detail
+
+// --- .arc ---
+.arc
+  .white_circle_wrapper
+    display    block
+    position   absolute
+    width      100%
+    height     100%
+    background transparent
+    .white_circle
+      margin     auto
+      top        -10000%
+      left       -10000%
+      right      -10000%
+      bottom     -10000%
+      display    block
+      position   absolute
+      width      $circle_radius * 2 * 3
+      height     $circle_radius * 2 * 3
+      background white
+      border-radius 50%
+  &.rotate0
+    .white_circle_wrapper
+      top  100%
+      left 100%
+  &.rotate90
+    .white_circle_wrapper
+      top  100%
+      left -100%
+  &.rotate180
+    .white_circle_wrapper
+      top  -100%
+      left -100%
+  &.rotate270
+    .white_circle_wrapper
+      top  -100%
+      left 100%
+
+// --- .pole ---
+.pole2.v
+  height $1_3 * 2
+.pole2.h
+  width $1_3 * 2
+.pole3.v
+  height $1_3 * 3
+.pole3.h
+  width $1_3 * 3
+
+// --- .circle ---
+.circle_s,
+.circle_l
+  border-radius 50%
+
+.circle_l
+  width  100%
+  height 100%
+
+// positioning
+.pos_0_0
+  left 0
+  top  0
+.pos_0_1
+  left 0
+  top  $1_3 * 1
+.pos_0_2
+  left 0
+  top  $1_3 * 2
+.pos_0_3
+  left 0
+  top  $1_3 * 3
+.pos_1_0
+  left $1_3 * 1
+  top  0
+.pos_1_1
+  left $1_3 * 1
+  top  $1_3 * 1
+.pos_1_2
+  left $1_3 * 1
+  top  $1_3 * 2
+.pos_1_3
+  left $1_3 * 1
+  top  $1_3 * 3
+.pos_2_0
+  left $1_3 * 2
+  top  0
+.pos_2_1
+  left $1_3 * 2
+  top  $1_3 * 1
+.pos_2_2
+  left $1_3 * 2
+  top  $1_3 * 2
+.pos_2_3
+  left $1_3 * 2
+  top  $1_3 * 3
