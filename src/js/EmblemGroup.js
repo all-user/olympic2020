@@ -12,7 +12,12 @@ class EmblemGroup {
         }
     }
 
-    map(chars) {
+    map(str) {
+        this.emblems.forEach((emblem, idx) => {
+            let c = str[idx];
+            if (!c) { c = ' '; }
+            emblem.to(c);
+        });
     }
 
 }
