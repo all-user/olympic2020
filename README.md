@@ -21,6 +21,8 @@ npm i @all-user/olympic2020
         document.addEventListener('DOMContentLoaded', function() {
 
             document.body.appendChild(olm.dom); // olm.dom is instance of DOMElement.
+            // or other way.
+            // olm.appendTo(document.body);
 
             olm.to('z'); // change to another charactor.
 

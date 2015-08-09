@@ -26,6 +26,10 @@ class Olympic2020 {
         return false;
     }
 
+    appendTo(parent) {
+        parent.appendChild(this.dom);
+    }
+
     set size(size) {
         let domStyle = this.dom.style;
         domStyle.width  = `${ size }px`;

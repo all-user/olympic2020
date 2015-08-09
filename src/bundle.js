@@ -138,6 +138,11 @@ var Olympic2020 = (function () {
             return false;
         }
     }, {
+        key: 'appendTo',
+        value: function appendTo(parent) {
+            parent.appendChild(this.dom);
+        }
+    }, {
         key: 'animateFromString',
         value: function animateFromString(str, time) {
             var _this = this;
