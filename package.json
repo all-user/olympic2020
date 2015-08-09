@@ -1,7 +1,7 @@
 {
-  "name": "@all-user/olympic-emblem",
+  "name": "@all-user/olympic2020",
   "version": "0.0.1",
-  "description": "generate olympic  emblem",
+  "description": "generate olympic emblem",
   "main": "index.js",
   "scripts": {
     "test": "testem ci -P 4",
