@@ -116,7 +116,7 @@ var Olympic2020 = (function () {
         this._displayTime = 1000;
         this._duration = 800;
         this._easing = 'cubic-bezier(.26,.92,.41,.98)';
-        this._stopAnimate = false;
+        this._isAnimating = false;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -146,33 +146,51 @@ var Olympic2020 = (function () {
     }, {
         key: 'stopAnimate',
         value: function stopAnimate() {
-            this._stopAnimate = true;
+            this._isAnimating = false;
+        }
+    }, {
+        key: 'resumeAnimate',
+        value: function resumeAnimate() {
+            this._isAnimating = true;
+            this._resume();
         }
     }, {
         key: 'animateFromString',
         value: function animateFromString(str, time) {
             var _this = this;
 
-            this._stopAnimate = false;
+            this._isAnimating = true;
+            this._resume = null;
             if (typeof time === 'number') {
                 this._displayTime = time;
             } else {
                 time = this._displayTime;
             }
 
-            [].reduce.call(str, function (p, c) {
+            [].reduce.call(str, function (p, c, idx) {
+                var isLast = idx === str.length - 1;
                 return p.then(function () {
                     return new Promise(function (resolve, reject) {
-                        if (_this._stopAnimate) {
-                            reject();
+                        if (!_this._isAnimating) {
+                            _this._resume = resolve;
                             return;
                         }
                         _this.to(c);
+                        if (isLast) {
+                            setTimout(reject, _this._displayTime);
+                            return;
+                        }
                         setTimeout(resolve, _this._displayTime);
                     });
                 });
-            }, Promise.resolve());
+            }, Promise.resolve())['catch'](function () {
+                _this._isAnimating = false;
+            });
         }
+
+        /*
+         * seter and geter of propertys
+         */
     }, {
         key: 'size',
         set: function set(size) {
@@ -205,6 +223,11 @@ var Olympic2020 = (function () {
         },
         get: function get() {
             return this._easing;
+        }
+    }, {
+        key: 'isAnimating',
+        get: function get() {
+            return this._isAnimating;
         }
     }]);
 

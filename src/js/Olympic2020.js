@@ -6,7 +6,7 @@ class Olympic2020 {
         this._displayTime = 1000;
         this._duration    = 800;
         this._easing      = 'cubic-bezier(.26,.92,.41,.98)';
-        this._stopAnimate = false;
+        this._isAnimating = false;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -32,9 +32,45 @@ class Olympic2020 {
     }
 
     stopAnimate() {
-        this._stopAnimate = true;
+        this._isAnimating = false;
     }
 
+    resumeAnimate() {
+        this._isAnimating = true;
+        this._resume();
+    }
+
+    animateFromString(str, time) {
+        this._isAnimating = true;
+        this._resume = null;
+        if (typeof time === 'number') {
+            this._displayTime = time;
+        } else {
+            time = this._displayTime;
+        }
+
+        [].reduce.call(str, (p, c, idx) => {
+            let isLast = idx === str.length - 1;
+            return p.then(() => {
+                return new Promise((resolve, reject) => {
+                    if (!this._isAnimating) {
+                        this._resume = resolve;
+                        return;
+                    }
+                    this.to(c);
+                    if (isLast) {
+                        setTimout(reject, this._displayTime);
+                        return;
+                    }
+                    setTimeout(resolve, this._displayTime);
+                });
+            });
+        }, Promise.resolve()).catch(() => { this._isAnimating = false; });
+    }
+
+    /*
+     * seter and geter of propertys
+     */
     set size(size) {
         let domStyle = this.dom.style;
         domStyle.width  = `${ size }px`;
@@ -58,28 +94,7 @@ class Olympic2020 {
 
     get easing() { return this._easing; }
 
-    animateFromString(str, time) {
-        this._stopAnimate = false;
-        if (typeof time === 'number') {
-            this._displayTime = time;
-        } else {
-            time = this._displayTime;
-        }
-
-        [].reduce.call(str, (p, c) => {
-            return p.then(() => {
-                return new Promise((resolve, reject) => {
-                    if (this._stopAnimate) {
-                        reject();
-                        return;
-                    }
-                    this.to(c);
-                    setTimeout(resolve, this._displayTime)
-                });
-            });
-        }, Promise.resolve());
-    }
-
+    get isAnimating() { return this._isAnimating; }
 
 }
 

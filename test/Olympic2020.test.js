@@ -266,6 +266,13 @@ describe('Olympic2020 test', () => {
             let olm = new Olympic2020('a');
             testField.appendChild(olm.dom);
             olm.size = 500;
+            olm.dom.addEventListener('click', () => {
+                if (olm.isAnimating) {
+                    olm.stopAnimate.call(olm);
+                } else {
+                    olm.resumeAnimate.call(olm);
+                }
+            });
             olm.animateFromString(ALL_VALID_CHARS);
 
             it('変化の様子を観察');
