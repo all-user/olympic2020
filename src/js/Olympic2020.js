@@ -6,6 +6,7 @@ class Olympic2020 {
         this._displayTime = 1000;
         this._duration    = 800;
         this._easing      = 'cubic-bezier(.26,.92,.41,.98)';
+        this._stopAnimate = false;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -28,6 +29,10 @@ class Olympic2020 {
 
     appendTo(parent) {
         parent.appendChild(this.dom);
+    }
+
+    stopAnimate() {
+        this._stopAnimate = true;
     }
 
     set size(size) {
@@ -54,6 +59,7 @@ class Olympic2020 {
     get easing() { return this._easing; }
 
     animateFromString(str, time) {
+        this._stopAnimate = false;
         if (typeof time === 'number') {
             this._displayTime = time;
         } else {
@@ -62,7 +68,11 @@ class Olympic2020 {
 
         [].reduce.call(str, (p, c) => {
             return p.then(() => {
-                return new Promise(resolve => {
+                return new Promise((resolve, reject) => {
+                    if (this._stopAnimate) {
+                        reject();
+                        return;
+                    }
                     this.to(c);
                     setTimeout(resolve, this._displayTime)
                 });

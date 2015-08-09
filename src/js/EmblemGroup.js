@@ -2,7 +2,7 @@ import Olympic2020 from './Olympic2020.js'
 
 class EmblemGroup {
 
-    constructor(chars, length) {
+    constructor(chars, length, size) {
         if (chars.length < length) {
             for (var i = chars.length; i < length; i++) {
                 chars += ' ';
@@ -11,7 +11,7 @@ class EmblemGroup {
             chars = chars.slice(0, length);
         }
 
-        let emblems = _transfromToOlympic2020Array(chars);
+        let emblems = _transfromToOlympic2020Array(chars, size);
 
         if (emblems) {
             this.emblems = emblems;
@@ -45,7 +45,7 @@ function _transfromToOlympic2020Array(arg) { // (string | [Olympic2020]) => [Oly
     let res;
     switch (typeof arg) {
         case 'string':
-            res = [].map.call(arg, c => new Olympic2020(c));
+            res = [].map.call(arg, c => new Olympic2020(c, size));
             break;
         case 'object':
             if (Array.isArray(arg) && arg.every(o => o instanceof Olympic2020)) {

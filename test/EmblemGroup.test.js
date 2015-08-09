@@ -2,11 +2,11 @@ import assert from 'power-assert'
 import appendCSS from 'append-css'
 
 describe('EmblemGroup test', () => {
-
     const TITLE_COPY = 'tokyo 2020';
     const LONG_COPY  = 'olympic paralympic games';
     const SHORT_COPY = 'a to z';
     const BLANK_COPY = '                                                        ';
+    const EMBLEM_SIZE       = 90;
 
     describe('インスタンスの生成', () => {
         let group = new EmblemGroup(TITLE_COPY);
@@ -94,9 +94,6 @@ describe('EmblemGroup test', () => {
         `);
 
         before('DOMContentLoaded待ち', done => {
-            let link = document.createElement('link');
-            link.setAttribute('rel',  'stylesheet');
-            link.setAttribute('href', CSS_PATH);
 
             new Promise((resolve, reject) => {
                 let readyState = document.readyState;

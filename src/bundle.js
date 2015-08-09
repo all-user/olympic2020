@@ -16,7 +16,7 @@ var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 
 var EmblemGroup = (function () {
-    function EmblemGroup(chars, length) {
+    function EmblemGroup(chars, length, size) {
         _classCallCheck(this, EmblemGroup);
 
         if (chars.length < length) {
@@ -27,7 +27,7 @@ var EmblemGroup = (function () {
             chars = chars.slice(0, length);
         }
 
-        var emblems = _transfromToOlympic2020Array(chars);
+        var emblems = _transfromToOlympic2020Array(chars, size);
 
         if (emblems) {
             this.emblems = emblems;
@@ -74,7 +74,7 @@ function _transfromToOlympic2020Array(arg) {
     switch (typeof arg) {
         case 'string':
             res = [].map.call(arg, function (c) {
-                return new _Olympic2020Js2['default'](c);
+                return new _Olympic2020Js2['default'](c, size);
             });
             break;
         case 'object':
@@ -116,6 +116,7 @@ var Olympic2020 = (function () {
         this._displayTime = 1000;
         this._duration = 800;
         this._easing = 'cubic-bezier(.26,.92,.41,.98)';
+        this._stopAnimate = false;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -143,10 +144,16 @@ var Olympic2020 = (function () {
             parent.appendChild(this.dom);
         }
     }, {
+        key: 'stopAnimate',
+        value: function stopAnimate() {
+            this._stopAnimate = true;
+        }
+    }, {
         key: 'animateFromString',
         value: function animateFromString(str, time) {
             var _this = this;
 
+            this._stopAnimate = false;
             if (typeof time === 'number') {
                 this._displayTime = time;
             } else {
@@ -155,7 +162,11 @@ var Olympic2020 = (function () {
 
             [].reduce.call(str, function (p, c) {
                 return p.then(function () {
-                    return new Promise(function (resolve) {
+                    return new Promise(function (resolve, reject) {
+                        if (_this._stopAnimate) {
+                            reject();
+                            return;
+                        }
                         _this.to(c);
                         setTimeout(resolve, _this._displayTime);
                     });

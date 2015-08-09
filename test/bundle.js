@@ -18042,7 +18042,7 @@ function _classCallCheck(instance, Constructor) {
 var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 var EmblemGroup = function () {
-    function EmblemGroup(chars, length) {
+    function EmblemGroup(chars, length, size) {
         _classCallCheck(this, EmblemGroup);
         if (chars.length < length) {
             for (var i = chars.length; i < length; i++) {
@@ -18051,7 +18051,7 @@ var EmblemGroup = function () {
         } else if (length != null && chars.length > length) {
             chars = chars.slice(0, length);
         }
-        var emblems = _transfromToOlympic2020Array(chars);
+        var emblems = _transfromToOlympic2020Array(chars, size);
         if (emblems) {
             this.emblems = emblems;
         } else {
@@ -18078,6 +18078,15 @@ var EmblemGroup = function () {
                     emblem.to(c);
                 });
             }
+        },
+        {
+            key: 'appendTo',
+            value: function appendTo(parent) {
+                var frag = this.emblems.reduce(function (f, e) {
+                    f.appendChild(e.dom);
+                }, document.createDocumentFragment());
+                parent.appenChild(frag);
+            }
         }
     ]);
     return EmblemGroup;
@@ -18087,7 +18096,7 @@ function _transfromToOlympic2020Array(arg) {
     switch (typeof arg) {
     case 'string':
         res = [].map.call(arg, function (c) {
-            return new _Olympic2020Js2['default'](c);
+            return new _Olympic2020Js2['default'](c, size);
         });
         break;
     case 'object':
@@ -18163,6 +18172,12 @@ var Olympic2020 = function () {
                     return true;
                 }
                 return false;
+            }
+        },
+        {
+            key: 'appendTo',
+            value: function appendTo(parent) {
+                parent.appendChild(this.dom);
             }
         },
         {
@@ -18825,6 +18840,7 @@ describe('EmblemGroup test', function () {
     var LONG_COPY = 'olympic paralympic games';
     var SHORT_COPY = 'a to z';
     var BLANK_COPY = '                                                        ';
+    var EMBLEM_SIZE = 90;
     describe('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u306E\u751F\u6210', function () {
         var group = new EmblemGroup(TITLE_COPY);
         it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
@@ -18884,9 +18900,6 @@ describe('EmblemGroup test', function () {
         (0, _appendCss2['default'])('\n            #emblemgroup-test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
         (0, _appendCss2['default'])('\n            #emblemgroup-test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
         before('DOMContentLoaded\u5F85\u3061', function (done) {
-            var link = document.createElement('link');
-            link.setAttribute('rel', 'stylesheet');
-            link.setAttribute('href', CSS_PATH);
             new Promise(function (resolve, reject) {
                 var readyState = document.readyState;
                 if (readyState === 'interactive' || readyState === 'complete') {
@@ -19041,7 +19054,7 @@ describe('Olympic2020 test', function () {
         });
         describe('a\u306E\u6587\u5B57\u3092\u8868\u793A', function () {
             var olm = new Olympic2020('a');
-            testField.appendChild(olm.dom);
+            olm.appendTo(testField);
             it('\u30B5\u30A4\u30BA\u304C\u6307\u5B9A\u901A\u308A\u306B\u306A\u3063\u3066\u3044\u308B\u304B', function (done) {
                 olm.size = EMBLEM_SIZE;
                 var recentStyle = getComputedStyle(olm.dom);

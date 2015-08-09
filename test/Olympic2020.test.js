@@ -164,16 +164,10 @@ describe('Olympic2020 test', () => {
             });
         });
 
-//         afterEach('#test-fieldの要素を全て削除する', done => {
-//           if (testField.firstChild) {
-//             testField.removeChild(testField.firstChild);
-//           }
-//           done();
-//         });
 
         describe('aの文字を表示', () => {
             let olm = new Olympic2020('a');
-            testField.appendChild(olm.dom);
+            olm.appendTo(testField);
 
 
             it('サイズが指定通りになっているか', done => {
