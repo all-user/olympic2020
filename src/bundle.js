@@ -7,6 +7,81 @@ Object.defineProperty(exports, '__esModule', {
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _Olympic2020Js = require('./Olympic2020.js');
+
+var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
+
+var EmblemGroup = (function () {
+    function EmblemGroup(chars) {
+        _classCallCheck(this, EmblemGroup);
+
+        var emblems = _transfromToOlympic2020Array(chars);
+
+        if (emblems) {
+            this.emblems = emblems;
+        } else {
+            throw new Error('EmblemGroup arguments expect string or array of Olympic2020.');
+        }
+    }
+
+    _createClass(EmblemGroup, [{
+        key: 'map',
+        value: function map(str) {
+            this.emblems.forEach(function (emblem, idx) {
+                var c = str[idx];
+                if (!c) {
+                    c = ' ';
+                }
+                emblem.to(c);
+            });
+        }
+    }]);
+
+    return EmblemGroup;
+})();
+
+function _transfromToOlympic2020Array(arg) {
+    // (string | [Olympic2020]) => [Olympic2020] | false
+
+    var res = undefined;
+    switch (typeof arg) {
+        case 'string':
+            res = [].map.call(arg, function (c) {
+                return new _Olympic2020Js2['default'](c);
+            });
+            break;
+        case 'object':
+            if (Array.isArray(arg) && arg.every(function (o) {
+                return o instanceof _Olympic2020Js2['default'];
+            })) {
+                res = arg;
+            } else {
+                res = false;
+            };
+            break;
+        default:
+            res = false;
+    }
+
+    return res;
+}
+
+exports['default'] = EmblemGroup;
+module.exports = exports['default'];
+
+},{"./Olympic2020.js":2}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Olympic2020 = (function () {
@@ -251,7 +326,7 @@ var TRANSITION_PROPS = ['top', 'left', 'background-color', 'border-radius'];
 exports['default'] = Olympic2020;
 module.exports = exports['default'];
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -260,7 +335,12 @@ var _Olympic2020Js = require('./Olympic2020.js');
 
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 
-window.Olympic2020 = _Olympic2020Js2['default'];
+var _EmblemGroupJs = require('./EmblemGroup.js');
 
-},{"./Olympic2020.js":1}]},{},[2])
+var _EmblemGroupJs2 = _interopRequireDefault(_EmblemGroupJs);
+
+window.Olympic2020 = _Olympic2020Js2['default'];
+window.EmblemGroup = _EmblemGroupJs2['default'];
+
+},{"./EmblemGroup.js":1,"./Olympic2020.js":2}]},{},[3])
 //# sourceMappingURL=bundle.js.map

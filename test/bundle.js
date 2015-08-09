@@ -18031,6 +18031,89 @@ var _createClass = function () {
         return Constructor;
     };
 }();
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+        throw new TypeError('Cannot call a class as a function');
+    }
+}
+var _Olympic2020Js = require('./Olympic2020.js');
+var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
+var EmblemGroup = function () {
+    function EmblemGroup(chars) {
+        _classCallCheck(this, EmblemGroup);
+        var emblems = _transfromToOlympic2020Array(chars);
+        if (emblems) {
+            this.emblems = emblems;
+        } else {
+            throw new Error('EmblemGroup arguments expect string or array of Olympic2020.');
+        }
+    }
+    _createClass(EmblemGroup, [{
+            key: 'map',
+            value: function map(str) {
+                this.emblems.forEach(function (emblem, idx) {
+                    var c = str[idx];
+                    if (!c) {
+                        c = ' ';
+                    }
+                    emblem.to(c);
+                });
+            }
+        }]);
+    return EmblemGroup;
+}();
+function _transfromToOlympic2020Array(arg) {
+    var res = undefined;
+    switch (typeof arg) {
+    case 'string':
+        res = [].map.call(arg, function (c) {
+            return new _Olympic2020Js2['default'](c);
+        });
+        break;
+    case 'object':
+        if (Array.isArray(arg) && arg.every(function (o) {
+                return o instanceof _Olympic2020Js2['default'];
+            })) {
+            res = arg;
+        } else {
+            res = false;
+        }
+        ;
+        break;
+    default:
+        res = false;
+    }
+    return res;
+}
+exports['default'] = EmblemGroup;
+module.exports = exports['default'];
+
+
+},{"./Olympic2020.js":69}],69:[function(require,module,exports){
+'use strict';
+Object.defineProperty(exports, '__esModule', { value: true });
+var _createClass = function () {
+    function defineProperties(target, props) {
+        for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ('value' in descriptor)
+                descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+        }
+    }
+    return function (Constructor, protoProps, staticProps) {
+        if (protoProps)
+            defineProperties(Constructor.prototype, protoProps);
+        if (staticProps)
+            defineProperties(Constructor, staticProps);
+        return Constructor;
+    };
+}();
 function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
         throw new TypeError('Cannot call a class as a function');
@@ -18124,30 +18207,6 @@ var Olympic2020 = function () {
     ]);
     return Olympic2020;
 }();
-var EmblemGroup = function EmblemGroup(chars) {
-    _classCallCheck(this, EmblemGroup);
-    var emblems = undefined;
-    switch (typeof chars) {
-    case 'string':
-        emblems = [].map.call(chars, function (c) {
-            return new Olympic2020(c);
-        });
-        break;
-    case 'object':
-        if (Array.isArray(chars) && chars.every(function (o) {
-                return o instanceof Olympic2020;
-            })) {
-            emblems = chars;
-        } else {
-            return false;
-        }
-        ;
-        break;
-    default:
-        return false;
-    }
-    this.emblems = emblems;
-};
 function _createDom() {
     return baseDom.cloneNode(true);
 }
@@ -18722,22 +18781,20 @@ exports['default'] = Olympic2020;
 module.exports = exports['default'];
 
 
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 'use strict';
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { 'default': obj };
 }
 var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
+var _EmblemGroupJs = require('./EmblemGroup.js');
+var _EmblemGroupJs2 = _interopRequireDefault(_EmblemGroupJs);
 window.Olympic2020 = _Olympic2020Js2['default'];
+window.EmblemGroup = _EmblemGroupJs2['default'];
 
 
-},{"./Olympic2020.js":68}],70:[function(require,module,exports){
-'use strict';
-require('./olympic.test.js');
-
-
-},{"./olympic.test.js":71}],71:[function(require,module,exports){
+},{"./EmblemGroup.js":68,"./Olympic2020.js":69}],71:[function(require,module,exports){
 'use strict';
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : { 'default': obj };
@@ -18746,9 +18803,27 @@ var _powerAssert = require('power-assert');
 var _powerAssert2 = _interopRequireDefault(_powerAssert);
 var _appendCss = require('append-css');
 var _appendCss2 = _interopRequireDefault(_appendCss);
-require('../src/js/index.js');
-describe('olympic emblem', function () {
-    var o;
+describe('EmblemGroup test', function () {
+    var TITLE_COPY = 'tokyo 2020';
+    describe('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u306E\u751F\u6210', function () {
+        it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
+            var group = new EmblemGroup(TITLE_COPY);
+            _powerAssert2['default'].equal(group.toString(), TITLE_COPY);
+        });
+    });
+});
+
+
+},{"append-css":10,"power-assert":12}],72:[function(require,module,exports){
+'use strict';
+function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { 'default': obj };
+}
+var _powerAssert = require('power-assert');
+var _powerAssert2 = _interopRequireDefault(_powerAssert);
+var _appendCss = require('append-css');
+var _appendCss2 = _interopRequireDefault(_appendCss);
+describe('Olympic2020 test', function () {
     var BASE_CHAR_LOWER = 'a';
     var BASE_CHAR_UPPER = 'A';
     var BASE_CHAR_INVALID = '$';
@@ -18770,6 +18845,7 @@ describe('olympic emblem', function () {
             done();
         });
         describe('\u5F15\u6570\u306A\u3057\u3067new', function () {
+            var o = undefined;
             beforeEach('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u751F\u6210', function (done) {
                 o = new Olympic2020();
                 done();
@@ -18810,6 +18886,7 @@ describe('olympic emblem', function () {
             });
         });
         describe('\u5F15\u6570\u3042\u308A\u3067new', function () {
+            var o = undefined;
             beforeEach('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u751F\u6210', function (done) {
                 o = new Olympic2020(BASE_CHAR_LOWER);
                 done();
@@ -18991,4 +19068,11 @@ describe('olympic emblem', function () {
 });
 
 
-},{"../src/js/index.js":69,"append-css":10,"power-assert":12}]},{},[70]);
+},{"append-css":10,"power-assert":12}],73:[function(require,module,exports){
+'use strict';
+require('../src/js/index.js');
+require('./Olympic2020.test.js');
+require('./EmblemGroup.test.js');
+
+
+},{"../src/js/index.js":70,"./EmblemGroup.test.js":71,"./Olympic2020.test.js":72}]},{},[73]);

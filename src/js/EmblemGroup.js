@@ -42,3 +42,5 @@ function _transfromToOlympic2020Array(arg) { // (string | [Olympic2020]) => [Oly
 
     return res;
 }
+
+export default EmblemGroup

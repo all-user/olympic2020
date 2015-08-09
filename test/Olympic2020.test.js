@@ -1,9 +1,7 @@
 import assert from 'power-assert'
 import appendCSS from 'append-css'
-import '../src/js/index.js'
 
-describe('olympic emblem', () => {
-    var o;
+describe('Olympic2020 test', () => {
     const BASE_CHAR_LOWER   = 'a';
     const BASE_CHAR_UPPER   = 'A';
     const BASE_CHAR_INVALID = '$';
@@ -28,6 +26,7 @@ describe('olympic emblem', () => {
         });
 
         describe('引数なしでnew', () => {
+            let o;
 
             beforeEach('インスタンス生成', done => {
                 o = new Olympic2020;
@@ -76,6 +75,7 @@ describe('olympic emblem', () => {
         });
 
         describe('引数ありでnew', () => {
+            let o;
 
             beforeEach('インスタンス生成', done => {
                 o = new Olympic2020(BASE_CHAR_LOWER);
