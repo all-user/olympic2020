@@ -13,10 +13,10 @@ class Olympic2020 {
         } else {
             this.size = 100;
         }
-        this.formTo(c);
+        this.to(c);
     }
 
-    formTo(c) {
+    to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
         if (FORMATION_TABLE[_c]) {
             _changeStyle.call(this, _c);
@@ -59,7 +59,7 @@ class Olympic2020 {
         [].reduce.call(str, (p, c) => {
             return p.then(() => {
                 return new Promise(resolve => {
-                    this.formTo(c);
+                    this.to(c);
                     setTimeout(resolve, this._displayTime)
                 });
             });

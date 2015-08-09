@@ -40,24 +40,24 @@ describe('olympic emblem', () => {
                 done();
             });
 
-            describe('formToを使って文字を変更', () => {
+            describe('toを使って文字を変更', () => {
 
                 it('小文字を与えると小文字になる', done => {
-                    let res = o.formTo(BASE_CHAR_LOWER);
+                    let res = o.to(BASE_CHAR_LOWER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
                     assert.ok(res);
                     done();
                 });
 
                 it('大文字を与えても小文字になる', done => {
-                    let res = o.formTo(BASE_CHAR_UPPER);
+                    let res = o.to(BASE_CHAR_UPPER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
                     assert.ok(res);
                     done();
                 });
 
                 it('無効な文字を与えるとfalseを返し、this.charは変化しない', done => {
-                    let res = o.formTo(BASE_CHAR_INVALID);
+                    let res = o.to(BASE_CHAR_INVALID);
                     assert.equal(o.char, null);
                     assert.equal(res, false);
                     done();
@@ -65,7 +65,7 @@ describe('olympic emblem', () => {
 
                 it('"abc...xyz...:/_"全ての文字を順に変換', done => {
                     [].reduce.call(ALL_VALID_CHARS, (o, char) => {
-                        let res = o.formTo(char);
+                        let res = o.to(char);
                         assert.equal(o.char, char);
                         assert.ok(res);
                         return o;
@@ -88,24 +88,24 @@ describe('olympic emblem', () => {
                 done();
             });
 
-            describe('formToを使って文字を変更', () => {
+            describe('toを使って文字を変更', () => {
 
                 it('小文字を与えると小文字になる', done => {
-                    let res = o.formTo(BASE_CHAR_LOWER);
+                    let res = o.to(BASE_CHAR_LOWER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
                     assert.ok(res);
                     done();
                 });
 
                 it('大文字を与えても小文字になる', done => {
-                    let res = o.formTo(BASE_CHAR_UPPER);
+                    let res = o.to(BASE_CHAR_UPPER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
                     assert.ok(res);
                     done();
                 });
 
                 it('無効な文字を与えるとfalseを返し、this.charは変化しない', done => {
-                    let res = o.formTo(BASE_CHAR_INVALID);
+                    let res = o.to(BASE_CHAR_INVALID);
                     assert.equal(o.char, BASE_CHAR_LOWER);
                     assert.equal(res, false);
                     done();
@@ -113,7 +113,7 @@ describe('olympic emblem', () => {
 
                 it('"abc...xyz...:/_"全ての文字を順に変換', done => {
                     [].reduce.call(ALL_VALID_CHARS, (o, char) => {
-                      let res = o.formTo(char);
+                      let res = o.to(char);
                       assert.equal(o.char, char);
                       assert.ok(res);
                       return o;
@@ -232,13 +232,13 @@ describe('olympic emblem', () => {
             });
         });
 
-        describe('aの文字を表示後formToでzに変換',() => {
+        describe('aの文字を表示後toでzに変換',() => {
             let olm = new Olympic2020('a');
             testField.appendChild(olm.dom);
 
             before('aを表示', done => {
                 olm.size = EMBLEM_SIZE;
-                olm.formTo('z');
+                olm.to('z');
                 setTimeout(done, DISPLAY_TIME);
             });
 

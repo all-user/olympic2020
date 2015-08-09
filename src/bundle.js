@@ -25,12 +25,12 @@ var Olympic2020 = (function () {
         } else {
             this.size = 100;
         }
-        this.formTo(c);
+        this.to(c);
     }
 
     _createClass(Olympic2020, [{
-        key: 'formTo',
-        value: function formTo(c) {
+        key: 'to',
+        value: function to(c) {
             var _c = c && c.toLowerCase && c.toLowerCase();
             if (FORMATION_TABLE[_c]) {
                 _changeStyle.call(this, _c);
@@ -53,7 +53,7 @@ var Olympic2020 = (function () {
             [].reduce.call(str, function (p, c) {
                 return p.then(function () {
                     return new Promise(function (resolve) {
-                        _this.formTo(c);
+                        _this.to(c);
                         setTimeout(resolve, _this._displayTime);
                     });
                 });

@@ -22,7 +22,7 @@ npm i @all-user/olympic2020
 
             document.body.appendChild(olm.dom); // olm.dom is instance of DOMElement.
 
-            olm.formTo('z'); // change to another charactor.
+            olm.to('z'); // change to another charactor.
 
             olm.animateFromString('tokyo olympic 2020'); // animate from string.
         });

@@ -18050,12 +18050,12 @@ var Olympic2020 = function () {
         } else {
             this.size = 100;
         }
-        this.formTo(c);
+        this.to(c);
     }
     _createClass(Olympic2020, [
         {
-            key: 'formTo',
-            value: function formTo(c) {
+            key: 'to',
+            value: function to(c) {
                 var _c = c && c.toLowerCase && c.toLowerCase();
                 if (FORMATION_TABLE[_c]) {
                     _changeStyle.call(this, _c);
@@ -18077,7 +18077,7 @@ var Olympic2020 = function () {
                 [].reduce.call(str, function (p, c) {
                     return p.then(function () {
                         return new Promise(function (resolve) {
-                            _this.formTo(c);
+                            _this.to(c);
                             setTimeout(resolve, _this._displayTime);
                         });
                     });
@@ -18126,19 +18126,27 @@ var Olympic2020 = function () {
 }();
 var EmblemGroup = function EmblemGroup(chars) {
     _classCallCheck(this, EmblemGroup);
-    var olms = undefined;
+    var emblems = undefined;
     switch (typeof chars) {
     case 'string':
-        olms = [].map.call(chars, function (c) {
+        emblems = [].map.call(chars, function (c) {
             return new Olympic2020(c);
         });
         break;
     case 'object':
         if (Array.isArray(chars) && chars.every(function (o) {
                 return o instanceof Olympic2020;
-            }));
+            })) {
+            emblems = chars;
+        } else {
+            return false;
+        }
         ;
+        break;
+    default:
+        return false;
     }
+    this.emblems = emblems;
 };
 function _createDom() {
     return baseDom.cloneNode(true);
@@ -18771,28 +18779,28 @@ describe('olympic emblem', function () {
                 _powerAssert2['default'].ok(o instanceof Olympic2020);
                 done();
             });
-            describe('formTo\u3092\u4F7F\u3063\u3066\u6587\u5B57\u3092\u5909\u66F4', function () {
+            describe('to\u3092\u4F7F\u3063\u3066\u6587\u5B57\u3092\u5909\u66F4', function () {
                 it('\u5C0F\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
-                    var res = o.formTo(BASE_CHAR_LOWER);
+                    var res = o.to(BASE_CHAR_LOWER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
                     _powerAssert2['default'].ok(res);
                     done();
                 });
                 it('\u5927\u6587\u5B57\u3092\u4E0E\u3048\u3066\u3082\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
-                    var res = o.formTo(BASE_CHAR_UPPER);
+                    var res = o.to(BASE_CHAR_UPPER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
                     _powerAssert2['default'].ok(res);
                     done();
                 });
                 it('\u7121\u52B9\u306A\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {
-                    var res = o.formTo(BASE_CHAR_INVALID);
+                    var res = o.to(BASE_CHAR_INVALID);
                     _powerAssert2['default'].equal(o.char, null);
                     _powerAssert2['default'].equal(res, false);
                     done();
                 });
                 it('"abc...xyz...:/_"\u5168\u3066\u306E\u6587\u5B57\u3092\u9806\u306B\u5909\u63DB', function (done) {
                     [].reduce.call(ALL_VALID_CHARS, function (o, char) {
-                        var res = o.formTo(char);
+                        var res = o.to(char);
                         _powerAssert2['default'].equal(o.char, char);
                         _powerAssert2['default'].ok(res);
                         return o;
@@ -18811,28 +18819,28 @@ describe('olympic emblem', function () {
                 _powerAssert2['default'].ok(o instanceof Olympic2020);
                 done();
             });
-            describe('formTo\u3092\u4F7F\u3063\u3066\u6587\u5B57\u3092\u5909\u66F4', function () {
+            describe('to\u3092\u4F7F\u3063\u3066\u6587\u5B57\u3092\u5909\u66F4', function () {
                 it('\u5C0F\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
-                    var res = o.formTo(BASE_CHAR_LOWER);
+                    var res = o.to(BASE_CHAR_LOWER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
                     _powerAssert2['default'].ok(res);
                     done();
                 });
                 it('\u5927\u6587\u5B57\u3092\u4E0E\u3048\u3066\u3082\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
-                    var res = o.formTo(BASE_CHAR_UPPER);
+                    var res = o.to(BASE_CHAR_UPPER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
                     _powerAssert2['default'].ok(res);
                     done();
                 });
                 it('\u7121\u52B9\u306A\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {
-                    var res = o.formTo(BASE_CHAR_INVALID);
+                    var res = o.to(BASE_CHAR_INVALID);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
                     _powerAssert2['default'].equal(res, false);
                     done();
                 });
                 it('"abc...xyz...:/_"\u5168\u3066\u306E\u6587\u5B57\u3092\u9806\u306B\u5909\u63DB', function (done) {
                     [].reduce.call(ALL_VALID_CHARS, function (o, char) {
-                        var res = o.formTo(char);
+                        var res = o.to(char);
                         _powerAssert2['default'].equal(o.char, char);
                         _powerAssert2['default'].ok(res);
                         return o;
@@ -18928,12 +18936,12 @@ describe('olympic emblem', function () {
                 done();
             });
         });
-        describe('a\u306E\u6587\u5B57\u3092\u8868\u793A\u5F8CformTo\u3067z\u306B\u5909\u63DB', function () {
+        describe('a\u306E\u6587\u5B57\u3092\u8868\u793A\u5F8Cto\u3067z\u306B\u5909\u63DB', function () {
             var olm = new Olympic2020('a');
             testField.appendChild(olm.dom);
             before('a\u3092\u8868\u793A', function (done) {
                 olm.size = EMBLEM_SIZE;
-                olm.formTo('z');
+                olm.to('z');
                 setTimeout(done, DISPLAY_TIME);
             });
             it('\u30B5\u30A4\u30BA\u304C\u6307\u5B9A\u901A\u308A\u306B\u306A\u3063\u3066\u3044\u308B\u304B', function (done) {
