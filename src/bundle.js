@@ -97,32 +97,6 @@ var Olympic2020 = (function () {
     return Olympic2020;
 })();
 
-var EmblemGroup = function EmblemGroup(chars) {
-    _classCallCheck(this, EmblemGroup);
-
-    var emblems = undefined;
-    switch (typeof chars) {
-        case 'string':
-            emblems = [].map.call(chars, function (c) {
-                return new Olympic2020(c);
-            });
-            break;
-        case 'object':
-            if (Array.isArray(chars) && chars.every(function (o) {
-                return o instanceof Olympic2020;
-            })) {
-                emblems = chars;
-            } else {
-                return false;
-            };
-            break;
-        default:
-            return false;
-    }
-
-    this.emblems = emblems;
-};
-
 function _createDom() {
     return baseDom.cloneNode(true);
 }
