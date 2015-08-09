@@ -18084,14 +18084,15 @@ var EmblemGroup = function () {
             value: function appendTo(parent) {
                 var frag = this.emblems.reduce(function (f, e) {
                     f.appendChild(e.dom);
+                    return f;
                 }, document.createDocumentFragment());
-                parent.appenChild(frag);
+                parent.appendChild(frag);
             }
         }
     ]);
     return EmblemGroup;
 }();
-function _transfromToOlympic2020Array(arg) {
+function _transfromToOlympic2020Array(arg, size) {
     var res = undefined;
     switch (typeof arg) {
     case 'string':
@@ -18930,7 +18931,7 @@ describe('EmblemGroup test', function () {
     describe('DOM', function () {
         var testField = document.createElement('div');
         testField.id = 'emblemgroup-test-field';
-        (0, _appendCss2['default'])('\n            #emblemgroup-test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
+        (0, _appendCss2['default'])('\n            #emblemgroup-test-field {\n                width:    100%;\n                display:  block;\n                position: relative;\n                margin:   0;\n                padding:  0;\n                clear:    both;\n            }\n        ');
         (0, _appendCss2['default'])('\n            #emblemgroup-test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
         before('DOMContentLoaded\u5F85\u3061', function (done) {
             new Promise(function (resolve, reject) {
@@ -18941,8 +18942,18 @@ describe('EmblemGroup test', function () {
                     window.onload = resolve;
                 }
             }).then(function () {
-                document.head.appendChild(link);
                 document.body.appendChild(testField);
+                done();
+            });
+        });
+        describe('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u3092DOM\u306B\u8FFD\u52A0', function () {
+            var group = new EmblemGroup(TITLE_COPY, TITLE_COPY.length, EMBLEM_SIZE);
+            group.appendTo(testField);
+            console.log(group);
+            it('\u5168\u3066\u306EOlympic2020\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u304CDOM\u306B\u5B58\u5728\u3059\u308B\u304B', function (done) {
+                group.emblems.forEach(function (e) {
+                    _powerAssert2['default'].equal(e.dom.parentNode, testField);
+                });
                 done();
             });
         });

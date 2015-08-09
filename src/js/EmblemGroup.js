@@ -35,12 +35,13 @@ class EmblemGroup {
     appendTo(parent) {
         var frag = this.emblems.reduce((f, e) => {
             f.appendChild(e.dom);
+            return f;
         }, document.createDocumentFragment());
-        parent.appenChild(frag);
+        parent.appendChild(frag);
     }
 }
 
-function _transfromToOlympic2020Array(arg) { // (string | [Olympic2020]) => [Olympic2020] | false
+function _transfromToOlympic2020Array(arg, size) { // (string | [Olympic2020]) => [Olympic2020] | false
 
     let res;
     switch (typeof arg) {

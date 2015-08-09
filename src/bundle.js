@@ -59,15 +59,16 @@ var EmblemGroup = (function () {
         value: function appendTo(parent) {
             var frag = this.emblems.reduce(function (f, e) {
                 f.appendChild(e.dom);
+                return f;
             }, document.createDocumentFragment());
-            parent.appenChild(frag);
+            parent.appendChild(frag);
         }
     }]);
 
     return EmblemGroup;
 })();
 
-function _transfromToOlympic2020Array(arg) {
+function _transfromToOlympic2020Array(arg, size) {
     // (string | [Olympic2020]) => [Olympic2020] | false
 
     var res = undefined;
@@ -280,7 +281,7 @@ function _updateTransitionConfig() {
 }
 
 /*
- * prototype of emblem dom.
+ * original of emblem dom.
  */
 var baseDom = (function () {
     var wrapper = document.createElement('div');

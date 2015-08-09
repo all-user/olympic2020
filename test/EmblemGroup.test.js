@@ -2,11 +2,11 @@ import assert from 'power-assert'
 import appendCSS from 'append-css'
 
 describe('EmblemGroup test', () => {
-    const TITLE_COPY = 'tokyo 2020';
-    const LONG_COPY  = 'olympic paralympic games';
-    const SHORT_COPY = 'a to z';
-    const BLANK_COPY = '                                                        ';
-    const EMBLEM_SIZE       = 90;
+    const TITLE_COPY  = 'tokyo 2020';
+    const LONG_COPY   = 'olympic paralympic games';
+    const SHORT_COPY  = 'a to z';
+    const BLANK_COPY  = '                                                        ';
+    const EMBLEM_SIZE = 90;
 
     describe('インスタンスの生成', () => {
         let group = new EmblemGroup(TITLE_COPY);
@@ -79,11 +79,12 @@ describe('EmblemGroup test', () => {
         testField.id = 'emblemgroup-test-field';
         appendCSS(`
             #emblemgroup-test-field {
-              width:    100%;
-              display:  block;
-              position: relative;
-              margin:   0;
-              padding:  0;
+                width:    100%;
+                display:  block;
+                position: relative;
+                margin:   0;
+                padding:  0;
+                clear:    both;
             }
         `);
         appendCSS(`
@@ -104,10 +105,26 @@ describe('EmblemGroup test', () => {
                     window.onload = resolve;
                 }
             }).then(() => {
-                document.head.appendChild(link);
                 document.body.appendChild(testField);
                 done();
             });
+
         });
+
+        describe('インスタンスをDOMに追加', () => {
+
+            let group = new EmblemGroup(TITLE_COPY, TITLE_COPY.length, EMBLEM_SIZE);
+
+            group.appendTo(testField);
+            console.log(group);
+
+            it('全てのOlympic2020インスタンスがDOMに存在するか', done => {
+                group.emblems.forEach(e => {
+                    assert.equal(e.dom.parentNode, testField);
+                });
+                done();
+            });
+        });
+
     });
 });

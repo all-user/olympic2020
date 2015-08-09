@@ -137,7 +137,7 @@ function _updateTransitionConfig() { // @bind this
 }
 
 /*
- * prototype of emblem dom.
+ * original of emblem dom.
  */
 let baseDom = (() => {
     let wrapper      = document.createElement('div');
