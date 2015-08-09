@@ -54,6 +54,14 @@ var EmblemGroup = (function () {
                 emblem.to(c);
             });
         }
+    }, {
+        key: 'appendTo',
+        value: function appendTo(parent) {
+            var frag = this.emblems.reduce(function (f, e) {
+                f.appendChild(e.dom);
+            }, document.createDocumentFragment());
+            parent.appenChild(frag);
+        }
     }]);
 
     return EmblemGroup;

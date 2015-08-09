@@ -73,4 +73,44 @@ describe('EmblemGroup test', () => {
             });
         })
     });
+
+    describe('DOM', () => {
+        let testField = document.createElement('div');
+        testField.id = 'emblemgroup-test-field';
+        appendCSS(`
+            #emblemgroup-test-field {
+              width:    100%;
+              display:  block;
+              position: relative;
+              margin:   0;
+              padding:  0;
+            }
+        `);
+        appendCSS(`
+            #emblemgroup-test-field .olympic-emblem {
+              margin: ${ EMBLEM_SIZE / 3 }px;
+              float: left;
+            }
+        `);
+
+        before('DOMContentLoaded待ち', done => {
+            let link = document.createElement('link');
+            link.setAttribute('rel',  'stylesheet');
+            link.setAttribute('href', CSS_PATH);
+
+            new Promise((resolve, reject) => {
+                let readyState = document.readyState;
+
+                if (readyState === 'interactive' || readyState === 'complete') {
+                    resolve();
+                } else {
+                    window.onload = resolve;
+                }
+            }).then(() => {
+                document.head.appendChild(link);
+                document.body.appendChild(testField);
+                done();
+            });
+        });
+    });
 });

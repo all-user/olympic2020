@@ -127,9 +127,9 @@ describe('Olympic2020 test', () => {
 
     describe('DOM', () => {
         let testField = document.createElement('div');
-        testField.id = 'test-field';
+        testField.id = 'olympic2020-test-field';
         appendCSS(`
-            #test-field {
+            #olympic2020-test-field {
               width:    100%;
               display:  block;
               position: relative;
@@ -138,7 +138,7 @@ describe('Olympic2020 test', () => {
             }
         `);
         appendCSS(`
-            #test-field .olympic-emblem {
+            #olympic2020-test-field .olympic-emblem {
               margin: ${ EMBLEM_SIZE / 3 }px;
               float: left;
             }

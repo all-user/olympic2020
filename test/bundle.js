@@ -18878,6 +18878,29 @@ describe('EmblemGroup test', function () {
             });
         });
     });
+    describe('DOM', function () {
+        var testField = document.createElement('div');
+        testField.id = 'emblemgroup-test-field';
+        (0, _appendCss2['default'])('\n            #emblemgroup-test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
+        (0, _appendCss2['default'])('\n            #emblemgroup-test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
+        before('DOMContentLoaded\u5F85\u3061', function (done) {
+            var link = document.createElement('link');
+            link.setAttribute('rel', 'stylesheet');
+            link.setAttribute('href', CSS_PATH);
+            new Promise(function (resolve, reject) {
+                var readyState = document.readyState;
+                if (readyState === 'interactive' || readyState === 'complete') {
+                    resolve();
+                } else {
+                    window.onload = resolve;
+                }
+            }).then(function () {
+                document.head.appendChild(link);
+                document.body.appendChild(testField);
+                done();
+            });
+        });
+    });
 });
 
 
@@ -18996,9 +19019,9 @@ describe('Olympic2020 test', function () {
     });
     describe('DOM', function () {
         var testField = document.createElement('div');
-        testField.id = 'test-field';
-        (0, _appendCss2['default'])('\n            #test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
-        (0, _appendCss2['default'])('\n            #test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
+        testField.id = 'olympic2020-test-field';
+        (0, _appendCss2['default'])('\n            #olympic2020-test-field {\n              width:    100%;\n              display:  block;\n              position: relative;\n              margin:   0;\n              padding:  0;\n            }\n        ');
+        (0, _appendCss2['default'])('\n            #olympic2020-test-field .olympic-emblem {\n              margin: ' + EMBLEM_SIZE / 3 + 'px;\n              float: left;\n            }\n        ');
         before('DOMContentLoaded\u5F85\u3061', function (done) {
             var link = document.createElement('link');
             link.setAttribute('rel', 'stylesheet');

@@ -32,6 +32,12 @@ class EmblemGroup {
         });
     }
 
+    appendTo(parent) {
+        var frag = this.emblems.reduce((f, e) => {
+            f.appendChild(e.dom);
+        }, document.createDocumentFragment());
+        parent.appenChild(frag);
+    }
 }
 
 function _transfromToOlympic2020Array(arg) { // (string | [Olympic2020]) => [Olympic2020] | false
