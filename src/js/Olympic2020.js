@@ -2,7 +2,7 @@ class Olympic2020 {
 
     constructor(c, opt) {
         if (typeof opt === 'object') {
-            var { size, displayTime, duration, easing } = opt;
+            var { size, displayTime, duration, easing, roop, random } = opt;
         }
         this.char = null;
         this.dom  = _createDom();
@@ -11,6 +11,8 @@ class Olympic2020 {
         this._easing      = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this._isAnimating = false;
         this._resume      = null;
+        this._loop        = roop || false;
+        this._random      = random || false;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -44,13 +46,22 @@ class Olympic2020 {
         this._resume();
     }
 
-    animateFromString(str, time) {
+    animateFromString(str, opt) {
+        if (typeof opt === 'object') {
+            var { displayTime, loop, random } = opt;
+        }
         this._isAnimating = true;
         this._resume      = null;
-        if (typeof time === 'number') {
-            this._displayTime = time;
+        if (loop != null) {
+            this._loop = loop;
+        }
+        if (random != null) {
+            this._random = random;
+        }
+        if (typeof displayTime === 'number' && displayTime > 0) {
+            this._displayTime = displayTime;
         } else {
-            time = this._displayTime;
+            displayTime = this._displayTime;
         }
 
         [].reduce.call(str, (p, c, idx) => {
@@ -61,10 +72,23 @@ class Olympic2020 {
                         this._resume = resolve;
                         return;
                     }
-                    this.to(c);
+                    if (this._random) {
+                        let _c = str[Math.random() * str.length | 0];
+                        this.to(_c);
+                    } else {
+                        this.to(c);
+                    }
                     if (isLast) {
-                        setTimout(reject, this._displayTime);
-                        return;
+                        if (this._loop) {
+                            setTimeout(() => {
+                                this.animateFromString.call(this, str);
+                                resolve();
+                            }, this._displayTime);
+                            return;
+                        } else {
+                            setTimeout(reject, this._displayTime);
+                            return;
+                        }
                     }
                     setTimeout(resolve, this._displayTime);
                 });
@@ -99,6 +123,12 @@ class Olympic2020 {
     get easing() { return this._easing; }
 
     get isAnimating() { return this._isAnimating; }
+
+    set loop(bool) { this._loop = bool; }
+    get loop()     { return this._loop; }
+
+    set random(bool) { this._random = bool; }
+    get random()     { return this._random; }
 
 }
 

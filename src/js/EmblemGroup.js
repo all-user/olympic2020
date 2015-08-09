@@ -55,7 +55,11 @@ class EmblemGroup {
         this._resume();
     }
 
-    animateFromString(str, time) {
+    animateFromString(str, opt) {
+        this._isAnimating = true;
+        this._resume      = null;
+        _asignOption.call(this, opt);
+
         let strArr;
         if (Array.isArray(str) && str.every(c => typeof c === 'string')) {
             strArr = str;
@@ -68,11 +72,14 @@ class EmblemGroup {
             }, []);
         }
 
-        _animateFromStringArray.call(this, strArr, time);
+        _animateFromStringArray.call(this, strArr);
     }
 
-    animateFromStringArray(strArr, time) {
-        _animateFromStringArray.call(this, strArr, time);
+    animateFromStringArray(strArr, opt) {
+        this._isAnimating = true;
+        this._resume      = null;
+        _asignOption.call(this, opt);
+        _animateFromStringArray.call(this, strArr);
     }
 
     /*
@@ -105,18 +112,23 @@ function _transfromToOlympic2020Array(arg, size) { // (string | [Olympic2020]) =
     return res;
 }
 
-
-function _animateFromStringArray(strArr, time) {
-    this._isAnimating = true;
-    this._resume      = null;
-    if (typeof time === 'number') {
-        this._displayTime = time;
-    } else {
-        time = this._displayTime;
+function _asignOption(opt) {
+    if (typeof opt === 'object') {
+        var { displayTime, loop } = opt;
     }
+    if (loop != null) {
+        this._loop = loop;
+    }
+    if (typeof displayTime === 'number' && displayTime > 0) {
+        this._displayTime = displayTime;
+    } else {
+        displayTime = this._displayTime;
+    }
+}
 
-    console.log(this);
 
+
+function _animateFromStringArray(strArr) {
     strArr.reduce((p, s, idx) => {
         let isLast = idx === strArr.length - 1;
         return p.then(() => {
@@ -127,8 +139,16 @@ function _animateFromStringArray(strArr, time) {
                 }
                 this.map(s);
                 if (isLast) {
-                    setTimout(reject, this._displayTime);
-                    return;
+                    if (this._loop) {
+                        setTimeout(() => {
+                            _animateFromStringArray.call(this, strArr);
+                            resolve();
+                        }, this._displayTime);
+                        return;
+                    } else {
+                        setTimeout(reject, this._displayTime);
+                        return;
+                    }
                 }
                 setTimeout(resolve, this._displayTime);
             });

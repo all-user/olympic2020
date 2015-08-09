@@ -9,16 +9,24 @@ document.addEventListener('DOMContentLoaded', function () {
     var ALL_VALID_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
     var TITLE_COPY = 'tokyo 2020';
     var SHORT_COPY = 'hi!!';
-    var DATE_COPY = '8 / 9 : sunday';
+    var DATE_COPY = '8/9:sunday';
     var BLANK_COPY = '                                                        ';
     var LONG_COPY = 'olympic paralympic games';
-    var COPYS = [TITLE_COPY, BLANK_COPY, LONG_COPY, BLANK_COPY, SHORT_COPY, '1234567890', BLANK_COPY, DATE_COPY, 'happy day!', BLANK_COPY, 'hello world', BLANK_COPY, TITLE_COPY, LONG_COPY, SHORT_COPY, '1234567890', 'happy day!', 'hello world'];
+    var COPYS = [TITLE_COPY, LONG_COPY, SHORT_COPY, '1234567890', BLANK_COPY, DATE_COPY, 'happy day!', BLANK_COPY, 'hello world', TITLE_COPY, LONG_COPY, SHORT_COPY, BLANK_COPY, '1234567890', 'happy day!', 'hello world', BLANK_COPY];
 
     var group = new EmblemGroup(TITLE_COPY, { length: 20, size: EMBLEM_SIZE });
 
     group.appendTo(wrapper);
 
-    group.animateFromString(COPYS);
+    wrapper.addEventListener('click', function () {
+        if (group.isAnimating) {
+            group.stopAnimate.call(group);
+        } else {
+            group.resumeAnimate.call(group);
+        }
+    });
+
+    group.animateFromString(COPYS, { loop: true });
 });
 
 },{}]},{},[1]);

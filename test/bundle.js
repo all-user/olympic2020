@@ -18112,8 +18112,11 @@ var EmblemGroup = function () {
         },
         {
             key: 'animateFromString',
-            value: function animateFromString(str, time) {
+            value: function animateFromString(str, opt) {
                 var _this = this;
+                this._isAnimating = true;
+                this._resume = null;
+                _asignOption.call(this, opt);
                 var strArr = undefined;
                 if (Array.isArray(str) && str.every(function (c) {
                         return typeof c === 'string';
@@ -18131,13 +18134,16 @@ var EmblemGroup = function () {
                         }, []);
                     }());
                 }
-                _animateFromStringArray.call(this, strArr, time);
+                _animateFromStringArray.call(this, strArr);
             }
         },
         {
             key: 'animateFromStringArray',
-            value: function animateFromStringArray(strArr, time) {
-                _animateFromStringArray.call(this, strArr, time);
+            value: function animateFromStringArray(strArr, opt) {
+                this._isAnimating = true;
+                this._resume = null;
+                _asignOption.call(this, opt);
+                _animateFromStringArray.call(this, strArr);
             }
         },
         {
@@ -18181,16 +18187,22 @@ function _transfromToOlympic2020Array(arg, size) {
     }
     return res;
 }
-function _animateFromStringArray(strArr, time) {
-    var _this2 = this;
-    this._isAnimating = true;
-    this._resume = null;
-    if (typeof time === 'number') {
-        this._displayTime = time;
-    } else {
-        time = this._displayTime;
+function _asignOption(opt) {
+    if (typeof opt === 'object') {
+        var displayTime = opt.displayTime;
+        var loop = opt.loop;
     }
-    console.log(this);
+    if (loop != null) {
+        this._loop = loop;
+    }
+    if (typeof displayTime === 'number' && displayTime > 0) {
+        this._displayTime = displayTime;
+    } else {
+        displayTime = this._displayTime;
+    }
+}
+function _animateFromStringArray(strArr) {
+    var _this2 = this;
     strArr.reduce(function (p, s, idx) {
         var isLast = idx === strArr.length - 1;
         return p.then(function () {
@@ -18201,8 +18213,16 @@ function _animateFromStringArray(strArr, time) {
                 }
                 _this2.map(s);
                 if (isLast) {
-                    setTimout(reject, _this2._displayTime);
-                    return;
+                    if (_this2._loop) {
+                        setTimeout(function () {
+                            _animateFromStringArray.call(_this2, strArr);
+                            resolve();
+                        }, _this2._displayTime);
+                        return;
+                    } else {
+                        setTimeout(reject, _this2._displayTime);
+                        return;
+                    }
                 }
                 setTimeout(resolve, _this2._displayTime);
             });
@@ -18258,6 +18278,7 @@ var Olympic2020 = function () {
         this._easing = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this._isAnimating = false;
         this._resume = null;
+        this._loop = false;
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
             this.size = size;
@@ -18300,14 +18321,21 @@ var Olympic2020 = function () {
         },
         {
             key: 'animateFromString',
-            value: function animateFromString(str, time) {
+            value: function animateFromString(str, opt) {
                 var _this = this;
+                if (typeof opt === 'object') {
+                    var displayTime = opt.displayTime;
+                    var loop = opt.loop;
+                }
                 this._isAnimating = true;
                 this._resume = null;
-                if (typeof time === 'number') {
-                    this._displayTime = time;
+                if (loop != null) {
+                    this._loop = loop;
+                }
+                if (typeof displayTime === 'number' && displayTime > 0) {
+                    this._displayTime = displayTime;
                 } else {
-                    time = this._displayTime;
+                    displayTime = this._displayTime;
                 }
                 [].reduce.call(str, function (p, c, idx) {
                     var isLast = idx === str.length - 1;
@@ -18319,8 +18347,16 @@ var Olympic2020 = function () {
                             }
                             _this.to(c);
                             if (isLast) {
-                                setTimout(reject, _this._displayTime);
-                                return;
+                                if (_this._loop) {
+                                    setTimeout(function () {
+                                        _this.animateFromString.call(_this, str);
+                                        resolve();
+                                    }, _this._displayTime);
+                                    return;
+                                } else {
+                                    setTimeout(reject, _this._displayTime);
+                                    return;
+                                }
                             }
                             setTimeout(resolve, _this._displayTime);
                         });
@@ -18371,6 +18407,15 @@ var Olympic2020 = function () {
             key: 'isAnimating',
             get: function get() {
                 return this._isAnimating;
+            }
+        },
+        {
+            key: 'loop',
+            set: function set(bool) {
+                this._loop = bool;
+            },
+            get: function get() {
+                return this._loop;
             }
         }
     ]);
@@ -19325,9 +19370,8 @@ describe('Olympic2020 test', function () {
             });
         });
         describe('\u6587\u5B57\u5217\u306B\u6CBF\u3063\u3066\u9806\u756A\u306B\u5909\u5316\u3055\u305B\u308B', function () {
-            var olm = new Olympic2020('a');
+            var olm = new Olympic2020('a', { size: 500 });
             testField.appendChild(olm.dom);
-            olm.size = 500;
             olm.dom.addEventListener('click', function () {
                 if (olm.isAnimating) {
                     olm.stopAnimate.call(olm);
@@ -19335,7 +19379,7 @@ describe('Olympic2020 test', function () {
                     olm.resumeAnimate.call(olm);
                 }
             });
-            olm.animateFromString(ALL_VALID_CHARS);
+            olm.animateFromString(ALL_VALID_CHARS, { loop: true });
             it('\u5909\u5316\u306E\u69D8\u5B50\u3092\u89B3\u5BDF');
         });
         describe('\u30B0\u30ED\u30FC\u30D0\u30EB\u306B\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u3092\u914D\u7F6E', function () {

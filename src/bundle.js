@@ -84,8 +84,12 @@ var EmblemGroup = (function () {
         }
     }, {
         key: 'animateFromString',
-        value: function animateFromString(str, time) {
+        value: function animateFromString(str, opt) {
             var _this = this;
+
+            this._isAnimating = true;
+            this._resume = null;
+            _asignOption.call(this, opt);
 
             var strArr = undefined;
             if (Array.isArray(str) && str.every(function (c) {
@@ -105,12 +109,15 @@ var EmblemGroup = (function () {
                 })();
             }
 
-            _animateFromStringArray.call(this, strArr, time);
+            _animateFromStringArray.call(this, strArr);
         }
     }, {
         key: 'animateFromStringArray',
-        value: function animateFromStringArray(strArr, time) {
-            _animateFromStringArray.call(this, strArr, time);
+        value: function animateFromStringArray(strArr, opt) {
+            this._isAnimating = true;
+            this._resume = null;
+            _asignOption.call(this, opt);
+            _animateFromStringArray.call(this, strArr);
         }
 
         /*
@@ -160,18 +167,23 @@ function _transfromToOlympic2020Array(arg, size) {
     return res;
 }
 
-function _animateFromStringArray(strArr, time) {
-    var _this2 = this;
-
-    this._isAnimating = true;
-    this._resume = null;
-    if (typeof time === 'number') {
-        this._displayTime = time;
-    } else {
-        time = this._displayTime;
+function _asignOption(opt) {
+    if (typeof opt === 'object') {
+        var displayTime = opt.displayTime;
+        var loop = opt.loop;
     }
+    if (loop != null) {
+        this._loop = loop;
+    }
+    if (typeof displayTime === 'number' && displayTime > 0) {
+        this._displayTime = displayTime;
+    } else {
+        displayTime = this._displayTime;
+    }
+}
 
-    console.log(this);
+function _animateFromStringArray(strArr) {
+    var _this2 = this;
 
     strArr.reduce(function (p, s, idx) {
         var isLast = idx === strArr.length - 1;
@@ -183,8 +195,16 @@ function _animateFromStringArray(strArr, time) {
                 }
                 _this2.map(s);
                 if (isLast) {
-                    setTimout(reject, _this2._displayTime);
-                    return;
+                    if (_this2._loop) {
+                        setTimeout(function () {
+                            _animateFromStringArray.call(_this2, strArr);
+                            resolve();
+                        }, _this2._displayTime);
+                        return;
+                    } else {
+                        setTimeout(reject, _this2._displayTime);
+                        return;
+                    }
                 }
                 setTimeout(resolve, _this2._displayTime);
             });
@@ -217,6 +237,8 @@ var Olympic2020 = (function () {
             var displayTime = opt.displayTime;
             var duration = opt.duration;
             var easing = opt.easing;
+            var roop = opt.roop;
+            var random = opt.random;
         }
         this.char = null;
         this.dom = _createDom();
@@ -225,6 +247,8 @@ var Olympic2020 = (function () {
         this._easing = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this._isAnimating = false;
         this._resume = null;
+        this._loop = roop || false;
+        this._random = random || false;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -264,15 +288,26 @@ var Olympic2020 = (function () {
         }
     }, {
         key: 'animateFromString',
-        value: function animateFromString(str, time) {
+        value: function animateFromString(str, opt) {
             var _this = this;
 
+            if (typeof opt === 'object') {
+                var displayTime = opt.displayTime;
+                var loop = opt.loop;
+                var random = opt.random;
+            }
             this._isAnimating = true;
             this._resume = null;
-            if (typeof time === 'number') {
-                this._displayTime = time;
+            if (loop != null) {
+                this._loop = loop;
+            }
+            if (random != null) {
+                this._random = random;
+            }
+            if (typeof displayTime === 'number' && displayTime > 0) {
+                this._displayTime = displayTime;
             } else {
-                time = this._displayTime;
+                displayTime = this._displayTime;
             }
 
             [].reduce.call(str, function (p, c, idx) {
@@ -283,10 +318,23 @@ var Olympic2020 = (function () {
                             _this._resume = resolve;
                             return;
                         }
-                        _this.to(c);
+                        if (_this._random) {
+                            var _c = str[Math.random() * str.length | 0];
+                            _this.to(_c);
+                        } else {
+                            _this.to(c);
+                        }
                         if (isLast) {
-                            setTimout(reject, _this._displayTime);
-                            return;
+                            if (_this._loop) {
+                                setTimeout(function () {
+                                    _this.animateFromString.call(_this, str);
+                                    resolve();
+                                }, _this._displayTime);
+                                return;
+                            } else {
+                                setTimeout(reject, _this._displayTime);
+                                return;
+                            }
                         }
                         setTimeout(resolve, _this._displayTime);
                     });
@@ -336,6 +384,22 @@ var Olympic2020 = (function () {
         key: 'isAnimating',
         get: function get() {
             return this._isAnimating;
+        }
+    }, {
+        key: 'loop',
+        set: function set(bool) {
+            this._loop = bool;
+        },
+        get: function get() {
+            return this._loop;
+        }
+    }, {
+        key: 'random',
+        set: function set(bool) {
+            this._random = bool;
+        },
+        get: function get() {
+            return this._random;
         }
     }]);
 

@@ -262,9 +262,8 @@ describe('Olympic2020 test', () => {
         });
 
         describe('文字列に沿って順番に変化させる', () => {
-            let olm = new Olympic2020('a');
+            let olm = new Olympic2020('a', { size : 500 });
             testField.appendChild(olm.dom);
-            olm.size = 500;
             olm.dom.addEventListener('click', () => {
                 if (olm.isAnimating) {
                     olm.stopAnimate.call(olm);
@@ -272,7 +271,7 @@ describe('Olympic2020 test', () => {
                     olm.resumeAnimate.call(olm);
                 }
             });
-            olm.animateFromString(ALL_VALID_CHARS);
+            olm.animateFromString(ALL_VALID_CHARS, { loop: true });
 
             it('変化の様子を観察');
         });
