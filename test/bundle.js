@@ -18112,35 +18112,32 @@ var EmblemGroup = function () {
         },
         {
             key: 'animateFromString',
-            value: function animateFromString(strArr, time) {
+            value: function animateFromString(str, time) {
                 var _this = this;
-                this._isAnimating = true;
-                this._resume = null;
-                if (typeof time === 'number') {
-                    this._displayTime = time;
+                var strArr = undefined;
+                if (Array.isArray(str) && str.every(function (c) {
+                        return typeof c === 'string';
+                    })) {
+                    strArr = str;
                 } else {
-                    time = this._displayTime;
+                    (function () {
+                        var len = _this.emblems.length;
+                        strArr = [].reduce.call(str, function (arr, s, idx) {
+                            if (idx % len === 0) {
+                                arr.push('');
+                            }
+                            arr[idx / len | 0] += s;
+                            return arr;
+                        }, []);
+                    }());
                 }
-                console.log(this);
-                strArr.reduce(function (p, s, idx) {
-                    var isLast = idx === strArr.length - 1;
-                    return p.then(function () {
-                        return new Promise(function (resolve, reject) {
-                            if (!_this._isAnimating) {
-                                _this._resume = resolve;
-                                return;
-                            }
-                            _this.map(s);
-                            if (isLast) {
-                                setTimout(reject, _this._displayTime);
-                                return;
-                            }
-                            setTimeout(resolve, _this._displayTime);
-                        });
-                    });
-                }, Promise.resolve())['catch'](function () {
-                    _this._isAnimating = false;
-                });
+                _animateFromStringArray.call(this, strArr, time);
+            }
+        },
+        {
+            key: 'animateFromStringArray',
+            value: function animateFromStringArray(strArr, time) {
+                _animateFromStringArray.call(this, strArr, time);
             }
         },
         {
@@ -18183,6 +18180,36 @@ function _transfromToOlympic2020Array(arg, size) {
         res = false;
     }
     return res;
+}
+function _animateFromStringArray(strArr, time) {
+    var _this2 = this;
+    this._isAnimating = true;
+    this._resume = null;
+    if (typeof time === 'number') {
+        this._displayTime = time;
+    } else {
+        time = this._displayTime;
+    }
+    console.log(this);
+    strArr.reduce(function (p, s, idx) {
+        var isLast = idx === strArr.length - 1;
+        return p.then(function () {
+            return new Promise(function (resolve, reject) {
+                if (!_this2._isAnimating) {
+                    _this2._resume = resolve;
+                    return;
+                }
+                _this2.map(s);
+                if (isLast) {
+                    setTimout(reject, _this2._displayTime);
+                    return;
+                }
+                setTimeout(resolve, _this2._displayTime);
+            });
+        });
+    }, Promise.resolve())['catch'](function () {
+        _this2._isAnimating = false;
+    });
 }
 exports['default'] = EmblemGroup;
 module.exports = exports['default'];

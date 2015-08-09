@@ -55,34 +55,24 @@ class EmblemGroup {
         this._resume();
     }
 
-    animateFromString(strArr, time) {
-        this._isAnimating = true;
-        this._resume      = null;
-        if (typeof time === 'number') {
-            this._displayTime = time;
+    animateFromString(str, time) {
+        let strArr;
+        if (Array.isArray(str) && str.every(c => typeof c === 'string')) {
+            strArr = str;
         } else {
-            time = this._displayTime;
+            let len = this.emblems.length;
+            strArr = [].reduce.call(str, (arr, s, idx) => {
+                if (idx % len === 0) { arr.push(''); }
+                arr[idx / len | 0] += s;
+                return arr;
+            }, []);
         }
 
-        console.log(this);
+        _animateFromStringArray.call(this, strArr, time);
+    }
 
-        strArr.reduce((p, s, idx) => {
-            let isLast = idx === strArr.length - 1;
-            return p.then(() => {
-                return new Promise((resolve, reject) => {
-                    if (!this._isAnimating) {
-                        this._resume = resolve;
-                        return;
-                    }
-                    this.map(s);
-                    if (isLast) {
-                        setTimout(reject, this._displayTime);
-                        return;
-                    }
-                    setTimeout(resolve, this._displayTime);
-                });
-            });
-        }, Promise.resolve()).catch(() => { this._isAnimating = false; });
+    animateFromStringArray(strArr, time) {
+        _animateFromStringArray.call(this, strArr, time);
     }
 
     /*
@@ -114,5 +104,37 @@ function _transfromToOlympic2020Array(arg, size) { // (string | [Olympic2020]) =
 
     return res;
 }
+
+
+function _animateFromStringArray(strArr, time) {
+    this._isAnimating = true;
+    this._resume      = null;
+    if (typeof time === 'number') {
+        this._displayTime = time;
+    } else {
+        time = this._displayTime;
+    }
+
+    console.log(this);
+
+    strArr.reduce((p, s, idx) => {
+        let isLast = idx === strArr.length - 1;
+        return p.then(() => {
+            return new Promise((resolve, reject) => {
+                if (!this._isAnimating) {
+                    this._resume = resolve;
+                    return;
+                }
+                this.map(s);
+                if (isLast) {
+                    setTimout(reject, this._displayTime);
+                    return;
+                }
+                setTimeout(resolve, this._displayTime);
+            });
+        });
+    }, Promise.resolve()).catch(() => { this._isAnimating = false; });
+}
+
 
 export default EmblemGroup
