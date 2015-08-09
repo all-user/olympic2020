@@ -1,6 +1,6 @@
 import assert from 'power-assert'
 import appendCSS from 'append-css'
-import Olympic2020 from '../src/js/Olympic2020.js'
+import '../src/js/index.js'
 
 describe('olympic emblem', () => {
     var o;
