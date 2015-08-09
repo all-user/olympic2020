@@ -1,6 +1,6 @@
 {
   "name": "@all-user/olympic2020",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "generate olympic emblem",
   "main": "index.js",
   "scripts": {
