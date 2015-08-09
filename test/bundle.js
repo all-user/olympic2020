@@ -18042,8 +18042,16 @@ function _classCallCheck(instance, Constructor) {
 var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 var EmblemGroup = function () {
-    function EmblemGroup(chars, length, size) {
+    function EmblemGroup(chars, opt) {
         _classCallCheck(this, EmblemGroup);
+        if (typeof opt === 'object') {
+            var length = opt.length;
+            var size = opt.size;
+            var displayTime = opt.displayTime;
+        }
+        this._isAnimating = false;
+        this._resume = null;
+        this._displayTime = displayTime || 1000;
         if (chars.length < length) {
             for (var i = chars.length; i < length; i++) {
                 chars += ' ';
@@ -18087,6 +18095,67 @@ var EmblemGroup = function () {
                     return f;
                 }, document.createDocumentFragment());
                 parent.appendChild(frag);
+            }
+        },
+        {
+            key: 'stopAnimate',
+            value: function stopAnimate() {
+                this._isAnimating = false;
+            }
+        },
+        {
+            key: 'resumeAnimate',
+            value: function resumeAnimate() {
+                this._isAnimating = true;
+                this._resume();
+            }
+        },
+        {
+            key: 'animateFromString',
+            value: function animateFromString(strArr, time) {
+                var _this = this;
+                this._isAnimating = true;
+                this._resume = null;
+                if (typeof time === 'number') {
+                    this._displayTime = time;
+                } else {
+                    time = this._displayTime;
+                }
+                console.log(this);
+                strArr.reduce(function (p, s, idx) {
+                    var isLast = idx === strArr.length - 1;
+                    return p.then(function () {
+                        return new Promise(function (resolve, reject) {
+                            if (!_this._isAnimating) {
+                                _this._resume = resolve;
+                                return;
+                            }
+                            _this.map(s);
+                            if (isLast) {
+                                setTimout(reject, _this._displayTime);
+                                return;
+                            }
+                            setTimeout(resolve, _this._displayTime);
+                        });
+                    });
+                }, Promise.resolve())['catch'](function () {
+                    _this._isAnimating = false;
+                });
+            }
+        },
+        {
+            key: 'displayTime',
+            set: function set(time) {
+                this._displayTime = time;
+            },
+            get: function get() {
+                return this._displayTime;
+            }
+        },
+        {
+            key: 'isAnimating',
+            get: function get() {
+                return this._isAnimating;
             }
         }
     ]);
@@ -18147,14 +18216,21 @@ function _classCallCheck(instance, Constructor) {
     }
 }
 var Olympic2020 = function () {
-    function Olympic2020(c, size) {
+    function Olympic2020(c, opt) {
         _classCallCheck(this, Olympic2020);
+        if (typeof opt === 'object') {
+            var size = opt.size;
+            var displayTime = opt.displayTime;
+            var duration = opt.duration;
+            var easing = opt.easing;
+        }
         this.char = null;
         this.dom = _createDom();
-        this._displayTime = 1000;
-        this._duration = 800;
-        this._easing = 'cubic-bezier(.26,.92,.41,.98)';
+        this._displayTime = displayTime || 1000;
+        this._duration = duration || 800;
+        this._easing = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this._isAnimating = false;
+        this._resume = null;
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
             this.size = size;
@@ -18875,6 +18951,26 @@ describe('EmblemGroup test', function () {
     var SHORT_COPY = 'a to z';
     var BLANK_COPY = '                                                        ';
     var EMBLEM_SIZE = 90;
+    var DISPLAY_TIME = 1000;
+    var COPYS = [
+        TITLE_COPY,
+        BLANK_COPY,
+        LONG_COPY,
+        BLANK_COPY,
+        SHORT_COPY,
+        '1234567890',
+        BLANK_COPY,
+        'happy day!',
+        BLANK_COPY,
+        'hello world',
+        BLANK_COPY,
+        TITLE_COPY,
+        LONG_COPY,
+        SHORT_COPY,
+        '1234567890',
+        'happy day!',
+        'hello world'
+    ];
     describe('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u306E\u751F\u6210', function () {
         var group = new EmblemGroup(TITLE_COPY);
         it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
@@ -18894,7 +18990,7 @@ describe('EmblemGroup test', function () {
     });
     describe('\u9577\u3055\u3092\u6307\u5B9A\u3057\u3066\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u306E\u751F\u6210', function () {
         describe('\u4E0E\u3048\u308B\u6587\u5B57\u5217\u3088\u308A\u9577\u3044\u9577\u3055\u3092\u6307\u5B9A', function () {
-            var group = new EmblemGroup(TITLE_COPY, LONG_COPY.length);
+            var group = new EmblemGroup(TITLE_COPY, { length: LONG_COPY.length });
             it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
                 _powerAssert2['default'].equal(group.toString(), (TITLE_COPY + BLANK_COPY).slice(0, LONG_COPY.length));
                 done();
@@ -18911,7 +19007,7 @@ describe('EmblemGroup test', function () {
             });
         });
         describe('\u4E0E\u3048\u308B\u6587\u5B57\u5217\u3088\u308A\u77ED\u3044\u9577\u3055\u3092\u6307\u5B9A', function () {
-            var group = new EmblemGroup(TITLE_COPY, SHORT_COPY.length);
+            var group = new EmblemGroup(TITLE_COPY, { length: SHORT_COPY.length });
             it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
                 _powerAssert2['default'].equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
                 done();
@@ -18947,14 +19043,19 @@ describe('EmblemGroup test', function () {
             });
         });
         describe('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u3092DOM\u306B\u8FFD\u52A0', function () {
-            var group = new EmblemGroup(TITLE_COPY, TITLE_COPY.length, EMBLEM_SIZE);
+            var group = new EmblemGroup(TITLE_COPY, {
+                length: TITLE_COPY.length,
+                size: EMBLEM_SIZE
+            });
             group.appendTo(testField);
-            console.log(group);
             it('\u5168\u3066\u306EOlympic2020\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u304CDOM\u306B\u5B58\u5728\u3059\u308B\u304B', function (done) {
                 group.emblems.forEach(function (e) {
                     _powerAssert2['default'].equal(e.dom.parentNode, testField);
                 });
-                done();
+                setTimeout(done, DISPLAY_TIME);
+            });
+            describe('\u4E0E\u3048\u305F\u914D\u5217\u4E2D\u306E\u6587\u5B57\u5217\u306E\u306B\u5909\u5316', function () {
+                group.animateFromString(COPYS);
             });
         });
     });
@@ -19097,10 +19198,9 @@ describe('Olympic2020 test', function () {
             });
         });
         describe('a\u306E\u6587\u5B57\u3092\u8868\u793A', function () {
-            var olm = new Olympic2020('a');
+            var olm = new Olympic2020('a', { size: EMBLEM_SIZE });
             olm.appendTo(testField);
             it('\u30B5\u30A4\u30BA\u304C\u6307\u5B9A\u901A\u308A\u306B\u306A\u3063\u3066\u3044\u308B\u304B', function (done) {
-                olm.size = EMBLEM_SIZE;
                 var recentStyle = getComputedStyle(olm.dom);
                 _powerAssert2['default'].equal(recentStyle.width, EMBLEM_SIZE + 'px');
                 _powerAssert2['default'].equal(recentStyle.height, EMBLEM_SIZE + 'px');

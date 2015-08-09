@@ -1,12 +1,16 @@
 class Olympic2020 {
 
-    constructor(c, size) {
+    constructor(c, opt) {
+        if (typeof opt === 'object') {
+            var { size, displayTime, duration, easing } = opt;
+        }
         this.char = null;
         this.dom  = _createDom();
-        this._displayTime = 1000;
-        this._duration    = 800;
-        this._easing      = 'cubic-bezier(.26,.92,.41,.98)';
+        this._displayTime = displayTime || 1000;
+        this._duration    = duration || 800;
+        this._easing      = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this._isAnimating = false;
+        this._resume      = null;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -42,7 +46,7 @@ class Olympic2020 {
 
     animateFromString(str, time) {
         this._isAnimating = true;
-        this._resume = null;
+        this._resume      = null;
         if (typeof time === 'number') {
             this._displayTime = time;
         } else {

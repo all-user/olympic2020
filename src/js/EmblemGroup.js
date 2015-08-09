@@ -2,7 +2,13 @@ import Olympic2020 from './Olympic2020.js'
 
 class EmblemGroup {
 
-    constructor(chars, length, size) {
+    constructor(chars, opt) {
+        if (typeof opt === 'object') {
+            var { length, size, displayTime } = opt;
+        }
+        this._isAnimating = false;
+        this._resume      = null;
+        this._displayTime = displayTime || 1000;
         if (chars.length < length) {
             for (var i = chars.length; i < length; i++) {
                 chars += ' ';
@@ -39,6 +45,53 @@ class EmblemGroup {
         }, document.createDocumentFragment());
         parent.appendChild(frag);
     }
+
+    stopAnimate() {
+        this._isAnimating = false;
+    }
+
+    resumeAnimate() {
+        this._isAnimating = true;
+        this._resume();
+    }
+
+    animateFromString(strArr, time) {
+        this._isAnimating = true;
+        this._resume      = null;
+        if (typeof time === 'number') {
+            this._displayTime = time;
+        } else {
+            time = this._displayTime;
+        }
+
+        console.log(this);
+
+        strArr.reduce((p, s, idx) => {
+            let isLast = idx === strArr.length - 1;
+            return p.then(() => {
+                return new Promise((resolve, reject) => {
+                    if (!this._isAnimating) {
+                        this._resume = resolve;
+                        return;
+                    }
+                    this.map(s);
+                    if (isLast) {
+                        setTimout(reject, this._displayTime);
+                        return;
+                    }
+                    setTimeout(resolve, this._displayTime);
+                });
+            });
+        }, Promise.resolve()).catch(() => { this._isAnimating = false; });
+    }
+
+    /*
+     * seter and geter of propertys
+     */
+    set displayTime(time) { this._displayTime = time; }
+    get displayTime()     { return this._displayTime; }
+
+    get isAnimating() { return this._isAnimating; }
 }
 
 function _transfromToOlympic2020Array(arg, size) { // (string | [Olympic2020]) => [Olympic2020] | false

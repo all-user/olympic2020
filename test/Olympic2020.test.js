@@ -166,12 +166,11 @@ describe('Olympic2020 test', () => {
 
 
         describe('aの文字を表示', () => {
-            let olm = new Olympic2020('a');
+            let olm = new Olympic2020('a', { size: EMBLEM_SIZE });
             olm.appendTo(testField);
 
 
             it('サイズが指定通りになっているか', done => {
-                olm.size = EMBLEM_SIZE;
                 var recentStyle = getComputedStyle(olm.dom);
                 assert.equal(recentStyle.width,  `${ EMBLEM_SIZE }px`);
                 assert.equal(recentStyle.height, `${ EMBLEM_SIZE }px`);

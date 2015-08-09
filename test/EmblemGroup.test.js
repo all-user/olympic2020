@@ -2,11 +2,31 @@ import assert from 'power-assert'
 import appendCSS from 'append-css'
 
 describe('EmblemGroup test', () => {
-    const TITLE_COPY  = 'tokyo 2020';
-    const LONG_COPY   = 'olympic paralympic games';
-    const SHORT_COPY  = 'a to z';
-    const BLANK_COPY  = '                                                        ';
-    const EMBLEM_SIZE = 90;
+    const TITLE_COPY   = 'tokyo 2020';
+    const LONG_COPY    = 'olympic paralympic games';
+    const SHORT_COPY   = 'a to z';
+    const BLANK_COPY   = '                                                        ';
+    const EMBLEM_SIZE  = 90;
+    const DISPLAY_TIME = 1000;
+    const COPYS        = [
+        TITLE_COPY,
+        BLANK_COPY,
+        LONG_COPY,
+        BLANK_COPY,
+        SHORT_COPY,
+        '1234567890',
+        BLANK_COPY,
+        'happy day!',
+        BLANK_COPY,
+        'hello world',
+        BLANK_COPY,
+        TITLE_COPY,
+        LONG_COPY,
+        SHORT_COPY,
+        '1234567890',
+        'happy day!',
+        'hello world',
+    ];
 
     describe('インスタンスの生成', () => {
         let group = new EmblemGroup(TITLE_COPY);
@@ -32,7 +52,7 @@ describe('EmblemGroup test', () => {
     describe('長さを指定してインスタンスの生成', () => {
 
         describe('与える文字列より長い長さを指定', () => {
-            let group = new EmblemGroup(TITLE_COPY, LONG_COPY.length);
+            let group = new EmblemGroup(TITLE_COPY, { length: LONG_COPY.length });
 
             it('文字列から生成', done => {
                 assert.equal(group.toString(), (TITLE_COPY + BLANK_COPY).slice(0, LONG_COPY.length));
@@ -53,7 +73,7 @@ describe('EmblemGroup test', () => {
         })
 
         describe('与える文字列より短い長さを指定', () => {
-            let group = new EmblemGroup(TITLE_COPY, SHORT_COPY.length);
+            let group = new EmblemGroup(TITLE_COPY, { length: SHORT_COPY.length });
 
             it('文字列から生成', done => {
                 assert.equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
@@ -113,18 +133,23 @@ describe('EmblemGroup test', () => {
 
         describe('インスタンスをDOMに追加', () => {
 
-            let group = new EmblemGroup(TITLE_COPY, TITLE_COPY.length, EMBLEM_SIZE);
+            let group = new EmblemGroup(TITLE_COPY, { length: TITLE_COPY.length, size: EMBLEM_SIZE });
 
             group.appendTo(testField);
-            console.log(group);
 
             it('全てのOlympic2020インスタンスがDOMに存在するか', done => {
                 group.emblems.forEach(e => {
                     assert.equal(e.dom.parentNode, testField);
                 });
-                done();
+                setTimeout(done, DISPLAY_TIME);
             });
+
+            describe('与えた配列中の文字列のに変化', () => {
+                group.animateFromString(COPYS);
+            });
+
         });
+
 
     });
 });

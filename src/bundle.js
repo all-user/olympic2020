@@ -16,9 +16,17 @@ var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 
 var EmblemGroup = (function () {
-    function EmblemGroup(chars, length, size) {
+    function EmblemGroup(chars, opt) {
         _classCallCheck(this, EmblemGroup);
 
+        if (typeof opt === 'object') {
+            var length = opt.length;
+            var size = opt.size;
+            var displayTime = opt.displayTime;
+        }
+        this._isAnimating = false;
+        this._resume = null;
+        this._displayTime = displayTime || 1000;
         if (chars.length < length) {
             for (var i = chars.length; i < length; i++) {
                 chars += ' ';
@@ -62,6 +70,69 @@ var EmblemGroup = (function () {
                 return f;
             }, document.createDocumentFragment());
             parent.appendChild(frag);
+        }
+    }, {
+        key: 'stopAnimate',
+        value: function stopAnimate() {
+            this._isAnimating = false;
+        }
+    }, {
+        key: 'resumeAnimate',
+        value: function resumeAnimate() {
+            this._isAnimating = true;
+            this._resume();
+        }
+    }, {
+        key: 'animateFromString',
+        value: function animateFromString(strArr, time) {
+            var _this = this;
+
+            this._isAnimating = true;
+            this._resume = null;
+            if (typeof time === 'number') {
+                this._displayTime = time;
+            } else {
+                time = this._displayTime;
+            }
+
+            console.log(this);
+
+            strArr.reduce(function (p, s, idx) {
+                var isLast = idx === strArr.length - 1;
+                return p.then(function () {
+                    return new Promise(function (resolve, reject) {
+                        if (!_this._isAnimating) {
+                            _this._resume = resolve;
+                            return;
+                        }
+                        _this.map(s);
+                        if (isLast) {
+                            setTimout(reject, _this._displayTime);
+                            return;
+                        }
+                        setTimeout(resolve, _this._displayTime);
+                    });
+                });
+            }, Promise.resolve())['catch'](function () {
+                _this._isAnimating = false;
+            });
+        }
+
+        /*
+         * seter and geter of propertys
+         */
+    }, {
+        key: 'displayTime',
+        set: function set(time) {
+            this._displayTime = time;
+        },
+        get: function get() {
+            return this._displayTime;
+        }
+    }, {
+        key: 'isAnimating',
+        get: function get() {
+            return this._isAnimating;
         }
     }]);
 
@@ -109,15 +180,22 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var Olympic2020 = (function () {
-    function Olympic2020(c, size) {
+    function Olympic2020(c, opt) {
         _classCallCheck(this, Olympic2020);
 
+        if (typeof opt === 'object') {
+            var size = opt.size;
+            var displayTime = opt.displayTime;
+            var duration = opt.duration;
+            var easing = opt.easing;
+        }
         this.char = null;
         this.dom = _createDom();
-        this._displayTime = 1000;
-        this._duration = 800;
-        this._easing = 'cubic-bezier(.26,.92,.41,.98)';
+        this._displayTime = displayTime || 1000;
+        this._duration = duration || 800;
+        this._easing = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this._isAnimating = false;
+        this._resume = null;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
