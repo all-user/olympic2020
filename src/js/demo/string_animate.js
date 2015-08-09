@@ -1,3 +1,5 @@
+require('es6-promise').polyfill;
+
 document.addEventListener('DOMContentLoaded', () => {
     var wrapper = document.querySelector('#wrapper');
 
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         BLANK_COPY,
     ];
 
-    let group = new EmblemGroup(TITLE_COPY, { length: 20, size: EMBLEM_SIZE });
+    let group = new EmblemGroup(TITLE_COPY, { length: 20, size: EMBLEM_SIZE, displayTime: 1500 });
 
     group.appendTo(wrapper);
 

@@ -1,3 +1,5 @@
+require('es6-promise').polyfill;
+
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper = document.querySelector('#wrapper');
     let olms    = [];

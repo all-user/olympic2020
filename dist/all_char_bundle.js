@@ -4,9 +4,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
     var olms = [];
-    olms.push(new Olympic2020('a', { size: 90, displayTime: 3111 }));
-    olms.push(new Olympic2020('z', { size: 90, displayTime: 6399 }));
-    olms.push(new Olympic2020('t', { size: 90, displayTime: 1477 }));
+    olms.push(new Olympic2020('a', { size: 90, displayTime: 3111, random: true }));
+    olms.push(new Olympic2020('z', { size: 90, displayTime: 6399, random: true }));
+    olms.push(new Olympic2020('t', { size: 90, displayTime: 1477, random: true }));
     olms.push(new Olympic2020('/', { size: 500 }));
 
     var ALL_VALID_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
