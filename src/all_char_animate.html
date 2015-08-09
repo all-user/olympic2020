@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Char Animate Demo</title>
+  <script src="bundle.js"></script>
+  <link rel="stylesheet" href="bundle.css">
+  <style>
+    #wrapper {
+      width: 100%;
+    }
+
+    .olympic-emblem {
+      margin: 100px auto;
+    }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var wrapper = document.querySelector('#wrapper');
+      var olm     = new Olympic2020('t', { size: 500 });
+
+      wrapper.appendChild(olm.dom);
+    });
+  </script>
+</head>
+<body>
+  <div id="wrapper">
+  </div>
+  <a href="index.html">Back To Top</a>
+</body>
+</html>
