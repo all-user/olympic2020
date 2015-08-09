@@ -18042,8 +18042,15 @@ function _classCallCheck(instance, Constructor) {
 var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 var EmblemGroup = function () {
-    function EmblemGroup(chars) {
+    function EmblemGroup(chars, length) {
         _classCallCheck(this, EmblemGroup);
+        if (chars.length < length) {
+            for (var i = chars.length; i < length; i++) {
+                chars += ' ';
+            }
+        } else if (length != null && chars.length > length) {
+            chars = chars.slice(0, length);
+        }
         var emblems = _transfromToOlympic2020Array(chars);
         if (emblems) {
             this.emblems = emblems;
@@ -18051,7 +18058,16 @@ var EmblemGroup = function () {
             throw new Error('EmblemGroup arguments expect string or array of Olympic2020.');
         }
     }
-    _createClass(EmblemGroup, [{
+    _createClass(EmblemGroup, [
+        {
+            key: 'toString',
+            value: function toString() {
+                return this.emblems.map(function (e) {
+                    return e.char;
+                }).join('');
+            }
+        },
+        {
             key: 'map',
             value: function map(str) {
                 this.emblems.forEach(function (emblem, idx) {
@@ -18062,7 +18078,8 @@ var EmblemGroup = function () {
                     emblem.to(c);
                 });
             }
-        }]);
+        }
+    ]);
     return EmblemGroup;
 }();
 function _transfromToOlympic2020Array(arg) {
@@ -18805,10 +18822,60 @@ var _appendCss = require('append-css');
 var _appendCss2 = _interopRequireDefault(_appendCss);
 describe('EmblemGroup test', function () {
     var TITLE_COPY = 'tokyo 2020';
+    var LONG_COPY = 'olympic paralympic games';
+    var SHORT_COPY = 'a to z';
+    var BLANK_COPY = '                                                        ';
     describe('\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u306E\u751F\u6210', function () {
+        var group = new EmblemGroup(TITLE_COPY);
         it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
-            var group = new EmblemGroup(TITLE_COPY);
             _powerAssert2['default'].equal(group.toString(), TITLE_COPY);
+            done();
+        });
+        it('\u9577\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+            group.map(LONG_COPY);
+            _powerAssert2['default'].equal(group.toString(), LONG_COPY.slice(0, TITLE_COPY.length));
+            done();
+        });
+        it('\u77ED\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+            group.map(SHORT_COPY);
+            _powerAssert2['default'].equal(group.toString(), (SHORT_COPY + BLANK_COPY).slice(0, TITLE_COPY.length));
+            done();
+        });
+    });
+    describe('\u9577\u3055\u3092\u6307\u5B9A\u3057\u3066\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u306E\u751F\u6210', function () {
+        describe('\u4E0E\u3048\u308B\u6587\u5B57\u5217\u3088\u308A\u9577\u3044\u9577\u3055\u3092\u6307\u5B9A', function () {
+            var group = new EmblemGroup(TITLE_COPY, LONG_COPY.length);
+            it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
+                _powerAssert2['default'].equal(group.toString(), (TITLE_COPY + BLANK_COPY).slice(0, LONG_COPY.length));
+                done();
+            });
+            it('\u9577\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+                group.map(LONG_COPY);
+                _powerAssert2['default'].equal(group.toString(), LONG_COPY);
+                done();
+            });
+            it('\u77ED\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+                group.map(SHORT_COPY);
+                _powerAssert2['default'].equal(group.toString(), (SHORT_COPY + BLANK_COPY).slice(0, LONG_COPY.length));
+                done();
+            });
+        });
+        describe('\u4E0E\u3048\u308B\u6587\u5B57\u5217\u3088\u308A\u77ED\u3044\u9577\u3055\u3092\u6307\u5B9A', function () {
+            var group = new EmblemGroup(TITLE_COPY, SHORT_COPY.length);
+            it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
+                _powerAssert2['default'].equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
+                done();
+            });
+            it('\u9577\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+                group.map(LONG_COPY);
+                _powerAssert2['default'].equal(group.toString(), LONG_COPY.slice(0, SHORT_COPY.length));
+                done();
+            });
+            it('\u77ED\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+                group.map(SHORT_COPY);
+                _powerAssert2['default'].equal(group.toString(), SHORT_COPY);
+                done();
+            });
         });
     });
 });

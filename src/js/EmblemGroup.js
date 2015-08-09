@@ -2,7 +2,15 @@ import Olympic2020 from './Olympic2020.js'
 
 class EmblemGroup {
 
-    constructor(chars) {
+    constructor(chars, length) {
+        if (chars.length < length) {
+            for (var i = chars.length; i < length; i++) {
+                chars += ' ';
+            }
+        } else if(length != null && chars.length > length) {
+            chars = chars.slice(0, length);
+        }
+
         let emblems = _transfromToOlympic2020Array(chars);
 
         if (emblems) {
@@ -10,6 +18,10 @@ class EmblemGroup {
         } else {
             throw new Error('EmblemGroup arguments expect string or array of Olympic2020.')
         }
+    }
+
+    toString() {
+        return this.emblems.map(e => e.char).join('');
     }
 
     map(str) {

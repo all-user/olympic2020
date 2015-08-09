@@ -16,8 +16,16 @@ var _Olympic2020Js = require('./Olympic2020.js');
 var _Olympic2020Js2 = _interopRequireDefault(_Olympic2020Js);
 
 var EmblemGroup = (function () {
-    function EmblemGroup(chars) {
+    function EmblemGroup(chars, length) {
         _classCallCheck(this, EmblemGroup);
+
+        if (chars.length < length) {
+            for (var i = chars.length; i < length; i++) {
+                chars += ' ';
+            }
+        } else if (length != null && chars.length > length) {
+            chars = chars.slice(0, length);
+        }
 
         var emblems = _transfromToOlympic2020Array(chars);
 
@@ -29,6 +37,13 @@ var EmblemGroup = (function () {
     }
 
     _createClass(EmblemGroup, [{
+        key: 'toString',
+        value: function toString() {
+            return this.emblems.map(function (e) {
+                return e.char;
+            }).join('');
+        }
+    }, {
         key: 'map',
         value: function map(str) {
             this.emblems.forEach(function (emblem, idx) {
