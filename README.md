@@ -27,6 +27,13 @@ npm i @all-user/olympic2020
             olm.to('z'); // change to another charactor.
 
             olm.animateFromString('tokyo olympic 2020'); // animate from string.
+
+
+
+            // grouping
+            var group = new EmblemGroup('tokyo 2020');
+
+            group.appendTo(document.body);
         });
     </script>
 </body>
