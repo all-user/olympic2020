@@ -104,6 +104,7 @@ class Olympic2020 {
         domStyle.width  = `${ size }px`;
         domStyle.height = `${ size }px`;
     }
+    get size() { return +this.dom.style.width.replace('px', ''); }
 
     set displayTime(time) { this._displayTime = time; }
     get displayTime()     { return this._displayTime; }
@@ -119,7 +120,6 @@ class Olympic2020 {
         this._easing = val;
         _updateTransitionConfig.call(this);
     }
-
     get easing() { return this._easing; }
 
     get isAnimating() { return this._isAnimating; }

@@ -92,6 +92,27 @@ describe('EmblemGroup test', () => {
                 done();
             });
         })
+
+        describe('サイズを指定', () => {
+            let group = new EmblemGroup(TITLE_COPY, { length: SHORT_COPY.length });
+
+            it('文字列から生成', done => {
+                assert.equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
+                done();
+            });
+
+            it('長い文字列を与えて変換', done => {
+                group.map(LONG_COPY);
+                assert.equal(group.toString(), LONG_COPY.slice(0, SHORT_COPY.length));
+                done();
+            });
+
+            it('短い文字列を与えて変換', done => {
+                group.map(SHORT_COPY);
+                assert.equal(group.toString(), SHORT_COPY);
+                done();
+            });
+        })
     });
 
     describe('DOM', () => {
@@ -130,6 +151,18 @@ describe('EmblemGroup test', () => {
             });
 
         });
+
+        describe('サイズを指定', () => {
+            let size  = 90;
+            let group = new EmblemGroup(TITLE_COPY, { length: TITLE_COPY.length, size: size });
+
+            it('指定したサイズになっているか', done => {
+                group.emblems.forEach(e => {
+                    assert.equal(e.size, size);
+                });
+                done();
+            });
+        })
 
         describe('インスタンスをDOMに追加', () => {
 

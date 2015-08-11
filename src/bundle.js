@@ -1217,7 +1217,7 @@ function _transfromToOlympic2020Array(arg, size) {
     switch (typeof arg) {
         case 'string':
             res = [].map.call(arg, function (c) {
-                return new _Olympic2020Js2['default'](c, size);
+                return new _Olympic2020Js2['default'](c, { size: size });
             });
             break;
         case 'object':
@@ -1422,6 +1422,9 @@ var Olympic2020 = (function () {
             var domStyle = this.dom.style;
             domStyle.width = size + 'px';
             domStyle.height = size + 'px';
+        },
+        get: function get() {
+            return +this.dom.style.width.replace('px', '');
         }
     }, {
         key: 'displayTime',

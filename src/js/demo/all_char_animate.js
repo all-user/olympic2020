@@ -1,16 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const margin = 30;
-
-    let wrapper = document.querySelector('#wrapper');
-    let olms    = [];
-    let size    = (getComputedStyle(document.body).width.replace('px', '')) - margin * 2;
-    size = size > 500 ? 500 : size;
-    let sizeS   = size * 0.18;
+    let wrapper   = document.querySelector('#wrapper');
+    let olms      = [];
+    const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
+    const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
+    const SIZE    = WIDTH - PADDING * 2;
+    let size      = SIZE > 500 ? 500 : SIZE;
+    const MARGIN  = size / 15;
+    let sizeL = size - MARGIN * 2;
+    let sizeS = MARGIN * 3;
 
     olms.push(new Olympic2020('a', { size: sizeS,  displayTime: 3111, random: true }));
     olms.push(new Olympic2020('z', { size: sizeS,  displayTime: 6399, random: true }));
     olms.push(new Olympic2020('t', { size: sizeS,  displayTime: 1477, random: true }));
-    olms.push(new Olympic2020('/', { size: size }));
+    olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px`; });
+
+    let bigEmblem = new Olympic2020('/', { size: sizeL });
+    bigEmblem.dom.style.margin = `${ MARGIN }px`;
+    olms.push(bigEmblem);
 
     const ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 

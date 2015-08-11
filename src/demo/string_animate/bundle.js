@@ -3,17 +3,23 @@
 
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
-
-    var d = new Date();
-    var EMBLEM_SIZE = 90;
-    var TITLE_COPY = 'tokyo 2020';
+    var WIDTH = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
+    var PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
+    var SIZE = WIDTH - PADDING * 2;
+    var MARGIN = SIZE / 35;
+    var EMBLEM_SIZE = MARGIN * 3;
+    var TITLE_COPY = 'tokyo  2020   olympic';
     var SHORT_COPY = 'hi!!';
     var DATE_COPY = '8/9:sunday';
     var BLANK_COPY = '                                                        ';
     var LONG_COPY = 'olympic paralympic games';
     var COPYS = [TITLE_COPY, LONG_COPY, SHORT_COPY, '1234567890', BLANK_COPY, DATE_COPY, 'happy day!', BLANK_COPY, 'hello world', TITLE_COPY, LONG_COPY, SHORT_COPY, BLANK_COPY, '1234567890', 'happy day!', 'hello world', BLANK_COPY];
 
-    var group = new EmblemGroup(TITLE_COPY, { length: 20, size: EMBLEM_SIZE, displayTime: 1500 });
+    var group = new EmblemGroup(TITLE_COPY, { length: 21, size: EMBLEM_SIZE, displayTime: 1500 });
+
+    group.emblems.forEach(function (e) {
+        e.dom.style.margin = MARGIN + 'px';
+    });
 
     group.appendTo(wrapper);
 

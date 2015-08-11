@@ -1,19 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const margin = 30;
+    let wrapper   = document.querySelector('#wrapper');
+    const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
+    const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
+    const SIZE    = WIDTH - PADDING * 2;
+    let size      = SIZE > 1500 ? 1500 : SIZE;
+    const MARGIN  = size / 20;
+    let sizeS = MARGIN * 3;
 
-    let wrapper = document.querySelector('#wrapper');
-    let size    = (getComputedStyle(document.body).width.replace('px', '')) - margin * 2;
-    size = size > 500 ? 500 : size;
+    let init = '2020';
+    let olms = [];
+    olms.push(new Olympic2020(init[0], { size: sizeS }));
+    olms.push(new Olympic2020(init[1], { size: sizeS }));
+    olms.push(new Olympic2020(init[2], { size: sizeS }));
+    olms.push(new Olympic2020(init[3], { size: sizeS }));
+    olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px`; });
 
-    let olm     = new Olympic2020('t', { size: size });
     let input   = document.querySelector('#user-input');
     const ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 
-    wrapper.appendChild(olm.dom);
+    olms.forEach(olm => {
+        wrapper.appendChild(olm.dom);
+    });
 
-    console.log(input);
     input.addEventListener('input', e => {
-        console.log(e);
-        olm.to(input.value[input.value.length - 1]);
+        let str = (init + e.target.value).slice(-init.length);
+        [].forEach.call(str, (c, idx) => {
+            olms[idx].to(c);
+        });
     });
 });

@@ -1,14 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
-    var wrapper = document.querySelector('#wrapper');
-
-    let d = new Date();
-    const EMBLEM_SIZE     = 90;
-    const TITLE_COPY      = 'tokyo 2020';
-    const SHORT_COPY      = 'hi!!';
-    const DATE_COPY       = '8/9:sunday'
-    const BLANK_COPY      = '                                                        ';
-    const LONG_COPY       = 'olympic paralympic games';
-    const COPYS           = [
+    let wrapper   = document.querySelector('#wrapper');
+    const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
+    const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
+    const SIZE    = WIDTH - PADDING * 2;
+    const MARGIN  = SIZE / 35;
+    const EMBLEM_SIZE = MARGIN * 3;
+    const TITLE_COPY  = 'tokyo  2020   olympic';
+    const SHORT_COPY  = 'hi!!';
+    const DATE_COPY   = '8/9:sunday'
+    const BLANK_COPY  = '                                                        ';
+    const LONG_COPY   = 'olympic paralympic games';
+    const COPYS       = [
         TITLE_COPY,
         LONG_COPY,
         SHORT_COPY,
@@ -28,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
         BLANK_COPY,
     ];
 
-    let group = new EmblemGroup(TITLE_COPY, { length: 20, size: EMBLEM_SIZE, displayTime: 1500 });
+    let group = new EmblemGroup(TITLE_COPY, { length: 21, size: EMBLEM_SIZE, displayTime: 1500 });
+
+    group.emblems.forEach(e => {
+        e.dom.style.margin = `${ MARGIN }px`;
+    });
 
     group.appendTo(wrapper);
 

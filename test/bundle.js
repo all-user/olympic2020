@@ -19145,7 +19145,7 @@ function _transfromToOlympic2020Array(arg, size) {
     switch (typeof arg) {
     case 'string':
         res = [].map.call(arg, function (c) {
-            return new _Olympic2020Js2['default'](c, size);
+            return new _Olympic2020Js2['default'](c, { size: size });
         });
         break;
     case 'object':
@@ -19360,6 +19360,9 @@ var Olympic2020 = function () {
                 var domStyle = this.dom.style;
                 domStyle.width = size + 'px';
                 domStyle.height = size + 'px';
+            },
+            get: function get() {
+                return +this.dom.style.width.replace('px', '');
             }
         },
         {
@@ -19415,7 +19418,12 @@ var Olympic2020 = function () {
                 return this._random;
             }
         }
-    ]);
+    ], [{
+            key: 'ALL_VALID_CHARS',
+            get: function get() {
+                return Object.keys(FORMATION_TABLE);
+            }
+        }]);
     return Olympic2020;
 }();
 function _createDom() {
@@ -20093,6 +20101,23 @@ describe('EmblemGroup test', function () {
                 done();
             });
         });
+        describe('\u30B5\u30A4\u30BA\u3092\u6307\u5B9A', function () {
+            var group = new EmblemGroup(TITLE_COPY, { length: SHORT_COPY.length });
+            it('\u6587\u5B57\u5217\u304B\u3089\u751F\u6210', function (done) {
+                _powerAssert2['default'].equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
+                done();
+            });
+            it('\u9577\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+                group.map(LONG_COPY);
+                _powerAssert2['default'].equal(group.toString(), LONG_COPY.slice(0, SHORT_COPY.length));
+                done();
+            });
+            it('\u77ED\u3044\u6587\u5B57\u5217\u3092\u4E0E\u3048\u3066\u5909\u63DB', function (done) {
+                group.map(SHORT_COPY);
+                _powerAssert2['default'].equal(group.toString(), SHORT_COPY);
+                done();
+            });
+        });
     });
     describe('DOM', function () {
         var testField = document.createElement('div');
@@ -20109,6 +20134,19 @@ describe('EmblemGroup test', function () {
                 }
             }).then(function () {
                 document.body.appendChild(testField);
+                done();
+            });
+        });
+        describe('\u30B5\u30A4\u30BA\u3092\u6307\u5B9A', function () {
+            var size = 90;
+            var group = new EmblemGroup(TITLE_COPY, {
+                length: TITLE_COPY.length,
+                size: size
+            });
+            it('\u6307\u5B9A\u3057\u305F\u30B5\u30A4\u30BA\u306B\u306A\u3063\u3066\u3044\u308B\u304B', function (done) {
+                group.emblems.forEach(function (e) {
+                    _powerAssert2['default'].equal(e.size, size);
+                });
                 done();
             });
         });
@@ -20272,6 +20310,7 @@ describe('Olympic2020 test', function () {
             olm.appendTo(testField);
             it('\u30B5\u30A4\u30BA\u304C\u6307\u5B9A\u901A\u308A\u306B\u306A\u3063\u3066\u3044\u308B\u304B', function (done) {
                 var recentStyle = getComputedStyle(olm.dom);
+                _powerAssert2['default'].equal(olm.size, EMBLEM_SIZE);
                 _powerAssert2['default'].equal(recentStyle.width, EMBLEM_SIZE + 'px');
                 _powerAssert2['default'].equal(recentStyle.height, EMBLEM_SIZE + 'px');
                 done();

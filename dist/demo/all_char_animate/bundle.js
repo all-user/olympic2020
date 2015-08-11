@@ -2,18 +2,26 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var margin = 30;
-
     var wrapper = document.querySelector('#wrapper');
     var olms = [];
-    var size = getComputedStyle(document.body).width.replace('px', '') - margin * 2;
-    size = size > 500 ? 500 : size;
-    var sizeS = size * 0.9;
+    var WIDTH = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
+    var PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
+    var SIZE = WIDTH - PADDING * 2;
+    var size = SIZE > 500 ? 500 : SIZE;
+    var MARGIN = size / 15;
+    var sizeL = size - MARGIN * 2;
+    var sizeS = MARGIN * 3;
 
     olms.push(new Olympic2020('a', { size: sizeS, displayTime: 3111, random: true }));
     olms.push(new Olympic2020('z', { size: sizeS, displayTime: 6399, random: true }));
     olms.push(new Olympic2020('t', { size: sizeS, displayTime: 1477, random: true }));
-    olms.push(new Olympic2020('/', { size: size }));
+    olms.forEach(function (e) {
+        e.dom.style.margin = MARGIN + 'px';
+    });
+
+    var bigEmblem = new Olympic2020('/', { size: sizeL });
+    bigEmblem.dom.style.margin = MARGIN + 'px';
+    olms.push(bigEmblem);
 
     var ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 

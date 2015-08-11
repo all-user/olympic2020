@@ -96,7 +96,7 @@ function _transfromToOlympic2020Array(arg, size) { // (string | [Olympic2020]) =
     let res;
     switch (typeof arg) {
         case 'string':
-            res = [].map.call(arg, c => new Olympic2020(c, size));
+            res = [].map.call(arg, c => new Olympic2020(c, { size: size }));
             break;
         case 'object':
             if (Array.isArray(arg) && arg.every(o => o instanceof Olympic2020)) {

@@ -2,22 +2,36 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-    var margin = 30;
-
     var wrapper = document.querySelector('#wrapper');
-    var size = getComputedStyle(document.body).width.replace('px', '') - margin * 2;
-    size = size > 500 ? 500 : size;
+    var WIDTH = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
+    var PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
+    var SIZE = WIDTH - PADDING * 2;
+    var size = SIZE > 1500 ? 1500 : SIZE;
+    var MARGIN = size / 20;
+    var sizeS = MARGIN * 3;
 
-    var olm = new Olympic2020('t', { size: size });
+    var init = '2020';
+    var olms = [];
+    olms.push(new Olympic2020(init[0], { size: sizeS }));
+    olms.push(new Olympic2020(init[1], { size: sizeS }));
+    olms.push(new Olympic2020(init[2], { size: sizeS }));
+    olms.push(new Olympic2020(init[3], { size: sizeS }));
+    olms.forEach(function (e) {
+        e.dom.style.margin = MARGIN + 'px';
+    });
+
     var input = document.querySelector('#user-input');
     var ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 
-    wrapper.appendChild(olm.dom);
+    olms.forEach(function (olm) {
+        wrapper.appendChild(olm.dom);
+    });
 
-    console.log(input);
     input.addEventListener('input', function (e) {
-        console.log(e);
-        olm.to(input.value[input.value.length - 1]);
+        var str = (init + e.target.value).slice(-init.length);
+        [].forEach.call(str, function (c, idx) {
+            olms[idx].to(c);
+        });
     });
 });
 

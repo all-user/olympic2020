@@ -172,6 +172,7 @@ describe('Olympic2020 test', () => {
 
             it('サイズが指定通りになっているか', done => {
                 var recentStyle = getComputedStyle(olm.dom);
+                assert.equal(olm.size, EMBLEM_SIZE);
                 assert.equal(recentStyle.width,  `${ EMBLEM_SIZE }px`);
                 assert.equal(recentStyle.height, `${ EMBLEM_SIZE }px`);
                 done();
