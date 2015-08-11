@@ -2,12 +2,18 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
+    var margin = 30;
+
     var wrapper = document.querySelector('#wrapper');
     var olms = [];
-    olms.push(new Olympic2020('a', { size: 90, displayTime: 3111, random: true }));
-    olms.push(new Olympic2020('z', { size: 90, displayTime: 6399, random: true }));
-    olms.push(new Olympic2020('t', { size: 90, displayTime: 1477, random: true }));
-    olms.push(new Olympic2020('/', { size: 500 }));
+    var size = getComputedStyle(document.body).width.replace('px', '') - margin * 2;
+    size = size > 500 ? 500 : size;
+    var sizeS = size * 0.18;
+
+    olms.push(new Olympic2020('a', { size: sizeS, displayTime: 3111, random: true }));
+    olms.push(new Olympic2020('z', { size: sizeS, displayTime: 6399, random: true }));
+    olms.push(new Olympic2020('t', { size: sizeS, displayTime: 1477, random: true }));
+    olms.push(new Olympic2020('/', { size: size }));
 
     var ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 

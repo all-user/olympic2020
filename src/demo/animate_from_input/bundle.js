@@ -2,8 +2,13 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
+    var margin = 30;
+
     var wrapper = document.querySelector('#wrapper');
-    var olm = new Olympic2020('t', { size: 500 });
+    var size = getComputedStyle(document.body).width.replace('px', '') - margin * 2;
+    size = size > 500 ? 500 : size;
+
+    var olm = new Olympic2020('t', { size: size });
     var input = document.querySelector('#user-input');
     var ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 
