@@ -4,20 +4,24 @@ class EmblemGroup {
 
     constructor(chars, opt) {
         if (typeof opt === 'object') {
-            var { length, size, displayTime } = opt;
+            var { length, size, displayTime, duration } = opt;
         }
         this._isAnimating = false;
         this._resume      = null;
         this._displayTime = displayTime || 1000;
-        if (chars.length < length) {
-            for (var i = chars.length; i < length; i++) {
-                chars += ' ';
+        this._duration    = duration || 800;
+
+        if (typeof chars === 'string') {
+            if (chars.length < length) {
+                for (var i = chars.length; i < length; i++) {
+                    chars += ' ';
+                }
+            } else if (length != null && chars.length > length) {
+                chars = chars.slice(0, length);
             }
-        } else if(length != null && chars.length > length) {
-            chars = chars.slice(0, length);
         }
 
-        let emblems = _transfromToOlympic2020Array(chars, size);
+        let emblems = _transfromToOlympic2020Array(chars, { size: size, duration: duration });
 
         if (emblems) {
             this.emblems = emblems;
@@ -91,12 +95,12 @@ class EmblemGroup {
     get isAnimating() { return this._isAnimating; }
 }
 
-function _transfromToOlympic2020Array(arg, size) { // (string | [Olympic2020]) => [Olympic2020] | false
+function _transfromToOlympic2020Array(arg, opt) { // (string | [Olympic2020]) => [Olympic2020] | false
 
     let res;
     switch (typeof arg) {
         case 'string':
-            res = [].map.call(arg, c => new Olympic2020(c, { size: size }));
+            res = [].map.call(arg, c => new Olympic2020(c, opt));
             break;
         case 'object':
             if (Array.isArray(arg) && arg.every(o => o instanceof Olympic2020)) {

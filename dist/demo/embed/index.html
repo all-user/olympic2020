@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Embed Signboard</title>
+
+  <!--   Olympic2020とEmblemGroupの読み込み -->
+  <script src="../../bundle.js"></script>
+  <link rel="stylesheet" href="../../bundle.css">
+
+  <!--   デモページ共通のファイル読み込み -->
+  <link rel="stylesheet" href="../common.css">
+
+  <!--   ページ専用のファイル読み込み -->
+  <link rel="stylesheet" href="bundle.css">
+  <script src="bundle.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1 class="">Embed Signboard</h1>
+    <div id="wrapper"></div>
+    <span class="fix"></span>
+    <form>
+      <div class="form-group">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="horizon-addon">Horizontal Characters</span>
+            <input type="text" id="horizon" class="form-control" value="7" placeholder="7" aria-describedby="horizon-addon">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="vertical-addon">Vertical Characters</span>
+            <input type="text" id="vertical" class="form-control" value="3" placeholder="3" aria-describedby="vertical-addon">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="display-addon">Display Time (ms)</span>
+            <input type="text" id="display" class="form-control" value="1500" placeholder="1500" aria-describedby="display-addon">
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="duration-addon">Duration (ms)</span>
+            <input type="text" id="duration" class="form-control" value="800" placeholder="800" aria-describedby="duration-addon">
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 col-xs-12">
+        <label for="message">Signboard Message</label>
+        <textarea name="message" id="message" cols="30" rows="3" class="form-control" value="test"></textarea>
+      </div>
+      <div class="col-sm-12 col-xs-12">
+        <button id="generate-button" type="button" class="btn btn-primary btn-lg">Generate Signboard</button>
+      </div>
+      <div class="col-sm-12 col-xs-12">
+        <button id="embed-button" type="button" class="btn btn-default btn-lg">Generate Embed Code</button>
+      </div>
+      <div class="col-sm-12 col-xs-12">
+        <input type="text" class="form-control" readonly>
+      </div>
+    </form>
+    <span class="fix"></span>
+    <p><a href="../../"><span class="glyphicon glyphicon-triangle-left"></span>Back To Top</a></p>
+  </div>
+</body>
+</html>

@@ -19024,10 +19024,12 @@ var EmblemGroup = function () {
             var length = opt.length;
             var size = opt.size;
             var displayTime = opt.displayTime;
+            var duration = opt.duration;
         }
         this._isAnimating = false;
         this._resume = null;
         this._displayTime = displayTime || 1000;
+        this._duration = duration || 800;
         if (chars.length < length) {
             for (var i = chars.length; i < length; i++) {
                 chars += ' ';
@@ -19035,7 +19037,10 @@ var EmblemGroup = function () {
         } else if (length != null && chars.length > length) {
             chars = chars.slice(0, length);
         }
-        var emblems = _transfromToOlympic2020Array(chars, size);
+        var emblems = _transfromToOlympic2020Array(chars, {
+            size: size,
+            duration: duration
+        });
         if (emblems) {
             this.emblems = emblems;
         } else {
@@ -19140,12 +19145,12 @@ var EmblemGroup = function () {
     ]);
     return EmblemGroup;
 }();
-function _transfromToOlympic2020Array(arg, size) {
+function _transfromToOlympic2020Array(arg, opt) {
     var res = undefined;
     switch (typeof arg) {
     case 'string':
         res = [].map.call(arg, function (c) {
-            return new _Olympic2020Js2['default'](c, { size: size });
+            return new _Olympic2020Js2['default'](c, opt);
         });
         break;
     case 'object':
