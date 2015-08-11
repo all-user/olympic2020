@@ -130,6 +130,7 @@ class Olympic2020 {
     set random(bool) { this._random = bool; }
     get random()     { return this._random; }
 
+    static get ALL_VALID_CHARS() { return Object.keys(FORMATION_TABLE); }
 }
 
 

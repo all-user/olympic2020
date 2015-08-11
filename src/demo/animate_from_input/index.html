@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>All Char Animate Demo</title>
+  <title>Animate From Input</title>
+
+  <script src=""></script>
 
   <!--   Olympic2020とEmblemGroupの読み込み -->
   <script src="../../bundle.js"></script>
@@ -18,9 +20,12 @@
 </head>
 <body>
   <div class="container">
-    <h1 class="">All Character Animate</h1>
+    <h1 class="">Animate From Input</h1>
     <div id="wrapper"></div>
-    <span class="fix"></span>
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" id="addon1">Input here <sapn class="glyphicon glyphicon-arrow-right" aria-hidden="true"></sapn></span>
+      <input id="user-input" type="text" class="form-control" placeholder="abcdefghijklmnopqrstuvwxyz/!.:;_" aria-describedby="addon1">
+    </div>
     <p><a href="../../"><span class="glyphicon glyphicon-triangle-left"></span>Back To Top</a></p>
   </div>
 </body>

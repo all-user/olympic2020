@@ -1,5 +1,3 @@
-require('es6-promise').polyfill;
-
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper = document.querySelector('#wrapper');
     let olms    = [];
@@ -8,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     olms.push(new Olympic2020('t', { size: 90,  displayTime: 1477, random: true }));
     olms.push(new Olympic2020('/', { size: 500 }));
 
-    const ALL_VALID_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
+    const ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
 
     olms.forEach((olm, idx) => {
         olm.dom.addEventListener('click', () => {

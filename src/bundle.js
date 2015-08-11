@@ -1470,6 +1470,11 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._random;
         }
+    }], [{
+        key: 'ALL_VALID_CHARS',
+        get: function get() {
+            return Object.keys(FORMATION_TABLE);
+        }
     }]);
 
     return Olympic2020;

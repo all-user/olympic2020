@@ -1,11 +1,8 @@
-require('es6-promise').polyfill;
-
 document.addEventListener('DOMContentLoaded', () => {
     var wrapper = document.querySelector('#wrapper');
 
     let d = new Date();
     const EMBLEM_SIZE     = 90;
-    const ALL_VALID_CHARS = "abcdefghijklmnopqrstuvwxyz1234567890!.':;/_";
     const TITLE_COPY      = 'tokyo 2020';
     const SHORT_COPY      = 'hi!!';
     const DATE_COPY       = '8/9:sunday'
