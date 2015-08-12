@@ -1,13 +1,11 @@
-import { clickButtonHandler } from './helpers/embed_helper.js';
+import { clickButtonHandler, getInputValues } from './helpers/embed_helper.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper       = document.querySelector('#wrapper');
-    let verticalInput = document.querySelector('#vertical');
-    let horizonInput  = document.querySelector('#horizon');
-    let displayInput  = document.querySelector('#display');
-    let durationInput = document.querySelector('#duration');
     let messageInput  = document.querySelector('#message');
+    let embedOutput   = document.querySelector('#embed-output');
     let genButton     = document.querySelector('#generate-button');
+    let codeButton    = document.querySelector('#embed-button');
 
     const TITLE_COPY  = 'tokyo  2020   olympic';
     const SHORT_COPY  = 'hi!!   ';
@@ -40,12 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
     clickButtonHandler(cfg);
 
     genButton.addEventListener('click', e => {
-        clickButtonHandler();
+        clickButtonHandler(getInputValues());
     });
 
+    codeButton.addEventListener('click', e => {
+        let embedCode = genEmbedCode();
+        embedOutput.value = embedCode;
+    });
 });
 
-function fixedEncodeURIComponent (str) {
+function genEmbedCode() {
+    let { width, height, vertical, horizon, display, duration, msg } = getInputValues();
+
+    return `<iframe style="width:${ width };height:${ height };" src="https://all-user.github.io/olympic2020/demo/embed_response/index.html?vertical=${ vertical }&horizon=${ horizon }&display=${ display }&duration=${ duration }&msg=${ fixedEncodeURIComponent(msg) }"></iframe>`
+}
+
+function fixedEncodeURIComponent(str) {
   return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
     return '%' + c.charCodeAt(0).toString(16);
   });

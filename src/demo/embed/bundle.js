@@ -5,12 +5,10 @@ var _helpersEmbed_helperJs = require('./helpers/embed_helper.js');
 
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
-    var verticalInput = document.querySelector('#vertical');
-    var horizonInput = document.querySelector('#horizon');
-    var displayInput = document.querySelector('#display');
-    var durationInput = document.querySelector('#duration');
     var messageInput = document.querySelector('#message');
+    var embedOutput = document.querySelector('#embed-output');
     var genButton = document.querySelector('#generate-button');
+    var codeButton = document.querySelector('#embed-button');
 
     var TITLE_COPY = 'tokyo  2020   olympic';
     var SHORT_COPY = 'hi!!   ';
@@ -32,9 +30,28 @@ document.addEventListener('DOMContentLoaded', function () {
     (0, _helpersEmbed_helperJs.clickButtonHandler)(cfg);
 
     genButton.addEventListener('click', function (e) {
-        (0, _helpersEmbed_helperJs.clickButtonHandler)();
+        (0, _helpersEmbed_helperJs.clickButtonHandler)((0, _helpersEmbed_helperJs.getInputValues)());
+    });
+
+    codeButton.addEventListener('click', function (e) {
+        var embedCode = genEmbedCode();
+        embedOutput.value = embedCode;
     });
 });
+
+function genEmbedCode() {
+    var _getInputValues = (0, _helpersEmbed_helperJs.getInputValues)();
+
+    var width = _getInputValues.width;
+    var height = _getInputValues.height;
+    var vertical = _getInputValues.vertical;
+    var horizon = _getInputValues.horizon;
+    var display = _getInputValues.display;
+    var duration = _getInputValues.duration;
+    var msg = _getInputValues.msg;
+
+    return '<iframe style="width:' + width + ';height:' + height + ';" src="https://all-user.github.io/olympic2020/demo/embed_response/index.html?vertical=' + vertical + '&horizon=' + horizon + '&display=' + display + '&duration=' + duration + '&msg=' + fixedEncodeURIComponent(msg) + '"></iframe>';
+}
 
 function fixedEncodeURIComponent(str) {
     return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -67,16 +84,38 @@ Object.defineProperty(exports, '__esModule', {
 
 var _computed_stylesJs = require('./computed_styles.js');
 
+var verticalInput = undefined,
+    horizonInput = undefined,
+    displayInput = undefined,
+    durationInput = undefined,
+    messageInput = undefined,
+    iWidthInput = undefined,
+    iHeightInput = undefined;
+
+function getInputValues() {
+    verticalInput = verticalInput || document.querySelector('#vertical');
+    horizonInput = horizonInput || document.querySelector('#horizon');
+    displayInput = displayInput || document.querySelector('#display');
+    durationInput = durationInput || document.querySelector('#duration');
+    messageInput = messageInput || document.querySelector('#message');
+    iWidthInput = iWidthInput || document.querySelector('#i-width');
+    iHeightInput = iHeightInput || document.querySelector('#i-height');
+
+    var vertical = verticalInput.value | 0;
+    var horizon = horizonInput.value | 0;
+    var display = displayInput.value | 0;
+    var duration = durationInput.value | 0;
+    var msg = messageInput.value.split('\n');
+    var width = iWidthInput.value;
+    var height = iHeightInput.value;
+
+    return { vertical: vertical, horizon: horizon, display: display, duration: duration, msg: msg, width: width, height: height };
+}
+
 function clickButtonHandler(cfg) {
 
     if (typeof cfg !== 'object') {
-        var vertical = verticalInput.value | 0;
-        var horizon = horizonInput.value | 0;
-        var display = displayInput.value | 0;
-        var duration = durationInput.value | 0;
-        var msg = messageInput.value.split('\n');
-
-        cfg = { vertical: vertical, horizon: horizon, display: display, duration: duration, msg: msg };
+        new Error('clickButtonHandler arg expect type is object.');
     }
 
     while (wrapper.firstChild) {
@@ -130,5 +169,6 @@ function generateSignboard(cfg) {
 }
 
 exports.clickButtonHandler = clickButtonHandler;
+exports.getInputValues = getInputValues;
 
 },{"./computed_styles.js":2}]},{},[1]);

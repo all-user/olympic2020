@@ -21,9 +21,11 @@ var _helpersComputed_stylesJs = require('./helpers/computed_styles.js');
 
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
-    var WIDTH = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
-    var PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
-    var SIZE = WIDTH - PADDING * 2;
+
+    var _computedStyles = (0, _helpersComputed_stylesJs.computedStyles)();
+
+    var SIZE = _computedStyles.SIZE;
+
     var MARGIN = SIZE / 35;
     var EMBLEM_SIZE = MARGIN * 3;
     var TITLE_COPY = 'tokyo  2020   olympic';

@@ -6,12 +6,14 @@ var _helpersEmbed_helperJs = require('./helpers/embed_helper.js');
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
 
-    var pairs = location.search.slice(1).split('&');
+    var pairs = decodeURIComponent(location.search.slice(1)).split('&');
     var params = pairs.reduce(function (params, s) {
         var keyValue = s.split('=');
         params[keyValue[0]] = keyValue[1];
         return params;
     }, {});
+
+    params.msg = params.msg.split(',');
 
     (0, _helpersEmbed_helperJs.clickButtonHandler)(params);
 });
@@ -41,16 +43,38 @@ Object.defineProperty(exports, '__esModule', {
 
 var _computed_stylesJs = require('./computed_styles.js');
 
+var verticalInput = undefined,
+    horizonInput = undefined,
+    displayInput = undefined,
+    durationInput = undefined,
+    messageInput = undefined,
+    iWidthInput = undefined,
+    iHeightInput = undefined;
+
+function getInputValues() {
+    verticalInput = verticalInput || document.querySelector('#vertical');
+    horizonInput = horizonInput || document.querySelector('#horizon');
+    displayInput = displayInput || document.querySelector('#display');
+    durationInput = durationInput || document.querySelector('#duration');
+    messageInput = messageInput || document.querySelector('#message');
+    iWidthInput = iWidthInput || document.querySelector('#i-width');
+    iHeightInput = iHeightInput || document.querySelector('#i-height');
+
+    var vertical = verticalInput.value | 0;
+    var horizon = horizonInput.value | 0;
+    var display = displayInput.value | 0;
+    var duration = durationInput.value | 0;
+    var msg = messageInput.value.split('\n');
+    var width = iWidthInput.value;
+    var height = iHeightInput.value;
+
+    return { vertical: vertical, horizon: horizon, display: display, duration: duration, msg: msg, width: width, height: height };
+}
+
 function clickButtonHandler(cfg) {
 
     if (typeof cfg !== 'object') {
-        var vertical = verticalInput.value | 0;
-        var horizon = horizonInput.value | 0;
-        var display = displayInput.value | 0;
-        var duration = durationInput.value | 0;
-        var msg = messageInput.value.split('\n');
-
-        cfg = { vertical: vertical, horizon: horizon, display: display, duration: duration, msg: msg };
+        new Error('clickButtonHandler arg expect type is object.');
     }
 
     while (wrapper.firstChild) {
@@ -104,5 +128,6 @@ function generateSignboard(cfg) {
 }
 
 exports.clickButtonHandler = clickButtonHandler;
+exports.getInputValues = getInputValues;
 
 },{"./computed_styles.js":2}]},{},[1]);

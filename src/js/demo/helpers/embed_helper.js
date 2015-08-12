@@ -1,15 +1,31 @@
 import { computedStyles } from './computed_styles.js';
 
+let verticalInput, horizonInput, displayInput, durationInput, messageInput, iWidthInput, iHeightInput;
+
+function getInputValues() {
+    verticalInput = verticalInput || document.querySelector('#vertical');
+    horizonInput  = horizonInput  || document.querySelector('#horizon');
+    displayInput  = displayInput  || document.querySelector('#display');
+    durationInput = durationInput || document.querySelector('#duration');
+    messageInput  = messageInput  || document.querySelector('#message');
+    iWidthInput   = iWidthInput   || document.querySelector('#i-width');
+    iHeightInput  = iHeightInput  || document.querySelector('#i-height');
+
+    let vertical = verticalInput.value | 0;
+    let horizon  = horizonInput.value | 0;
+    let display  = displayInput.value | 0;
+    let duration = durationInput.value | 0;
+    let msg      = messageInput.value.split('\n');
+    let width    = iWidthInput.value;
+    let height   = iHeightInput.value;
+
+    return { vertical, horizon, display, duration, msg, width, height };
+}
+
 function clickButtonHandler(cfg) {
 
     if (typeof cfg !== 'object') {
-        let vertical = verticalInput.value | 0;
-        let horizon  = horizonInput.value | 0;
-        let display  = displayInput.value | 0;
-        let duration = durationInput.value | 0;
-        let msg      = messageInput.value.split('\n');
-
-        cfg = { vertical, horizon, display, duration, msg };
+        new Error('clickButtonHandler arg expect type is object.')
     }
 
     while (wrapper.firstChild) {
@@ -52,4 +68,4 @@ function generateSignboard(cfg) { // object => EmblemGroup
     return group;
 }
 
-export { clickButtonHandler };
+export { clickButtonHandler, getInputValues };
