@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,6 +11,7 @@
 
   <!--   デモページ共通のファイル読み込み -->
   <link rel="stylesheet" href="../common.css">
+<!--   <script src="../bootstrap.min.js"></script> -->
 
   <!--   ページ専用のファイル読み込み -->
   <link rel="stylesheet" href="bundle.css">
@@ -21,9 +22,8 @@
     <h1 class="">Embed Signboard</h1>
     <div id="wrapper"></div>
     <span class="fix"></span>
-    <form>
-      <h2>Singboard Settings</h2>
-      <div class="form-group">
+    <form class="row">
+      <div class="row form-group">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon" id="horizon-addon">Horizontal Characters</span>
@@ -49,15 +49,20 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-xs-12">
-        <label for="message">Signboard Message</label>
-        <textarea name="message" id="message" cols="30" rows="15" class="form-control"></textarea>
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+          <label for="message">Signboard Messages</label>
+          <textarea name="message" id="message" cols="30" rows="15" class="form-control"></textarea>
+        </div>
       </div>
-      <div class="col-sm-12 col-xs-12">
-        <button id="generate-button" type="button" class="btn btn-primary btn-lg">Generate Signboard</button>
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+          <button id="generate-button" type="button" class="btn btn-primary btn-lg">Generate Signboard</button>
+        </div>
       </div>
-      <h2>Embed Settings</h2>
-      <div class="form-group">
+    </form>
+    <form class="row">
+      <div class="row form-group">
         <div class="col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon" id="i-width-addon">Width</span>
@@ -67,19 +72,58 @@
         <div class="col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon" id="i-height-addon">Height</span>
-            <input type="text" id="i-height" class="form-control" value="300px" placeholder="number in px" aria-describedby="i-height-addon">
+            <input type="text" id="i-height" class="form-control" value="800px" placeholder="number in px" aria-describedby="i-height-addon">
           </div>
         </div>
       </div>
-      <div class="col-sm-12 col-xs-12">
-        <button id="embed-button" type="button" class="btn btn-default btn-lg">Generate Embed Code</button>
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+          <button id="embed-button" type="button" class="btn btn-default btn-lg">Generate Embed Code</button>
+        </div>
       </div>
-      <div class="col-sm-12 col-xs-12">
-        <input id="embed-output" type="text" class="form-control" readonly>
+      <div class="row">
+        <div class="col-sm-12 col-xs-12">
+          <label for="embed-output"><span class="glyphicon glyphicon-arrow-down"></span><span class="text-primary">Copy</span> this code and <span class="text-primary">Paste</span> to page.</label>
+          <input id="embed-output" type="text" class="form-control" readonly>
+        </div>
       </div>
     </form>
-    <span class="fix"></span>
-    <p><a href="../../"><span class="glyphicon glyphicon-triangle-left"></span>Back To Top</a></p>
+    <h2>Signboard Settings</h2>
+    <p>五輪エンブレムのアニメーションを作れます。<br>
+       作ったものは簡単に貼り付けることが出来ます。</p>
+    <dl>
+      <dt>Horizontal Characters</dt>
+      <dd>縦の分割数を指定します、デフォルト値は<code>3</code>です。</dd>
+      <dt>Vertical Characters</dt>
+      <dd>横の分割数を指定します、デフォルト値は<code>7</code>です。</dd>
+      <dt>Display Time</dt>
+      <dd>一つのメッセージが表示される時間を<code>1/1000</code>秒単位で指定します、デフォルト値は<code>1500</code>です。</dd>
+      <dt>Duration</dt>
+      <dd>次のメッセージへのアニメーションにかかる時間を<code>1/1000</code>秒単位で指定します、デフォルト値は<code>1500</code>です。</dd>
+      <dt>Signboard Messages</dt>
+      <dd>エンブレムで表現するメッセージを記述します。<br>
+          使用できる文字は<code>a</code>から<code>z</code>、<code>0</code>から<code>9</code>、<code>!.':;/_</code>と半角スペースです。<br>
+          一回のメッセージで表示される文字数は<strong>縦の分割数 x 横の分割数</strong>です、デフォルトだと<code>3 x 7</code>で<code>21</code>文字になります。<br>
+          一度に表示されるメッセージは一行で書く必要があり、オーバーした文字はカットされます。<br>
+          また、改行で区切ることでメッセージを分けることが出来ます。<br>
+          例えば空行を一つ挟むとメッセージとメッセージの間がホワイトアウトします。</dd>
+      <dt>Generate Signboard</dt>
+      <dd>このボタンを押してプレビューを確認します。</dd>
+    </dl>
+    <h2>Embed Settings</h2>
+    <p>作成したメッセージを貼り付けるサイズを指定します。<br>
+       </p>
+    <dl>
+      <dt>Width</dt>
+      <dd>横幅いっぱいに表示したい時は<code>100%</code>を指定します、これがデフォルト値です。<br>
+          サイズを指定したい場合は<code>500px</code>のように数字の後に<code>px</code>を付けます。</dd>
+      <dt>Height</dt>
+      <dd>縦のサイズを指定、デフォルトは<code>800px</code>です。<br>
+          これはスクロールバーを表示させないようにかなり大きめに設定してあります。</dd>
+      <dt>Generate Embed Code</dt>
+      <dd>このボタンを押して生成されるコードをページに貼り付ければ完了です。</dd>
+    </dl>
+    <p class="back-top"><a href="../../"><span class="glyphicon glyphicon-triangle-left"></span>Back To Top</a></p>
   </div>
 </body>
 </html>

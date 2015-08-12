@@ -3,17 +3,17 @@ import { computedStyles } from './helpers/computed_styles.js';
 document.addEventListener('DOMContentLoaded', () => {
     let wrapper    = document.querySelector('#wrapper');
     const { SIZE } = computedStyles();
-    let size       = SIZE > 1500 ? 1500 : SIZE;
-    const MARGIN   = size / 20;
+    let size       = SIZE > 675 ? 675 : SIZE;
+    const MARGIN   = size / 5;
     let sizeS      = MARGIN * 3;
 
-    let init = '2020';
+    let init = 't';
     let olms = [];
     olms.push(new Olympic2020(init[0], { size: sizeS }));
-    olms.push(new Olympic2020(init[1], { size: sizeS }));
-    olms.push(new Olympic2020(init[2], { size: sizeS }));
-    olms.push(new Olympic2020(init[3], { size: sizeS }));
-    olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px`; });
+//     olms.push(new Olympic2020(init[1], { size: sizeS }));
+//     olms.push(new Olympic2020(init[2], { size: sizeS }));
+//     olms.push(new Olympic2020(init[3], { size: sizeS }));
+    olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px auto`; });
 
     let input   = document.querySelector('#user-input');
     const ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;

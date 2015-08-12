@@ -10,18 +10,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     var SIZE = _computedStyles.SIZE;
 
-    var size = SIZE > 1500 ? 1500 : SIZE;
-    var MARGIN = size / 20;
+    var size = SIZE > 675 ? 675 : SIZE;
+    var MARGIN = size / 5;
     var sizeS = MARGIN * 3;
 
-    var init = '2020';
+    var init = 't';
     var olms = [];
     olms.push(new Olympic2020(init[0], { size: sizeS }));
-    olms.push(new Olympic2020(init[1], { size: sizeS }));
-    olms.push(new Olympic2020(init[2], { size: sizeS }));
-    olms.push(new Olympic2020(init[3], { size: sizeS }));
+    //     olms.push(new Olympic2020(init[1], { size: sizeS }));
+    //     olms.push(new Olympic2020(init[2], { size: sizeS }));
+    //     olms.push(new Olympic2020(init[3], { size: sizeS }));
     olms.forEach(function (e) {
-        e.dom.style.margin = MARGIN + 'px';
+        e.dom.style.margin = MARGIN + 'px auto';
     });
 
     var input = document.querySelector('#user-input');

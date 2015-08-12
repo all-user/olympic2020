@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'hello  world!!',
     ];
 
-    let cfg = {
+    let params = {
         vertical: 3,
         horizon: 7,
         display: 1500,
@@ -35,10 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     messageInput.textContent = COPYS.join('\n');
 
-    clickButtonHandler(cfg);
+    clickButtonHandler(params);
 
     genButton.addEventListener('click', e => {
         clickButtonHandler(getInputValues());
+        scroll(0, 0);
     });
 
     codeButton.addEventListener('click', e => {

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var LONG_COPY = 'olympicparalympicgame';
     var COPYS = [TITLE_COPY, LONG_COPY, SHORT_COPY, BLANK_COPY, '1234567890    ', BLANK_COPY, DATE_COPY, 'happy  day!', BLANK_COPY, 'hello  world!!'];
 
-    var cfg = {
+    var params = {
         vertical: 3,
         horizon: 7,
         display: 1500,
@@ -27,10 +27,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     messageInput.textContent = COPYS.join('\n');
 
-    (0, _helpersEmbed_helperJs.clickButtonHandler)(cfg);
+    (0, _helpersEmbed_helperJs.clickButtonHandler)(params);
 
     genButton.addEventListener('click', function (e) {
         (0, _helpersEmbed_helperJs.clickButtonHandler)((0, _helpersEmbed_helperJs.getInputValues)());
+        scroll(0, 0);
     });
 
     codeButton.addEventListener('click', function (e) {
@@ -112,9 +113,9 @@ function getInputValues() {
     return { vertical: vertical, horizon: horizon, display: display, duration: duration, msg: msg, width: width, height: height };
 }
 
-function clickButtonHandler(cfg) {
+function clickButtonHandler(params) {
 
-    if (typeof cfg !== 'object') {
+    if (typeof params !== 'object') {
         new Error('clickButtonHandler arg expect type is object.');
     }
 
@@ -122,7 +123,7 @@ function clickButtonHandler(cfg) {
         wrapper.removeChild(wrapper.firstChild);
     }
 
-    var group = generateSignboard(cfg);
+    var group = generateSignboard(params);
     group.appendTo(wrapper);
 
     wrapper.addEventListener('click', function () {
@@ -133,30 +134,34 @@ function clickButtonHandler(cfg) {
         }
     });
 
-    group.animateFromString(cfg.msg, { loop: true });
+    params.msg = params.msg.slice(1).concat(params.msg[0]);
+
+    setTimeout(function () {
+        group.animateFromString(params.msg, { loop: true });
+    }, group.emblems[0].displayTime);
 }
 
-function generateSignboard(cfg) {
+function generateSignboard(params) {
     // object => EmblemGroup
 
     var _computedStyles = (0, _computed_stylesJs.computedStyles)();
 
     var SIZE = _computedStyles.SIZE;
 
-    if (! typeof cfg === 'object') {
+    if (! typeof params === 'object') {
         return;
     }
 
-    var vertical = cfg.vertical;
-    var horizon = cfg.horizon;
-    var display = cfg.display;
-    var duration = cfg.duration;
-    var msg = cfg.msg;
+    var vertical = params.vertical;
+    var horizon = params.horizon;
+    var display = params.display;
+    var duration = params.duration;
+    var msg = params.msg;
 
     vertical = vertical || 3;
     horizon = horizon || 7;
     display = display || 1500;
-    var margin = SIZE * 0.98 / (horizon * 5);
+    var margin = SIZE / (horizon * 5);
     var emblemSize = margin * 3;
 
     var group = new EmblemGroup(msg[0], { length: vertical * horizon, size: emblemSize, displayTime: display, duration: duration });

@@ -22,9 +22,9 @@ function getInputValues() {
     return { vertical, horizon, display, duration, msg, width, height };
 }
 
-function clickButtonHandler(cfg) {
+function clickButtonHandler(params) {
 
-    if (typeof cfg !== 'object') {
+    if (typeof params !== 'object') {
         new Error('clickButtonHandler arg expect type is object.')
     }
 
@@ -32,7 +32,7 @@ function clickButtonHandler(cfg) {
         wrapper.removeChild(wrapper.firstChild);
     }
 
-    let group = generateSignboard(cfg);
+    let group = generateSignboard(params);
     group.appendTo(wrapper);
 
     wrapper.addEventListener('click', () => {
@@ -43,20 +43,24 @@ function clickButtonHandler(cfg) {
         }
     });
 
-    group.animateFromString(cfg.msg, { loop: true });
+    params.msg = params.msg.slice(1).concat(params.msg[0]);
+
+    setTimeout(() => {
+        group.animateFromString(params.msg, { loop: true });
+    }, group.emblems[0].displayTime);
 }
 
-function generateSignboard(cfg) { // object => EmblemGroup
+function generateSignboard(params) { // object => EmblemGroup
     const { SIZE } = computedStyles();
 
-    if (!typeof cfg === 'object') { return; }
+    if (!typeof params === 'object') { return; }
 
-    let { vertical, horizon, display, duration, msg } = cfg;
+    let { vertical, horizon, display, duration, msg } = params;
 
     vertical = vertical || 3;
     horizon  = horizon || 7;
     display  = display || 1500;
-    let margin     = SIZE * 0.98 / (horizon * 5);
+    let margin     = SIZE / (horizon * 5);
     let emblemSize = margin * 3;
 
     let group = new EmblemGroup(msg[0], { length: vertical * horizon, size: emblemSize, displayTime: display, duration: duration });
