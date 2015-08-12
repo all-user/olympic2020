@@ -21,9 +21,10 @@
   <div class="container">
     <h1 class="">Embed Signboard</h1>
     <div id="wrapper"></div>
-    <span class="fix"></span>
-    <form class="row">
-      <div class="row form-group">
+    <span class="clearfix"></span>
+    <form>
+      <h3>Signboard Settings</h3>
+      <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon" id="horizon-addon">Horizontal Characters</span>
@@ -61,14 +62,17 @@
         </div>
       </div>
     </form>
-    <form class="row">
-      <div class="row form-group">
+    <form>
+      <h3>Embed Settings</h3>
+      <div class="row">
         <div class="col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon" id="i-width-addon">Width</span>
             <input type="text" id="i-width" class="form-control" value="100%" placeholder="100% or number in px" aria-describedby="i-width-addon">
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-sm-6 col-xs-12">
           <div class="input-group">
             <span class="input-group-addon" id="i-height-addon">Height</span>
@@ -76,11 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-12 col-xs-12">
-          <button id="embed-button" type="button" class="btn btn-default btn-lg">Generate Embed Code</button>
-        </div>
-      </div>
+      <button id="embed-button" type="button" class="btn btn-default btn-lg">Generate Embed Code</button>
       <div class="row">
         <div class="col-sm-12 col-xs-12">
           <label for="embed-output"><span class="glyphicon glyphicon-arrow-down"></span><span class="text-primary">Copy</span> this code and <span class="text-primary">Paste</span> to any page.</label>
@@ -88,9 +88,10 @@
         </div>
       </div>
     </form>
-    <h2>Signboard Settings</h2>
+    <h2>使い方</h2>
     <p>五輪エンブレムのアニメーションを作れます。<br>
        作ったものは簡単に貼り付けることが出来ます。</p>
+    <h3 class="">Signboard Settings</h3>
     <dl>
       <dt>Horizontal Characters</dt>
       <dd>縦の分割数を指定します、デフォルト値は<code>3</code>です。</dd>
@@ -110,7 +111,7 @@
       <dt>Generate Signboard</dt>
       <dd>このボタンを押してプレビューを確認します。</dd>
     </dl>
-    <h2>Embed Settings</h2>
+    <h3>Embed Settings</h3>
     <p>作成したメッセージを貼り付けるサイズを指定します。<br>
        </p>
     <dl>
