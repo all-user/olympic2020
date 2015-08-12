@@ -16,19 +16,18 @@ npm i @all-user/olympic2020
 </head>
 <body>
     <script>
-        var olm = Olympic2020('t', 300); // initial charactor and size in px.
+        var olm = Olympic2020('t', { size: 300 }); // initial charactor and size in px.
 
         document.addEventListener('DOMContentLoaded', function() {
 
-            document.body.appendChild(olm.dom); // olm.dom is instance of DOMElement.
+            olm.appendTo(document.body);
             // or other way.
-            // olm.appendTo(document.body);
+            // document.body.appendChild(olm.dom);
+            // olm.dom is instance of DOMElement.
 
             olm.to('z'); // change to another charactor.
 
             olm.animateFromString('tokyo olympic 2020'); // animate from string.
-
-
 
             // grouping
             var group = new EmblemGroup('tokyo 2020');
