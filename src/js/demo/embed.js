@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function genEmbedCode() {
     let { width, height, vertical, horizon, display, duration, msg } = getInputValues();
 
-    return `<iframe style="width:${ width };height:${ height };" src="https://all-user.github.io/olympic2020/demo/embed_response/index.html?vertical=${ vertical }&horizon=${ horizon }&display=${ display }&duration=${ duration }&msg=${ fixedEncodeURIComponent(msg) }"></iframe>`
+    return `<iframe style="width:${ width };height:${ height };border:none;" src="https://all-user.github.io/olympic2020/demo/embed_response/index.html?vertical=${ vertical }&horizon=${ horizon }&display=${ display }&duration=${ duration }&msg=${ fixedEncodeURIComponent(msg) }"></iframe>`
 }
 
 function fixedEncodeURIComponent(str) {
