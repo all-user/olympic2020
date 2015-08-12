@@ -56,7 +56,7 @@ function generateSignboard(cfg) { // object => EmblemGroup
     vertical = vertical || 3;
     horizon  = horizon || 7;
     display  = display || 1500;
-    let margin     = SIZE / (horizon * 5);
+    let margin     = SIZE * 0.98 / (horizon * 5);
     let emblemSize = margin * 3;
 
     let group = new EmblemGroup(msg[0], { length: vertical * horizon, size: emblemSize, displayTime: display, duration: duration });

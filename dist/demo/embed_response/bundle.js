@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
 
     var pairs = decodeURIComponent(location.search.slice(1)).split('&');
-    console.log(pairs);
     var params = pairs.reduce(function (params, s) {
         var keyValue = s.split('=');
         params[keyValue[0]] = keyValue[1];
@@ -116,7 +115,7 @@ function generateSignboard(cfg) {
     vertical = vertical || 3;
     horizon = horizon || 7;
     display = display || 1500;
-    var margin = SIZE / (horizon * 5);
+    var margin = SIZE * 0.98 / (horizon * 5);
     var emblemSize = margin * 3;
 
     var group = new EmblemGroup(msg[0], { length: vertical * horizon, size: emblemSize, displayTime: display, duration: duration });
