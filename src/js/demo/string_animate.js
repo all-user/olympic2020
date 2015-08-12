@@ -1,32 +1,29 @@
+import { computedStyles } from './helpers/computed_styles.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    let wrapper   = document.querySelector('#wrapper');
-    const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
-    const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
-    const SIZE    = WIDTH - PADDING * 2;
-    const MARGIN  = SIZE / 35;
+    let wrapper    = document.querySelector('#wrapper');
+    const { SIZE } = computedStyles();
+    const MARGIN   = SIZE / 35;
     const EMBLEM_SIZE = MARGIN * 3;
     const TITLE_COPY  = 'tokyo  2020   olympic';
-    const SHORT_COPY  = 'hi!!';
-    const DATE_COPY   = '8/9:sunday'
-    const BLANK_COPY  = '                                                        ';
-    const LONG_COPY   = 'olympic paralympic games';
+    const SHORT_COPY  = 'hi!!   ';
+    const DATE_COPY   = '8/9:sun'
+    const BLANK_COPY  = '       ';
+    const LONG_COPY   = 'olympicparalympicgame';
     const COPYS       = [
         TITLE_COPY,
         LONG_COPY,
         SHORT_COPY,
-        '1234567890',
+        BLANK_COPY,
+        BLANK_COPY,
+        '1234567890    ',
         BLANK_COPY,
         DATE_COPY,
-        'happy day!',
+        'happy     day!',
         BLANK_COPY,
-        'hello world',
-        TITLE_COPY,
-        LONG_COPY,
-        SHORT_COPY,
         BLANK_COPY,
-        '1234567890',
-        'happy day!',
-        'hello world',
+        BLANK_COPY,
+        'hello  world!!',
         BLANK_COPY,
     ];
 
@@ -46,5 +43,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    group.animateFromString(COPYS, { loop: true });
+    group.animateFromString(COPYS.join(''), { loop: true });
 });

@@ -1,11 +1,11 @@
+import { computedStyles } from './helpers/computed_styles.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    let wrapper   = document.querySelector('#wrapper');
-    const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
-    const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
-    const SIZE    = WIDTH - PADDING * 2;
-    let size      = SIZE > 1500 ? 1500 : SIZE;
-    const MARGIN  = size / 20;
-    let sizeS = MARGIN * 3;
+    let wrapper    = document.querySelector('#wrapper');
+    const { SIZE } = computedStyles();
+    let size       = SIZE > 1500 ? 1500 : SIZE;
+    const MARGIN   = size / 20;
+    let sizeS      = MARGIN * 3;
 
     let init = '2020';
     let olms = [];

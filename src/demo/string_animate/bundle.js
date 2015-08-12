@@ -1,19 +1,39 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-document.addEventListener('DOMContentLoaded', function () {
-    var wrapper = document.querySelector('#wrapper');
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+function computedStyles() {
     var WIDTH = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
     var PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
     var SIZE = WIDTH - PADDING * 2;
+
+    return { WIDTH: WIDTH, PADDING: PADDING, SIZE: SIZE };
+}
+
+exports.computedStyles = computedStyles;
+
+},{}],2:[function(require,module,exports){
+'use strict';
+
+var _helpersComputed_stylesJs = require('./helpers/computed_styles.js');
+
+document.addEventListener('DOMContentLoaded', function () {
+    var wrapper = document.querySelector('#wrapper');
+
+    var _computedStyles = (0, _helpersComputed_stylesJs.computedStyles)();
+
+    var SIZE = _computedStyles.SIZE;
+
     var MARGIN = SIZE / 35;
     var EMBLEM_SIZE = MARGIN * 3;
     var TITLE_COPY = 'tokyo  2020   olympic';
-    var SHORT_COPY = 'hi!!';
-    var DATE_COPY = '8/9:sunday';
-    var BLANK_COPY = '                                                        ';
-    var LONG_COPY = 'olympic paralympic games';
-    var COPYS = [TITLE_COPY, LONG_COPY, SHORT_COPY, '1234567890', BLANK_COPY, DATE_COPY, 'happy day!', BLANK_COPY, 'hello world', TITLE_COPY, LONG_COPY, SHORT_COPY, BLANK_COPY, '1234567890', 'happy day!', 'hello world', BLANK_COPY];
+    var SHORT_COPY = 'hi!!   ';
+    var DATE_COPY = '8/9:sun';
+    var BLANK_COPY = '       ';
+    var LONG_COPY = 'olympicparalympicgame';
+    var COPYS = [TITLE_COPY, LONG_COPY, SHORT_COPY, BLANK_COPY, BLANK_COPY, '1234567890    ', BLANK_COPY, DATE_COPY, 'happy     day!', BLANK_COPY, BLANK_COPY, BLANK_COPY, 'hello  world!!', BLANK_COPY];
 
     var group = new EmblemGroup(TITLE_COPY, { length: 21, size: EMBLEM_SIZE, displayTime: 1500 });
 
@@ -31,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    group.animateFromString(COPYS, { loop: true });
+    group.animateFromString(COPYS.join(''), { loop: true });
 });
 
-},{}]},{},[1]);
+},{"./helpers/computed_styles.js":1}]},{},[2]);

@@ -5,42 +5,16 @@ var _helpersEmbed_helperJs = require('./helpers/embed_helper.js');
 
 document.addEventListener('DOMContentLoaded', function () {
     var wrapper = document.querySelector('#wrapper');
-    var verticalInput = document.querySelector('#vertical');
-    var horizonInput = document.querySelector('#horizon');
-    var displayInput = document.querySelector('#display');
-    var durationInput = document.querySelector('#duration');
-    var messageInput = document.querySelector('#message');
-    var genButton = document.querySelector('#generate-button');
 
-    var TITLE_COPY = 'tokyo  2020   olympic';
-    var SHORT_COPY = 'hi!!   ';
-    var DATE_COPY = '8/9:sun';
-    var BLANK_COPY = '       ';
-    var LONG_COPY = 'olympicparalympicgame';
-    var COPYS = [TITLE_COPY, LONG_COPY, SHORT_COPY, BLANK_COPY, '1234567890    ', BLANK_COPY, DATE_COPY, 'happy  day!', BLANK_COPY, 'hello  world!!'];
+    var pairs = location.search.slice(1).split('&');
+    var params = pairs.reduce(function (params, s) {
+        var keyValue = s.split('=');
+        params[keyValue[0]] = keyValue[1];
+        return params;
+    }, {});
 
-    var cfg = {
-        vertical: 3,
-        horizon: 7,
-        display: 1500,
-        duration: 800,
-        msg: COPYS
-    };
-
-    messageInput.textContent = COPYS.join('\n');
-
-    (0, _helpersEmbed_helperJs.clickButtonHandler)(cfg);
-
-    genButton.addEventListener('click', function (e) {
-        (0, _helpersEmbed_helperJs.clickButtonHandler)();
-    });
+    (0, _helpersEmbed_helperJs.clickButtonHandler)(params);
 });
-
-function fixedEncodeURIComponent(str) {
-    return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
-        return '%' + c.charCodeAt(0).toString(16);
-    });
-}
 
 },{"./helpers/embed_helper.js":3}],2:[function(require,module,exports){
 'use strict';

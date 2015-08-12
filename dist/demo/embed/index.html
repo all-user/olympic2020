@@ -22,6 +22,7 @@
     <div id="wrapper"></div>
     <span class="fix"></span>
     <form>
+      <h2>Singboard Settings</h2>
       <div class="form-group">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="input-group">
@@ -50,10 +51,25 @@
       </div>
       <div class="col-sm-12 col-xs-12">
         <label for="message">Signboard Message</label>
-        <textarea name="message" id="message" cols="30" rows="3" class="form-control" value="test"></textarea>
+        <textarea name="message" id="message" cols="30" rows="15" class="form-control"></textarea>
       </div>
       <div class="col-sm-12 col-xs-12">
         <button id="generate-button" type="button" class="btn btn-primary btn-lg">Generate Signboard</button>
+      </div>
+      <h2>Embed Settings</h2>
+      <div class="form-group">
+        <div class="col-sm-6 col-xs-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="i-width-addon">Width</span>
+            <input type="text" id="i-width" class="form-control" value="100%" placeholder="100% or number in px" aria-describedby="i-width-addon">
+          </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+          <div class="input-group">
+            <span class="input-group-addon" id="i-height-addon">Height</span>
+            <input type="text" id="i-height" class="form-control" value="300px" placeholder="number in px" aria-describedby="i-height-addon">
+          </div>
+        </div>
       </div>
       <div class="col-sm-12 col-xs-12">
         <button id="embed-button" type="button" class="btn btn-default btn-lg">Generate Embed Code</button>

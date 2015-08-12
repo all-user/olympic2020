@@ -1,4 +1,4 @@
-import Olympic2020 from './Olympic2020.js'
+import Olympic2020 from './Olympic2020.js';
 
 class EmblemGroup {
 
@@ -161,4 +161,4 @@ function _animateFromStringArray(strArr) {
 }
 
 
-export default EmblemGroup
+export default EmblemGroup;

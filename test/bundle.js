@@ -19030,12 +19030,14 @@ var EmblemGroup = function () {
         this._resume = null;
         this._displayTime = displayTime || 1000;
         this._duration = duration || 800;
-        if (chars.length < length) {
-            for (var i = chars.length; i < length; i++) {
-                chars += ' ';
+        if (typeof chars === 'string') {
+            if (chars.length < length) {
+                for (var i = chars.length; i < length; i++) {
+                    chars += ' ';
+                }
+            } else if (length != null && chars.length > length) {
+                chars = chars.slice(0, length);
             }
-        } else if (length != null && chars.length > length) {
-            chars = chars.slice(0, length);
         }
         var emblems = _transfromToOlympic2020Array(chars, {
             size: size,

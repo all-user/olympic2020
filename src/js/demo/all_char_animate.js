@@ -1,13 +1,13 @@
+import { computedStyles } from './helpers/computed_styles.js';
+
 document.addEventListener('DOMContentLoaded', () => {
-    let wrapper   = document.querySelector('#wrapper');
-    let olms      = [];
-    const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
-    const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');
-    const SIZE    = WIDTH - PADDING * 2;
-    let size      = SIZE > 500 ? 500 : SIZE;
-    const MARGIN  = size / 15;
-    let sizeL = size - MARGIN * 2;
-    let sizeS = MARGIN * 3;
+    let wrapper    = document.querySelector('#wrapper');
+    let olms       = [];
+    const { SIZE } = computedStyles();
+    let size       = SIZE > 500 ? 500 : SIZE;
+    const MARGIN   = size / 15;
+    let sizeL      = size - MARGIN * 2;
+    let sizeS      = MARGIN * 3;
 
     olms.push(new Olympic2020('a', { size: sizeS,  displayTime: 3111, random: true }));
     olms.push(new Olympic2020('z', { size: sizeS,  displayTime: 6399, random: true }));
