@@ -2,7 +2,7 @@ class Olympic2020 {
 
     constructor(c, opt) {
         if (typeof opt === 'object') {
-            var { size, displayTime, duration, easing, roop, random } = opt;
+            var { size, displayTime, duration, easing, roop, random, pedal } = opt;
         }
         this.char = null;
         this.dom  = _createDom();
@@ -13,6 +13,7 @@ class Olympic2020 {
         this._resume      = null;
         this._loop        = roop || false;
         this._random      = random || false;
+        this._pedal       = pedal == null ? true : pedal;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -25,12 +26,11 @@ class Olympic2020 {
 
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
-        if (FORMATION_TABLE[_c]) {
-            _changeStyle.call(this, _c);
-            this.char = _c;
-            return true;
-        }
-        return false;
+        if (!FORMATION_TABLE[_c])            { return false; }
+        if (this._pedal && this.char === _c) { return false; }
+        _changeStyle.call(this, _c);
+        this.char = _c;
+        return true;
     }
 
     appendTo(parent) {
@@ -129,6 +129,9 @@ class Olympic2020 {
 
     set random(bool) { this._random = bool; }
     get random()     { return this._random; }
+
+    set pedal(bool) { this._pedal = bool; }
+    get pedal()     { return this._pedal; }
 
     static get ALL_VALID_CHARS() { return Object.keys(FORMATION_TABLE); }
 }

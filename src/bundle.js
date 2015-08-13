@@ -1313,6 +1313,7 @@ var Olympic2020 = (function () {
             var easing = opt.easing;
             var roop = opt.roop;
             var random = opt.random;
+            var pedal = opt.pedal;
         }
         this.char = null;
         this.dom = _createDom();
@@ -1323,6 +1324,7 @@ var Olympic2020 = (function () {
         this._resume = null;
         this._loop = roop || false;
         this._random = random || false;
+        this._pedal = pedal == null ? true : pedal;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -1337,12 +1339,15 @@ var Olympic2020 = (function () {
         key: 'to',
         value: function to(c) {
             var _c = c && c.toLowerCase && c.toLowerCase();
-            if (FORMATION_TABLE[_c]) {
-                _changeStyle.call(this, _c);
-                this.char = _c;
-                return true;
+            if (!FORMATION_TABLE[_c]) {
+                return false;
             }
-            return false;
+            if (this._pedal && this.char === _c) {
+                return false;
+            }
+            _changeStyle.call(this, _c);
+            this.char = _c;
+            return true;
         }
     }, {
         key: 'appendTo',
@@ -1477,6 +1482,14 @@ var Olympic2020 = (function () {
         },
         get: function get() {
             return this._random;
+        }
+    }, {
+        key: 'pedal',
+        set: function set(bool) {
+            this._pedal = bool;
+        },
+        get: function get() {
+            return this._pedal;
         }
     }], [{
         key: 'ALL_VALID_CHARS',
