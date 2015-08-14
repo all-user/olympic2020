@@ -145,81 +145,117 @@
       top  -100%
       left 100%
 
+
+
 .circle_s,
 .pole1,
 .blank
   &.rotate0
     .white_circle_wrapper
-      top  200%
-      left 200%
+      top  $mod_square
+      left $mod_square
   &.rotate90
     .white_circle_wrapper
-      top  200%
-      left -200%
+      top  $mod_square
+      left -($mod_square)
   &.rotate180
     .white_circle_wrapper
-      top  -200%
-      left -200%
+      top  -($mod_square)
+      left -($mod_square)
   &.rotate270
     .white_circle_wrapper
-      top  -200%
-      left 200%
+      top  -($mod_square)
+      left $mod_square
 
-.pole2_h,
+.pole2_h
+  &.rotate0
+    .white_circle_wrapper
+      top  $mod_square
+      left 100% + $mod_pole2
+  &.rotate90
+    .white_circle_wrapper
+      top  $mod_square
+      left -($mod_pole2)
+  &.rotate180
+    .white_circle_wrapper
+      top  -($mod_square)
+      left -($mod_pole2)
+  &.rotate270
+    .white_circle_wrapper
+      top  -($mod_square)
+      left 100% + $mod_pole2
+
 .pole3_h
   &.rotate0
     .white_circle_wrapper
-      top  200%
-      left 100%
+      top  $mod_square
+      left 100% + $mod_pole3
   &.rotate90
     .white_circle_wrapper
-      top  200%
-      left -100%
+      top  $mod_square
+      left -($mod_pole3)
   &.rotate180
     .white_circle_wrapper
-      top  -200%
-      left -100%
+      top  -($mod_square)
+      left -($mod_pole3)
   &.rotate270
     .white_circle_wrapper
-      top  -200%
-      left 100%
+      top  -($mod_square)
+      left 100% + $mod_pole3
 
-.pole2_v,
+.pole2_v
+  &.rotate0
+    .white_circle_wrapper
+      top  100% + $mod_pole2
+      left $mod_square
+  &.rotate90
+    .white_circle_wrapper
+      top  100% + $mod_pole2
+      left -($mod_square)
+  &.rotate180
+    .white_circle_wrapper
+      top  -($mod_pole2)
+      left -($mod_square)
+  &.rotate270
+    .white_circle_wrapper
+      top  -($mod_pole2)
+      left $mod_square
+
 .pole3_v
   &.rotate0
     .white_circle_wrapper
-      top  100%
-      left 200%
+      top  100% + $mod_pole3
+      left $mod_square
   &.rotate90
     .white_circle_wrapper
-      top  100%
-      left -200%
+      top  100% + $mod_pole3
+      left -($mod_square)
   &.rotate180
     .white_circle_wrapper
-      top  -100%
-      left -200%
+      top  -($mod_pole3)
+      left -($mod_square)
   &.rotate270
     .white_circle_wrapper
-      top  -100%
-      left 200%
+      top  -($mod_pole3)
+      left $mod_square
 
 .circle_l
   &.rotate0
     .white_circle_wrapper
-      top  100% + $1_3
-      left 100% + $1_3
+      top  100% + $mod_pole3
+      left 100% + $mod_pole3
   &.rotate90
     .white_circle_wrapper
-      top  100% + $1_3
-      left -(100% + $1_3)
+      top  100% + $mod_pole3
+      left -($mod_pole3)
   &.rotate180
     .white_circle_wrapper
-      top  -(100% + $1_3)
-      left -(100% + $1_3)
+      top  -($mod_pole3)
+      left -($mod_pole3)
   &.rotate270
     .white_circle_wrapper
-      top  -(100% + $1_3)
-      left 100% + $1_3
+      top  -($mod_pole3)
+      left 100% + $mod_pole3
 
 // positioning
 .pos_0_0
