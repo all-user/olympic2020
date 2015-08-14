@@ -1506,8 +1506,8 @@ var Olympic2020 = (function () {
             if (this[CHAR_PROP] === _c) {
                 return false;
             }
-            this[CHAR_PROP] = _c;
             _changeStyle.call(this, _c);
+            this[CHAR_PROP] = _c;
             return true;
         }
     }, {
@@ -1735,8 +1735,25 @@ function _createDom() {
 
 function _changeStyle(c) {
     // @bind this
-    var classTable = formationTable[c];
+    var oldC = this[CHAR_PROP];
+    var oldFormation = formationTable[oldC];
+    var newFormation = formationTable[c];
+    if (!newFormation) {
+        return;
+    }
+    var diffFormation = undefined;
+    if (oldC) {
+        diffFormation = newFormation.map(function (newStr, idx) {
+            var oldStr = oldFormation[idx];
+            return newStr !== oldStr ? newStr : false;
+        });
+    } else {
+        diffFormation = newFormation;
+    }
     [].forEach.call(this[DOM_PROP].childNodes, function (node, idx) {
+        if (!diffFormation[idx]) {
+            return;
+        }
         var pos = undefined;
         // fix for '/'
         if (c === '/' && idx === 0) {
@@ -1744,7 +1761,7 @@ function _changeStyle(c) {
         } else {
             pos = 'pos_' + idx % 3 + '_' + (idx / 3 | 0);
         }
-        node.className = classTable[idx] + ' ' + pos;
+        node.className = diffFormation[idx] + ' ' + pos;
         if (node.classList.contains('arc')) {
             return;
         }
