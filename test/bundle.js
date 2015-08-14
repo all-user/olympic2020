@@ -19255,6 +19255,7 @@ var Olympic2020 = function () {
             var easing = opt.easing;
             var roop = opt.roop;
             var random = opt.random;
+            var pedal = opt.pedal;
         }
         this.char = null;
         this.dom = _createDom();
@@ -19265,6 +19266,7 @@ var Olympic2020 = function () {
         this._resume = null;
         this._loop = roop || false;
         this._random = random || false;
+        this._pedal = pedal == null ? true : pedal;
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
             this.size = size;
@@ -19278,12 +19280,15 @@ var Olympic2020 = function () {
             key: 'to',
             value: function to(c) {
                 var _c = c && c.toLowerCase && c.toLowerCase();
-                if (FORMATION_TABLE[_c]) {
-                    _changeStyle.call(this, _c);
-                    this.char = _c;
-                    return true;
+                if (!formationTable[_c]) {
+                    return false;
                 }
-                return false;
+                if (this.char === _c) {
+                    return false;
+                }
+                this.char = _c;
+                _changeStyle.call(this, _c);
+                return true;
             }
         },
         {
@@ -19424,11 +19429,20 @@ var Olympic2020 = function () {
             get: function get() {
                 return this._random;
             }
+        },
+        {
+            key: 'pedal',
+            set: function set(bool) {
+                this._pedal = bool;
+            },
+            get: function get() {
+                return this._pedal;
+            }
         }
     ], [{
-            key: 'ALL_VALID_CHARS',
+            key: 'allValidChars',
             get: function get() {
-                return Object.keys(FORMATION_TABLE);
+                return Object.keys(formationTable);
             }
         }]);
     return Olympic2020;
@@ -19437,7 +19451,7 @@ function _createDom() {
     return baseDom.cloneNode(true);
 }
 function _changeStyle(c) {
-    var classTable = FORMATION_TABLE[c];
+    var classTable = formationTable[c];
     [].forEach.call(this.dom.childNodes, function (node, idx) {
         var pos = undefined;
         if (c === '/' && idx === 0) {
@@ -19511,7 +19525,7 @@ var P3_H = 'part pole3_h gray';
 var C_S = 'part circle_s red';
 var C_L = 'part circle_l red';
 var BL = 'part blank';
-var FORMATION_TABLE = {
+var formationTable = {
     'a': [
         G_R180,
         P1,
@@ -20231,6 +20245,14 @@ describe('Olympic2020 test', function () {
                     _powerAssert2['default'].ok(res);
                     done();
                 });
+                it('this.pedal\u6709\u52B9\u6642\u3001\u73FE\u5728\u306E\u6587\u5B57\u3068\u540C\u3058\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {
+                    o.to(BASE_CHAR_LOWER);
+                    var res = o.to(BASE_CHAR_LOWER);
+                    _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
+                    _powerAssert2['default'].ok(o.pedal);
+                    _powerAssert2['default'].equal(res, false);
+                    done();
+                });
                 it('\u7121\u52B9\u306A\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {
                     var res = o.to(BASE_CHAR_INVALID);
                     _powerAssert2['default'].equal(o.char, null);
@@ -20241,7 +20263,6 @@ describe('Olympic2020 test', function () {
                     [].reduce.call(ALL_VALID_CHARS, function (o, char) {
                         var res = o.to(char);
                         _powerAssert2['default'].equal(o.char, char);
-                        _powerAssert2['default'].ok(res);
                         return o;
                     }, o);
                     done();
@@ -20263,13 +20284,21 @@ describe('Olympic2020 test', function () {
                 it('\u5C0F\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
                     var res = o.to(BASE_CHAR_LOWER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
-                    _powerAssert2['default'].ok(res);
+                    _powerAssert2['default'].equal(res, false);
                     done();
                 });
                 it('\u5927\u6587\u5B57\u3092\u4E0E\u3048\u3066\u3082\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
                     var res = o.to(BASE_CHAR_UPPER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
-                    _powerAssert2['default'].ok(res);
+                    _powerAssert2['default'].equal(res, false);
+                    done();
+                });
+                it('this.pedal\u6709\u52B9\u6642\u3001\u73FE\u5728\u306E\u6587\u5B57\u3068\u540C\u3058\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {
+                    o.to(BASE_CHAR_LOWER);
+                    var res = o.to(BASE_CHAR_LOWER);
+                    _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
+                    _powerAssert2['default'].ok(o.pedal);
+                    _powerAssert2['default'].equal(res, false);
                     done();
                 });
                 it('\u7121\u52B9\u306A\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {
@@ -20282,7 +20311,6 @@ describe('Olympic2020 test', function () {
                     [].reduce.call(ALL_VALID_CHARS, function (o, char) {
                         var res = o.to(char);
                         _powerAssert2['default'].equal(o.char, char);
-                        _powerAssert2['default'].ok(res);
                         return o;
                     }, o);
                     done();

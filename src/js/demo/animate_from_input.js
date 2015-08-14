@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px auto`; });
 
     let input   = document.querySelector('#user-input');
-    const ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
+    const allValidChars = Olympic2020.allValidChars;
 
     olms.forEach(olm => {
         wrapper.appendChild(olm.dom);

@@ -4,16 +4,16 @@ class Olympic2020 {
         if (typeof opt === 'object') {
             var { size, displayTime, duration, easing, roop, random, pedal } = opt;
         }
-        this.char = null;
-        this.dom  = _createDom();
-        this._displayTime = displayTime || 1000;
-        this._duration    = duration || 800;
-        this._easing      = easing || 'cubic-bezier(.26,.92,.41,.98)';
-        this._isAnimating = false;
-        this._resume      = null;
-        this._loop        = roop || false;
-        this._random      = random || false;
-        this._pedal       = pedal == null ? true : pedal;
+        this.char          =   null;
+        this.dom           =   _createDom();
+        this._displayTime  =   displayTime    || 1000;
+        this._duration     =   duration       || 800;
+        this._easing       =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
+        this._isAnimating  =   false;
+        this._resume       =   null;
+        this._loop         =   roop           || false;
+        this._random       =   random         || false;
+        this._pedal        =   pedal == null  ?  true    :  pedal;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -26,10 +26,10 @@ class Olympic2020 {
 
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
-        if (!FORMATION_TABLE[_c])            { return false; }
-        if (this._pedal && this.char === _c) { return false; }
-        _changeStyle.call(this, _c);
+        if (!formationTable[_c])            { return false; }
+        if (this.char === _c) { return false; }
         this.char = _c;
+        _changeStyle.call(this, _c);
         return true;
     }
 
@@ -64,7 +64,7 @@ class Olympic2020 {
             displayTime = this._displayTime;
         }
 
-        [].reduce.call(str, (p, c, idx) => {
+        [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
             let isLast = idx === str.length - 1;
             return p.then(() => {
                 return new Promise((resolve, reject) => {
@@ -99,6 +99,8 @@ class Olympic2020 {
     /*
      * seter and geter of propertys
      */
+
+    // --- size ---
     set size(size) {
         let domStyle = this.dom.style;
         domStyle.width  = `${ size }px`;
@@ -106,34 +108,41 @@ class Olympic2020 {
     }
     get size() { return +this.dom.style.width.replace('px', ''); }
 
+    // --- displayTime ---
     set displayTime(time) { this._displayTime = time; }
     get displayTime()     { return this._displayTime; }
 
+    // --- duration ---
     set duration(time) {
         this._duration = time;
         _updateTransitionConfig.call(this);
     }
-
     get duration() { return this._duration; }
 
+    // --- easing ---
     set easing(val) {
         this._easing = val;
         _updateTransitionConfig.call(this);
     }
     get easing() { return this._easing; }
 
+    // --- isAnimating ---
     get isAnimating() { return this._isAnimating; }
 
+    // --- loop ---
     set loop(bool) { this._loop = bool; }
     get loop()     { return this._loop; }
 
+    // --- random ---
     set random(bool) { this._random = bool; }
     get random()     { return this._random; }
 
+    // --- pedal ---
     set pedal(bool) { this._pedal = bool; }
     get pedal()     { return this._pedal; }
 
-    static get ALL_VALID_CHARS() { return Object.keys(FORMATION_TABLE); }
+    // --- allValidChars ---
+    static get allValidChars() { return Object.keys(formationTable); }
 }
 
 
@@ -142,7 +151,7 @@ function _createDom() {
 }
 
 function _changeStyle(c) { // @bind this
-    let classTable = FORMATION_TABLE[c];
+    let classTable = formationTable[c];
     [].forEach.call(this.dom.childNodes, (node, idx) => {
         let pos;
         // fix for '/'
@@ -229,7 +238,7 @@ const BL     = "part blank";
 /*
  * formation settings of all characters.
  */
-const FORMATION_TABLE = {
+const formationTable = {
     "a": [
         G_R180, P1,     G_R270,
         S_R0,   C_S,    S_R90,
