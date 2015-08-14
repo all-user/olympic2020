@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
         vertical: 3,
         horizon: 7,
         display: 1500,
-        duration: 800,
+        duration: 1500,
         msg: COPYS
     };
 
