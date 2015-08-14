@@ -79,6 +79,33 @@ describe('Olympic2020 test', () => {
                     }, o);
                     done();
                 });
+
+                it('olympic2020.optionにオブジェクトを渡して設定', done => {
+                    let size        = 800;
+                    let displayTime = 3000;
+                    let duration    = 1200;
+                    let easing      = 'cubic-bezier(.1,.8,.5,.9)';
+                    let loop        = false;
+                    let random      = true;
+                    let pedal       = false;
+                    let opt = {
+                        size,
+                        displayTime,
+                        duration,
+                        easing,
+                        loop,
+                        random,
+                        pedal,
+                    };
+                    o.option = opt;
+                    assert.equal(o.displayTime, displayTime);
+                    assert.equal(o.duration,    duration);
+                    assert.equal(o.easing,      easing);
+                    assert.equal(o.loop,        loop);
+                    assert.equal(o.random,      random);
+                    assert.equal(o.pedal,       pedal);
+                    done();
+                });
             });
         });
 

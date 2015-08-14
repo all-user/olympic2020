@@ -1,19 +1,30 @@
+const CHAR_PROP         = Symbol();
+const DOM_PROP          = Symbol();
+const DISPLAY_TIME_PROP = Symbol();
+const DURATION_PROP     = Symbol();
+const EASING_PROP       = Symbol();
+const IS_ANIMATING_PROP = Symbol();
+const RESUME_PROP       = Symbol();
+const LOOP_PROP         = Symbol();
+const RANDOM_PROP       = Symbol();
+const PEDAL_PROP        = Symbol();
+
 class Olympic2020 {
 
     constructor(c, opt) {
         if (typeof opt === 'object') {
             var { size, displayTime, duration, easing, roop, random, pedal } = opt;
         }
-        this.char          =   null;
-        this.dom           =   _createDom();
-        this._displayTime  =   displayTime    || 1000;
-        this._duration     =   duration       || 800;
-        this._easing       =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
-        this._isAnimating  =   false;
-        this._resume       =   null;
-        this._loop         =   roop           || false;
-        this._random       =   random         || false;
-        this._pedal        =   pedal == null  ?  true    :  pedal;
+        this[CHAR_PROP]          =   null;
+        this[DOM_PROP]           =   _createDom();
+        this[DISPLAY_TIME_PROP]  =   displayTime    || 1000;
+        this[DURATION_PROP]      =   duration       || 800;
+        this[EASING_PROP]        =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
+        this[IS_ANIMATING_PROP]  =   false;
+        this[RESUME_PROP]        =   null;
+        this[LOOP_PROP]          =   roop           || false;
+        this[RANDOM_PROP]        =   random         || false;
+        this[PEDAL_PROP]         =   pedal == null  ?  true    :  pedal;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -26,79 +37,110 @@ class Olympic2020 {
 
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
-        if (!formationTable[_c])            { return false; }
-        if (this.char === _c) { return false; }
-        this.char = _c;
+        if (!formationTable[_c])    { return false; }
+        if (this[CHAR_PROP] === _c) { return false; }
+        this[CHAR_PROP] = _c;
         _changeStyle.call(this, _c);
         return true;
     }
 
     appendTo(parent) {
-        parent.appendChild(this.dom);
+        parent.appendChild(this[DOM_PROP]);
     }
 
     stopAnimate() {
-        this._isAnimating = false;
+        this[IS_ANIMATING_PROP] = false;
     }
 
     resumeAnimate() {
-        this._isAnimating = true;
-        this._resume();
+        this[IS_ANIMATING_PROP] = true;
+        this[RESUME_PROP]();
     }
 
     animateFromString(str, opt) {
         if (typeof opt === 'object') {
             var { displayTime, loop, random } = opt;
         }
-        this._isAnimating = true;
-        this._resume      = null;
+        this[IS_ANIMATING_PROP] = true;
+        this[RESUME_PROP]       = null;
         if (loop != null) {
-            this._loop = loop;
+            this[LOOP_PROP] = loop;
         }
         if (random != null) {
-            this._random = random;
+            this[RANDOM_PROP] = random;
         }
         if (typeof displayTime === 'number' && displayTime > 0) {
-            this._displayTime = displayTime;
+            this[DISPLAY_TIME_PROP] = displayTime;
         } else {
-            displayTime = this._displayTime;
+            displayTime = this[DISPLAY_TIME_PROP];
         }
 
         [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
             let isLast = idx === str.length - 1;
             return p.then(() => {
                 return new Promise((resolve, reject) => {
-                    if (!this._isAnimating) {
-                        this._resume = resolve;
+                    if (!this[IS_ANIMATING_PROP]) {
+                        this[RESUME_PROP] = resolve;
                         return;
                     }
-                    if (this._random) {
+                    if (this[RANDOM_PROP]) {
                         let _c = str[Math.random() * str.length | 0];
                         this.to(_c);
                     } else {
                         this.to(c);
                     }
                     if (isLast) {
-                        if (this._loop) {
+                        if (this[LOOP_PROP]) {
                             setTimeout(() => {
                                 this.animateFromString.call(this, str);
                                 resolve();
-                            }, this._displayTime);
+                            }, this[DISPLAY_TIME_PROP]);
                             return;
                         } else {
-                            setTimeout(reject, this._displayTime);
+                            setTimeout(reject, this[DISPLAY_TIME_PROP]);
                             return;
                         }
                     }
-                    setTimeout(resolve, this._displayTime);
+                    setTimeout(resolve, this[DISPLAY_TIME_PROP]);
                 });
             });
-        }, Promise.resolve()).catch(() => { this._isAnimating = false; });
+        }, Promise.resolve()).catch(() => { this[IS_ANIMATING_PROP] = false; });
     }
 
     /*
      * seter and geter of propertys
      */
+
+    // --- option object asignment ---
+    set option(opt) {
+        let { size, displayTime, duration, easing, loop, random, pedal } = opt;
+        this.size               = size;    // use setter
+        this[DISPLAY_TIME_PROP] = displayTime;
+        // call _updateTransitionConfig after assign parms.
+        this[DURATION_PROP]     = duration;
+        this.easing             = easing;  // use setter
+        // ---
+        this[LOOP_PROP]         = loop;
+        this[RANDOM_PROP]       = random;
+        this[PEDAL_PROP]        = pedal;
+    }
+    get option() {
+        return {
+            size:        this.size,
+            displaytime: this[DISPLAY_TIME_PROP],
+            duration:    this[DURATION_PROP],
+            easing:      this[EASING_PROP],
+            loop:        this[LOOP_PROP],
+            random:      this[RANDOM_PROP],
+            pedal:       this[PEDAL_PROP],
+        }
+    }
+
+    // --- dom ---
+    get dom() { return this[DOM_PROP]; }
+
+    // --- char ---
+    get char() { return this[CHAR_PROP]; }
 
     // --- size ---
     set size(size) {
@@ -106,40 +148,40 @@ class Olympic2020 {
         domStyle.width  = `${ size }px`;
         domStyle.height = `${ size }px`;
     }
-    get size() { return +this.dom.style.width.replace('px', ''); }
+    get size() { return +this[DOM_PROP].style.width.replace('px', ''); }
 
     // --- displayTime ---
-    set displayTime(time) { this._displayTime = time; }
-    get displayTime()     { return this._displayTime; }
+    set displayTime(time) { this[DISPLAY_TIME_PROP] = time; }
+    get displayTime()     { return this[DISPLAY_TIME_PROP]; }
 
     // --- duration ---
     set duration(time) {
-        this._duration = time;
+        this[DURATION_PROP] = time;
         _updateTransitionConfig.call(this);
     }
-    get duration() { return this._duration; }
+    get duration() { return this[DURATION_PROP]; }
 
     // --- easing ---
     set easing(val) {
-        this._easing = val;
+        this[EASING_PROP] = val;
         _updateTransitionConfig.call(this);
     }
-    get easing() { return this._easing; }
+    get easing() { return this[EASING_PROP]; }
 
     // --- isAnimating ---
-    get isAnimating() { return this._isAnimating; }
+    get isAnimating() { return this[IS_ANIMATING_PROP]; }
 
     // --- loop ---
-    set loop(bool) { this._loop = bool; }
-    get loop()     { return this._loop; }
+    set loop(bool) { this[LOOP_PROP] = bool; }
+    get loop()     { return this[LOOP_PROP]; }
 
     // --- random ---
-    set random(bool) { this._random = bool; }
-    get random()     { return this._random; }
+    set random(bool) { this[RANDOM_PROP] = bool; }
+    get random()     { return this[RANDOM_PROP]; }
 
     // --- pedal ---
-    set pedal(bool) { this._pedal = bool; }
-    get pedal()     { return this._pedal; }
+    set pedal(bool) { this[PEDAL_PROP] = bool; }
+    get pedal()     { return this[PEDAL_PROP]; }
 
     // --- allValidChars ---
     static get allValidChars() { return Object.keys(formationTable); }
@@ -147,12 +189,12 @@ class Olympic2020 {
 
 
 function _createDom() {
-    return baseDom.cloneNode(true);
+    return BASE_DOM.cloneNode(true);
 }
 
 function _changeStyle(c) { // @bind this
     let classTable = formationTable[c];
-    [].forEach.call(this.dom.childNodes, (node, idx) => {
+    [].forEach.call(this[DOM_PROP].childNodes, (node, idx) => {
         let pos;
         // fix for '/'
         if (c === '/' && idx === 0) {
@@ -168,10 +210,10 @@ function _changeStyle(c) { // @bind this
 
 function _updateTransitionConfig() { // @bind this
     let val = TRANSITION_PROPS.reduce((str, prop, idx) => {
-        return `${ str }${ idx ? ',' : '' } ${ prop } ${ this._duration }ms ${ this._easing }`;
+        return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[DURATION_PROP] }ms ${ this[EASING_PROP] }`;
     }, '');
 
-    _updateStyle(this.dom.childNodes);
+    _updateStyle(this[DOM_PROP].childNodes);
 
     function _updateStyle(list) {
         [].forEach.call(list, node => {
@@ -184,7 +226,7 @@ function _updateTransitionConfig() { // @bind this
 /*
  * original of emblem dom.
  */
-let baseDom = (() => {
+const BASE_DOM = (() => {
     let wrapper      = document.createElement('div');
     let part         = document.createElement('div');
     let whiteCircleW = document.createElement('div');
