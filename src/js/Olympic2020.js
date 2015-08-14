@@ -238,7 +238,7 @@ const BL     = "part blank";
 /*
  * formation settings of all characters.
  */
-const formationTable = {
+let formationTable = {
     "a": [
         G_R180, P1,     G_R270,
         S_R0,   C_S,    S_R90,
