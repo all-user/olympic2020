@@ -1339,14 +1339,14 @@ var Olympic2020 = (function () {
         key: 'to',
         value: function to(c) {
             var _c = c && c.toLowerCase && c.toLowerCase();
-            if (!FORMATION_TABLE[_c]) {
+            if (!formationTable[_c]) {
                 return false;
             }
-            if (this._pedal && this.char === _c) {
+            if (this.char === _c) {
                 return false;
             }
-            _changeStyle.call(this, _c);
             this.char = _c;
+            _changeStyle.call(this, _c);
             return true;
         }
     }, {
@@ -1390,6 +1390,7 @@ var Olympic2020 = (function () {
             }
 
             [].reduce.call(str, function (p, c, idx) {
+                // p = Promise.resolve(); c = str[idx];
                 var isLast = idx === str.length - 1;
                 return p.then(function () {
                     return new Promise(function (resolve, reject) {
@@ -1426,6 +1427,8 @@ var Olympic2020 = (function () {
         /*
          * seter and geter of propertys
          */
+
+        // --- size ---
     }, {
         key: 'size',
         set: function set(size) {
@@ -1436,6 +1439,8 @@ var Olympic2020 = (function () {
         get: function get() {
             return +this.dom.style.width.replace('px', '');
         }
+
+        // --- displayTime ---
     }, {
         key: 'displayTime',
         set: function set(time) {
@@ -1444,6 +1449,8 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._displayTime;
         }
+
+        // --- duration ---
     }, {
         key: 'duration',
         set: function set(time) {
@@ -1453,6 +1460,8 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._duration;
         }
+
+        // --- easing ---
     }, {
         key: 'easing',
         set: function set(val) {
@@ -1462,11 +1471,15 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._easing;
         }
+
+        // --- isAnimating ---
     }, {
         key: 'isAnimating',
         get: function get() {
             return this._isAnimating;
         }
+
+        // --- loop ---
     }, {
         key: 'loop',
         set: function set(bool) {
@@ -1475,6 +1488,8 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._loop;
         }
+
+        // --- random ---
     }, {
         key: 'random',
         set: function set(bool) {
@@ -1483,6 +1498,8 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._random;
         }
+
+        // --- pedal ---
     }, {
         key: 'pedal',
         set: function set(bool) {
@@ -1491,10 +1508,12 @@ var Olympic2020 = (function () {
         get: function get() {
             return this._pedal;
         }
+
+        // --- allValidChars ---
     }], [{
-        key: 'ALL_VALID_CHARS',
+        key: 'allValidChars',
         get: function get() {
-            return Object.keys(FORMATION_TABLE);
+            return Object.keys(formationTable);
         }
     }]);
 
@@ -1507,7 +1526,7 @@ function _createDom() {
 
 function _changeStyle(c) {
     // @bind this
-    var classTable = FORMATION_TABLE[c];
+    var classTable = formationTable[c];
     [].forEach.call(this.dom.childNodes, function (node, idx) {
         var pos = undefined;
         // fix for '/'
@@ -1600,7 +1619,7 @@ var BL = "part blank";
 /*
  * formation settings of all characters.
  */
-var FORMATION_TABLE = {
+var formationTable = {
     "a": [G_R180, P1, G_R270, S_R0, C_S, S_R90, P1, BL, P1],
     "b": [BL, P3_V, G_R90, BL, BL, S_R90, BL, BL, S_R180],
     "c": [S_R180, P1, G_R90, P1, BL, BL, G_R90, P1, S_R180],

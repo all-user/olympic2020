@@ -55,6 +55,15 @@ describe('Olympic2020 test', () => {
                     done();
                 });
 
+                it('this.pedal有効時、現在の文字と同じ文字を与えるとfalseを返し、this.charは変化しない', done => {
+                    o.to(BASE_CHAR_LOWER);
+                    let res = o.to(BASE_CHAR_LOWER);
+                    assert.equal(o.char, BASE_CHAR_LOWER);
+                    assert.ok(o.pedal);
+                    assert.equal(res, false);
+                    done();
+                });
+
                 it('無効な文字を与えるとfalseを返し、this.charは変化しない', done => {
                     let res = o.to(BASE_CHAR_INVALID);
                     assert.equal(o.char, null);
@@ -66,7 +75,6 @@ describe('Olympic2020 test', () => {
                     [].reduce.call(ALL_VALID_CHARS, (o, char) => {
                         let res = o.to(char);
                         assert.equal(o.char, char);
-                        assert.ok(res);
                         return o;
                     }, o);
                     done();
@@ -93,16 +101,26 @@ describe('Olympic2020 test', () => {
                 it('小文字を与えると小文字になる', done => {
                     let res = o.to(BASE_CHAR_LOWER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.ok(res);
+                    assert.equal(res, false);
                     done();
                 });
 
                 it('大文字を与えても小文字になる', done => {
                     let res = o.to(BASE_CHAR_UPPER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.ok(res);
+                    assert.equal(res, false);
                     done();
                 });
+
+                it('this.pedal有効時、現在の文字と同じ文字を与えるとfalseを返し、this.charは変化しない', done => {
+                    o.to(BASE_CHAR_LOWER);
+                    let res = o.to(BASE_CHAR_LOWER);
+                    assert.equal(o.char, BASE_CHAR_LOWER);
+                    assert.ok(o.pedal);
+                    assert.equal(res, false);
+                    done();
+                });
+
 
                 it('無効な文字を与えるとfalseを返し、this.charは変化しない', done => {
                     let res = o.to(BASE_CHAR_INVALID);
@@ -115,7 +133,6 @@ describe('Olympic2020 test', () => {
                     [].reduce.call(ALL_VALID_CHARS, (o, char) => {
                       let res = o.to(char);
                       assert.equal(o.char, char);
-                      assert.ok(res);
                       return o;
                     }, o);
                     done();

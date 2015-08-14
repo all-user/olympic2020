@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     var input = document.querySelector('#user-input');
-    var ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
+    var allValidChars = Olympic2020.allValidChars;
 
     olms.forEach(function (olm) {
         wrapper.appendChild(olm.dom);

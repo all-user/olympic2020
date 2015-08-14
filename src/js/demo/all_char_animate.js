@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bigEmblem.dom.style.margin = `${ MARGIN }px`;
     olms.push(bigEmblem);
 
-    const ALL_VALID_CHARS = Olympic2020.ALL_VALID_CHARS;
+    const allValidChars = Olympic2020.allValidChars;
 
     olms.forEach((olm, idx) => {
         olm.dom.addEventListener('click', () => {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
         wrapper.appendChild(olm.dom);
 
         setTimeout(() => {
-            olm.animateFromString(ALL_VALID_CHARS, { loop: true });
+            olm.animateFromString(allValidChars, { loop: true });
         }, 1000);
     });
 
