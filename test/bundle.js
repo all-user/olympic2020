@@ -19460,9 +19460,7 @@ function _changeStyle(c) {
             pos = 'pos_' + idx % 3 + '_' + (idx / 3 | 0);
         }
         node.className = classTable[idx] + ' ' + pos;
-        if ([].some.call(node.classList, function (c) {
-                return ROTATE_TABLE.indexOf(c) !== -1;
-            })) {
+        if (node.classList.contains('arc')) {
             return;
         }
         node.classList.add(ROTATE_TABLE[Math.random() * 4 | 0]);
@@ -20290,7 +20288,6 @@ describe('Olympic2020 test', function () {
                 it('\u5927\u6587\u5B57\u3092\u4E0E\u3048\u3066\u3082\u5C0F\u6587\u5B57\u306B\u306A\u308B', function (done) {
                     var res = o.to(BASE_CHAR_UPPER);
                     _powerAssert2['default'].equal(o.char, BASE_CHAR_LOWER);
-                    _powerAssert2['default'].equal(res, false);
                     done();
                 });
                 it('this.pedal\u6709\u52B9\u6642\u3001\u73FE\u5728\u306E\u6587\u5B57\u3068\u540C\u3058\u6587\u5B57\u3092\u4E0E\u3048\u308B\u3068false\u3092\u8FD4\u3057\u3001this.char\u306F\u5909\u5316\u3057\u306A\u3044', function (done) {

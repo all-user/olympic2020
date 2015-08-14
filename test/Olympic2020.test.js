@@ -108,7 +108,6 @@ describe('Olympic2020 test', () => {
                 it('大文字を与えても小文字になる', done => {
                     let res = o.to(BASE_CHAR_UPPER);
                     assert.equal(o.char, BASE_CHAR_LOWER);
-                    assert.equal(res, false);
                     done();
                 });
 

@@ -161,9 +161,7 @@ function _changeStyle(c) { // @bind this
             pos = `pos_${ idx % 3 }_${ idx / 3 | 0 }`;
         }
         node.className = `${ classTable[idx] } ${ pos }`;
-        if ([].some.call(node.classList, c => ROTATE_TABLE.indexOf(c) !== -1)) {
-            return;
-        }
+        if (node.classList.contains('arc')) { return; }
         node.classList.add(ROTATE_TABLE[Math.random() * 4 | 0]);
     });
 }
@@ -201,7 +199,8 @@ let baseDom = (() => {
     whiteCircleW.appendChild(whiteCircle);
     part.appendChild(whiteCircleW);
 
-    // div.wrapper > div.part * 9 (emmet syntax)
+    // in emmet syntax.
+    // div.wrapper > div.part * 9
     for (let i = 0; i < 9; i++) {
         let _part = part.cloneNode(true);
         _part.classList.add(`pos_${ i % 3 }_${ i / 3 | 0 }`);

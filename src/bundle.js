@@ -1536,9 +1536,7 @@ function _changeStyle(c) {
             pos = 'pos_' + idx % 3 + '_' + (idx / 3 | 0);
         }
         node.className = classTable[idx] + ' ' + pos;
-        if ([].some.call(node.classList, function (c) {
-            return ROTATE_TABLE.indexOf(c) !== -1;
-        })) {
+        if (node.classList.contains('arc')) {
             return;
         }
         node.classList.add(ROTATE_TABLE[Math.random() * 4 | 0]);
@@ -1583,7 +1581,8 @@ var baseDom = (function () {
     whiteCircleW.appendChild(whiteCircle);
     part.appendChild(whiteCircleW);
 
-    // div.wrapper > div.part * 9 (emmet syntax)
+    // in emmet syntax.
+    // div.wrapper > div.part * 9
     for (var i = 0; i < 9; i++) {
         var _part = part.cloneNode(true);
         _part.classList.add('pos_' + i % 3 + '_' + (i / 3 | 0));

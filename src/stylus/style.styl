@@ -12,10 +12,12 @@
 // .olympic-emblem .part .white_circle_wrapper .white_circle
 //   transition convert(gen_transition_prop($transition_props, $duration))
 
-.olympic-emblem .part,
-.olympic-emblem .part .white_circle_wrapper,
+.olympic-emblem .part
+  will-change top, left, background-color, border-radius, width, height
+.olympic-emblem .part .white_circle_wrapper
+  will-change top, left, width, height, visibility
 .olympic-emblem .part .white_circle_wrapper .white_circle
-  will-change top, left, background-color, border-radius
+  will-change top, left, visibility
 
 .part
   margin     0
@@ -45,6 +47,9 @@
 
 .blank
   background transparent
+  .white_circle_wrapper
+    visibility hidden
+
 
 // detail
 
@@ -87,7 +92,8 @@
 
 .arc,
 .circle_s,
-.pole1
+.pole1,
+.blank
   .white_circle_wrapper
     width  100%
     height 100%
@@ -140,7 +146,8 @@
       left 100%
 
 .circle_s,
-.pole1
+.pole1,
+.blank
   &.rotate0
     .white_circle_wrapper
       top  200%
