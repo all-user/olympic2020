@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     olms.push(new Olympic2020('t', { size: sizeS,  displayTime: 1477, random: true }));
     olms.forEach(e => { e.dom.style.margin = `${ MARGIN }px`; });
 
-    let bigEmblem = new Olympic2020('/', { size: sizeL });
+    let bigEmblem = new Olympic2020('/', { size: sizeL, displayTime: 1000, duration: 800 });
     bigEmblem.dom.style.margin = `${ MARGIN }px`;
     olms.push(bigEmblem);
 
