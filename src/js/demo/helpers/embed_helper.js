@@ -1,23 +1,23 @@
 import { computedStyles } from './computed_styles.js';
 
-let verticalInput, horizonInput, displayInput, durationInput, messageInput, iWidthInput, iHeightInput;
+let forms = {};
 
 function getInputValues() {
-    verticalInput = verticalInput || document.querySelector('#vertical');
-    horizonInput  = horizonInput  || document.querySelector('#horizon');
-    displayInput  = displayInput  || document.querySelector('#display');
-    durationInput = durationInput || document.querySelector('#duration');
-    messageInput  = messageInput  || document.querySelector('#message');
-    iWidthInput   = iWidthInput   || document.querySelector('#i-width');
-    iHeightInput  = iHeightInput  || document.querySelector('#i-height');
+    forms.verticalInput = forms.verticalInput || document.querySelector('#vertical');
+    forms.horizonInput  = forms.horizonInput  || document.querySelector('#horizon');
+    forms.displayInput  = forms.displayInput  || document.querySelector('#display');
+    forms.durationInput = forms.durationInput || document.querySelector('#duration');
+    forms.messageInput  = forms.messageInput  || document.querySelector('#message');
+    forms.iWidthInput   = forms.iWidthInput   || document.querySelector('#i-width');
+    forms.iHeightInput  = forms.iHeightInput  || document.querySelector('#i-height');
 
-    let vertical = verticalInput.value | 0;
-    let horizon  = horizonInput.value | 0;
-    let display  = displayInput.value | 0;
-    let duration = durationInput.value | 0;
-    let msg      = messageInput.value.split('\n');
-    let width    = iWidthInput.value;
-    let height   = iHeightInput.value;
+    let vertical = forms.verticalInput.value | 0;
+    let horizon  = forms.horizonInput.value | 0;
+    let display  = forms.displayInput.value | 0;
+    let duration = forms.durationInput.value | 0;
+    let msg      = forms.messageInput.value.split('\n');
+    let width    = forms.iWidthInput.value;
+    let height   = forms.iHeightInput.value;
 
     return { vertical, horizon, display, duration, msg, width, height };
 }

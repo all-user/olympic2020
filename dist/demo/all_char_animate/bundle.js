@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         e.dom.style.margin = MARGIN + 'px';
     });
 
-    var bigEmblem = new Olympic2020('/', { size: sizeL, duration: 800 });
+    var bigEmblem = new Olympic2020('/', { size: sizeL, displayTime: 1000, duration: 800 });
     bigEmblem.dom.style.margin = MARGIN + 'px';
     olms.push(bigEmblem);
 

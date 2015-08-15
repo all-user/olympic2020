@@ -43,30 +43,24 @@ Object.defineProperty(exports, '__esModule', {
 
 var _computed_stylesJs = require('./computed_styles.js');
 
-var verticalInput = undefined,
-    horizonInput = undefined,
-    displayInput = undefined,
-    durationInput = undefined,
-    messageInput = undefined,
-    iWidthInput = undefined,
-    iHeightInput = undefined;
+var forms = {};
 
-function getInputValues() {
-    verticalInput = verticalInput || document.querySelector('#vertical');
-    horizonInput = horizonInput || document.querySelector('#horizon');
-    displayInput = displayInput || document.querySelector('#display');
-    durationInput = durationInput || document.querySelector('#duration');
-    messageInput = messageInput || document.querySelector('#message');
-    iWidthInput = iWidthInput || document.querySelector('#i-width');
-    iHeightInput = iHeightInput || document.querySelector('#i-height');
+function _getInputValues() {
+    forms.verticalInput = forms.verticalInput || document.querySelector('#vertical');
+    forms.horizonInput = forms.horizonInput || document.querySelector('#horizon');
+    forms.displayInput = forms.displayInput || document.querySelector('#display');
+    forms.durationInput = forms.durationInput || document.querySelector('#duration');
+    forms.messageInput = forms.messageInput || document.querySelector('#message');
+    forms.iWidthInput = forms.iWidthInput || document.querySelector('#i-width');
+    forms.iHeightInput = forms.iHeightInput || document.querySelector('#i-height');
 
-    var vertical = verticalInput.value | 0;
-    var horizon = horizonInput.value | 0;
-    var display = displayInput.value | 0;
-    var duration = durationInput.value | 0;
-    var msg = messageInput.value.split('\n');
-    var width = iWidthInput.value;
-    var height = iHeightInput.value;
+    var vertical = forms.verticalInput.value | 0;
+    var horizon = forms.horizonInput.value | 0;
+    var display = forms.displayInput.value | 0;
+    var duration = forms.durationInput.value | 0;
+    var msg = forms.messageInput.value.split('\n');
+    var width = forms.iWidthInput.value;
+    var height = forms.iHeightInput.value;
 
     return { vertical: vertical, horizon: horizon, display: display, duration: duration, msg: msg, width: width, height: height };
 }
