@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         vertical: 3,
         horizon: 7,
         display: 1500,
-        duration: 1500,
+        duration: 800,
         msg: COPYS
     };
 

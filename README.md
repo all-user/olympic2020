@@ -2,8 +2,6 @@
 
 Generate emblem of Olympic in 2020.
 
-<iframe style="width:100%;height:100vh;border:none;" src="https://all-user.github.io/olympic2020/demo/embed_response/index.html?vertical=1&horizon=1&display=1500&duration=1500&msg=a%2Cb%2Cc%2Cd%2Ce%2Cf%2Cg%2Ch%2Ci%2Cj%2Ck%2Cl%2Cm%2Cn%2Co%2Cp%2Cq%2Cr%2Cs%2Ct%2Cu%2Cv%2Cw%2Cx%2Cy%2Cz%2C0%2C1%2C2%2C3%2C4%2C5%2C6%2C7%2C8%2C9%2C%21%2C%3A%2C%3B%2C.%2C%27%2C%2F%2C_"></iframe>
-
 ## Usage
 
 ```shell
