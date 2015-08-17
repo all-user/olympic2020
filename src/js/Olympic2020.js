@@ -9,21 +9,45 @@ const LOOP_PROP         = Symbol();
 const RANDOM_PROP       = Symbol();
 const PEDAL_PROP        = Symbol();
 
+/**
+ * エンブレム１文字を表現するクラス
+ */
 class Olympic2020 {
 
+    /**
+     * @param {string}  [c=null]                - エンブレムが表す文字の初期値
+     * @param {Object}  [opt]                   - その他のオプション
+     * @param {number}  [opt.size=100]          - エンブレムの大きさ、単位はpx
+     * @param {number}  [opt.displayTime=1500]  - アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間
+     * @param {number}  [opt.duration=1000]     - アニメーション時、次の文字に変化するのに掛かる時間
+     * @param {boolean} [opt.loop=false]        - animateFromString実行時、アニメーションをループさせるかどうか
+     * @param {boolean} [opt.raondom=false]     - animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @param {boolean} [opt.pedal=true]        - アニメーション時、次に変化する文字が同じ場合何もしない
+     * @param {number}  [opt.easing='cubic-bezier(.26,.92,.41,.98)'] - 次の文字に変化するアニメーションのイージング、CSS3timing-function
+     */
     constructor(c, opt) {
         if (typeof opt === 'object') {
             var { size, displayTime, duration, easing, roop, random, pedal } = opt;
         }
+        /** @access private */
         this[CHAR_PROP]          =   null;
+        /** @access private */
         this[DOM_PROP]           =   _createDom();
+        /** @access private */
         this[DISPLAY_TIME_PROP]  =   displayTime    || 1500;
+        /** @access private */
         this[DURATION_PROP]      =   duration       || 1000;
+        /** @access private */
         this[EASING_PROP]        =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
+        /** @access private */
         this[IS_ANIMATING_PROP]  =   false;
+        /** @access private */
         this[RESUME_PROP]        =   null;
+        /** @access private */
         this[LOOP_PROP]          =   roop           || false;
+        /** @access private */
         this[RANDOM_PROP]        =   random         || false;
+        /** @access private */
         this[PEDAL_PROP]         =   pedal == null  ?  true    :  pedal;
 
         _updateTransitionConfig.call(this);
@@ -35,6 +59,11 @@ class Olympic2020 {
         this.to(c);
     }
 
+    /**
+     * エンブレムを別の文字に変化させる
+     * @param  {string}  c - 変化させる文字
+     * @return {boolean}   - 与えられた文字に変化した場合はtrue、文字が不正もしくは変化しない場合falseを返す
+     */
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
         if (!formationTable[_c])    { return false; }
@@ -44,19 +73,32 @@ class Olympic2020 {
         return true;
     }
 
+    /**
+     * 与えられた要素にエンブレムを追加する
+     * @param {ParentNode} parent - エンブレムを追加する親要素
+     */
     appendTo(parent) {
         parent.appendChild(this[DOM_PROP]);
     }
 
+    /**
+     * animateFromStringの実行を中断する
+     */
     stopAnimate() {
         this[IS_ANIMATING_PROP] = false;
     }
 
+    /**
+     * stopAnimateで中断したアニメーションを再開する
+     */
     resumeAnimate() {
         this[IS_ANIMATING_PROP] = true;
         this[RESUME_PROP]();
     }
 
+    /**
+     * 文字列に沿って
+     */
     animateFromString(str, opt) {
         if (typeof opt === 'object') {
             var { displayTime, loop, random } = opt;
