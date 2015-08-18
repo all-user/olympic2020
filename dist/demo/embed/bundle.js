@@ -87,7 +87,7 @@ var _computed_stylesJs = require('./computed_styles.js');
 
 var forms = {};
 
-function _getInputValues() {
+function getInputValues() {
     forms.verticalInput = forms.verticalInput || document.querySelector('#vertical');
     forms.horizonInput = forms.horizonInput || document.querySelector('#horizon');
     forms.displayInput = forms.displayInput || document.querySelector('#display');
