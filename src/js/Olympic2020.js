@@ -1,19 +1,18 @@
-const CHAR_PROP         = Symbol();
-const DOM_PROP          = Symbol();
-const DISPLAY_TIME_PROP = Symbol();
-const DURATION_PROP     = Symbol();
+const _CHAR_PROP         = Symbol();
+const _DOM_PROP          = Symbol();
+const _DISPLAY_TIME_PROP = Symbol();
+const _DURATION_PROP     = Symbol();
 const EASING_PROP       = Symbol();
 const IS_ANIMATING_PROP = Symbol();
 const RESUME_PROP       = Symbol();
 const LOOP_PROP         = Symbol();
-const RANDOM_PROP       = Symbol();
+const RAN_DOM_PROP       = Symbol();
 const PEDAL_PROP        = Symbol();
 
 /**
  * エンブレム１文字を表現するクラス
  */
 class Olympic2020 {
-
     /**
      * @param {string}  [c=null]                - エンブレムが表す文字の初期値
      * @param {Object}  [opt]                   - その他のオプション
@@ -21,22 +20,18 @@ class Olympic2020 {
      * @param {number}  [opt.displayTime=1500]  - アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間
      * @param {number}  [opt.duration=1000]     - アニメーション時、次の文字に変化するのに掛かる時間
      * @param {boolean} [opt.loop=false]        - animateFromString実行時、アニメーションをループさせるかどうか
-     * @param {boolean} [opt.raondom=false]     - animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ
-     * @param {boolean} [opt.pedal=true]        - アニメーション時、次に変化する文字が同じ場合何もしない
+     * @param {boolean} [opt.random=false]      - animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @param {boolean} [opt.pedal=true]        - エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない
      * @param {number}  [opt.easing='cubic-bezier(.26,.92,.41,.98)'] - 次の文字に変化するアニメーションのイージング、CSS3timing-function
      */
     constructor(c, opt) {
         if (typeof opt === 'object') {
             var { size, displayTime, duration, easing, roop, random, pedal } = opt;
         }
-        /** @access private */
-        this[CHAR_PROP]          =   null;
-        /** @access private */
-        this[DOM_PROP]           =   _createDom();
-        /** @access private */
-        this[DISPLAY_TIME_PROP]  =   displayTime    || 1500;
-        /** @access private */
-        this[DURATION_PROP]      =   duration       || 1000;
+        this[_CHAR_PROP]          =   null;
+        this[_DOM_PROP]           =   _createDom();
+        this[_DISPLAY_TIME_PROP]  =   displayTime    || 1500;
+        this[_DURATION_PROP]      =   duration       || 1000;
         /** @access private */
         this[EASING_PROP]        =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
         /** @access private */
@@ -46,14 +41,16 @@ class Olympic2020 {
         /** @access private */
         this[LOOP_PROP]          =   roop           || false;
         /** @access private */
-        this[RANDOM_PROP]        =   random         || false;
+        this[RAN_DOM_PROP]        =   random         || false;
         /** @access private */
         this[PEDAL_PROP]         =   pedal == null  ?  true    :  pedal;
 
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
+            /** @ignore size */
             this.size = size;
         } else {
+            /** @ignore size */
             this.size = 100;
         }
         this.to(c);
@@ -67,9 +64,9 @@ class Olympic2020 {
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
         if (!formationTable[_c])    { return false; }
-        if (this[CHAR_PROP] === _c) { return false; }
+        if (this[_CHAR_PROP] === _c) { return false; }
         _changeStyle.call(this, _c);
-        this[CHAR_PROP] = _c;
+        this[_CHAR_PROP] = _c;
         return true;
     }
 
@@ -78,7 +75,7 @@ class Olympic2020 {
      * @param {ParentNode} parent - エンブレムを追加する親要素
      */
     appendTo(parent) {
-        parent.appendChild(this[DOM_PROP]);
+        parent.appendChild(this[_DOM_PROP]);
     }
 
     /**
@@ -97,7 +94,8 @@ class Olympic2020 {
     }
 
     /**
-     * 文字列に沿って
+     * 与えられた文字列に沿って順に文字を変化せていく
+     * @param {string} str - アニメーションの元になる文字列、この文字列の先頭から順にエンブレムを変化させていく
      */
     animateFromString(str, opt) {
         if (typeof opt === 'object') {
@@ -109,12 +107,12 @@ class Olympic2020 {
             this[LOOP_PROP] = loop;
         }
         if (random != null) {
-            this[RANDOM_PROP] = random;
+            this[RAN_DOM_PROP] = random;
         }
         if (typeof displayTime === 'number' && displayTime > 0) {
-            this[DISPLAY_TIME_PROP] = displayTime;
+            this[_DISPLAY_TIME_PROP] = displayTime;
         } else {
-            displayTime = this[DISPLAY_TIME_PROP];
+            displayTime = this[_DISPLAY_TIME_PROP];
         }
 
         [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
@@ -125,7 +123,7 @@ class Olympic2020 {
                         this[RESUME_PROP] = resolve;
                         return;
                     }
-                    if (this[RANDOM_PROP]) {
+                    if (this[RAN_DOM_PROP]) {
                         let _c = str[Math.random() * str.length | 0];
                         this.to(_c);
                     } else {
@@ -136,14 +134,14 @@ class Olympic2020 {
                             setTimeout(() => {
                                 this.animateFromString.call(this, str);
                                 resolve();
-                            }, this[DISPLAY_TIME_PROP]);
+                            }, this[_DISPLAY_TIME_PROP]);
                             return;
                         } else {
-                            setTimeout(reject, this[DISPLAY_TIME_PROP]);
+                            setTimeout(reject, this[_DISPLAY_TIME_PROP]);
                             return;
                         }
                     }
-                    setTimeout(resolve, this[DISPLAY_TIME_PROP]);
+                    setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
                 });
             });
         }, Promise.resolve()).catch(() => { this[IS_ANIMATING_PROP] = false; });
@@ -154,88 +152,210 @@ class Olympic2020 {
      */
 
     // --- option object asignment ---
-    set option(opt) {
-        let { size, displayTime, duration, easing, loop, random, pedal } = opt;
+
+    /**
+     * オプションをまとめて設定する
+     * @example
+     * let o = new Olympic2020();
+     * o.option = { size: 200, displayTime: 1800 };
+     * @type     {Object}                - オプションの設定をまとめたオブジェクト
+     * @property {number}  [size]        - エンブレムの大きさ、単位はpx
+     * @property {number}  [displayTime] - アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間
+     * @property {number}  [duration]    - 次の文字に変化するアニメーションの時間
+     * @property {boolean} [loop]        - animateFromString実行時、アニメーションをループさせるかどうか
+     * @property {boolean} [random]      - animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @property {boolean} [pedal]       - アニメーション時、次に変化する文字が同じ場合何もしない
+     * @property {number}  [easing]      - 次の文字に変化するアニメーションのイージング、CSS3timing-function
+     */
+    set option({ size, displayTime, duration, loop, random, pedal, easing }) {
+        /** @ignore size */
         this.size               = size;    // use setter
-        this[DISPLAY_TIME_PROP] = displayTime;
+        this[_DISPLAY_TIME_PROP] = displayTime;
         // call _updateTransitionConfig after assign parms.
-        this[DURATION_PROP]     = duration;
+        this[_DURATION_PROP]     = duration;
+        /** @ignore size */
         this.easing             = easing;  // use setter
         // ---
         this[LOOP_PROP]         = loop;
-        this[RANDOM_PROP]       = random;
+        this[RAN_DOM_PROP]       = random;
         this[PEDAL_PROP]        = pedal;
     }
+    /**
+     * 現在のオプション設定を取得する
+     * @type {Object}
+     * @example
+     * let o   = new Olympic2020({ size: 200, displayTime: 1200 })
+     * let opt = o.option
+     * // {
+     * //     size       : 200,
+     * //     displayTime: 1200,
+     * //     duration   : 1000,
+     * //     loop       : false,
+     * //     random     : false,
+     * //     pedal      : true,
+     * //     easing     : 'cubic-bezier(.26,.92,.41,.98)'
+     * // }
+     */
     get option() {
         return {
             size:        this.size,
-            displaytime: this[DISPLAY_TIME_PROP],
-            duration:    this[DURATION_PROP],
+            displaytime: this[_DISPLAY_TIME_PROP],
+            duration:    this[_DURATION_PROP],
             easing:      this[EASING_PROP],
             loop:        this[LOOP_PROP],
-            random:      this[RANDOM_PROP],
+            random:      this[RAN_DOM_PROP],
             pedal:       this[PEDAL_PROP],
         }
     }
 
     // --- dom ---
-    get dom() { return this[DOM_PROP]; }
+
+    /**
+     * エンブレムを構成するDOMエレメント
+     * @type {HTMLDivElement}
+     */
+    get dom() { return this[_DOM_PROP]; }
 
     // --- char ---
-    get char() { return this[CHAR_PROP]; }
+
+    /**
+     * 現在のエンブレムの文字
+     * 未定義の場合はnull
+     * @type {string|null}
+     */
+    get char() { return this[_CHAR_PROP]; }
 
     // --- size ---
+
+    /**
+     * エンブレムの大きさを設定する
+     * 単位はpx
+     * @type {number}
+     */
     set size(size) {
         let domStyle = this.dom.style;
         domStyle.width  = `${ size }px`;
         domStyle.height = `${ size }px`;
     }
-    get size() { return +this[DOM_PROP].style.width.replace('px', ''); }
+    /**
+     * 現在のエンブレムの大きさ
+     * 単位はpx
+     * @type {number}
+     */
+    get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
 
     // --- displayTime ---
-    set displayTime(time) { this[DISPLAY_TIME_PROP] = time; }
-    get displayTime()     { return this[DISPLAY_TIME_PROP]; }
+
+    /**
+     * アニメーション時、durationの時間を含めて一文字が表示され続けている時間を設定する
+     * 単位は1/1000秒
+     * @type {number}
+     */
+    set displayTime(time) { this[_DISPLAY_TIME_PROP] = time; }
+    /**
+     * durationの時間を含めて一文字が表示され続けている時間
+     * 単位は1/1000秒
+     * @type {number}
+     */
+    get displayTime()     { return this[_DISPLAY_TIME_PROP]; }
 
     // --- duration ---
+
+    /**
+     * 次の文字に変化するアニメーションの時間を設定する
+     * 単位は1/1000秒
+     * @type {number}
+     */
     set duration(time) {
-        this[DURATION_PROP] = time;
+        this[_DURATION_PROP] = time;
         _updateTransitionConfig.call(this);
     }
-    get duration() { return this[DURATION_PROP]; }
+    /**
+     * 次の文字に変化するアニメーションの時間
+     * @type {number}
+     */
+    get duration() { return this[_DURATION_PROP]; }
 
     // --- easing ---
+
+    /**
+     * 次の文字に変化するアニメーションの動き、イージングを設定する、CSS3timing-functionに準拠した文字列
+     * @type {string}
+     */
     set easing(val) {
         this[EASING_PROP] = val;
         _updateTransitionConfig.call(this);
     }
+    /**
+     * 次の文字に変化するアニメーションのイージングを表す文字列、CSS3timing-functionに準拠した文字列
+     * @type {string}
+     */
     get easing() { return this[EASING_PROP]; }
 
     // --- isAnimating ---
+
+    /**
+     * 現在animateFromStringが実行中かどうか
+     * @type {boolean}
+     */
     get isAnimating() { return this[IS_ANIMATING_PROP]; }
 
     // --- loop ---
+
+    /**
+     * animateFromString実行時、アニメーションをループさせるかどうかを設定する
+     * @type {boolean}
+     */
     set loop(bool) { this[LOOP_PROP] = bool; }
+    /**
+     * animateFromString実行時、アニメーションのループが有効かどうか
+     * @type {boolean}
+     */
     get loop()     { return this[LOOP_PROP]; }
 
     // --- random ---
-    set random(bool) { this[RANDOM_PROP] = bool; }
-    get random()     { return this[RANDOM_PROP]; }
+
+    /**
+     * このオプションが有効の時animateFromStringを実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @type {boolean}
+     */
+    set random(bool) { this[RAN_DOM_PROP] = bool; }
+    /**
+     * このオプションが有効の時animateFromStringを実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @type {boolean}
+     */
+    get random()     { return this[RAN_DOM_PROP]; }
 
     // --- pedal ---
+
+    /**
+     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
+     * @type {boolean} bool
+     */
     set pedal(bool) { this[PEDAL_PROP] = bool; }
+    /**
+     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
+     * @type {boolean}
+     */
     get pedal()     { return this[PEDAL_PROP]; }
 
     // --- allValidChars ---
+
+    /**
+     * 現在エンブレムが変更可能な全ての文字
+     * 変更可能な文字を格納した配列
+     * @type {[string]}
+     */
     static get allValidChars() { return Object.keys(formationTable); }
 }
 
 
 function _createDom() {
-    return BASE_DOM.cloneNode(true);
+    return _BASE_DOM.cloneNode(true);
 }
 
 function _changeStyle(c) { // @bind this
-    let oldC         = this[CHAR_PROP];
+    let oldC         = this[_CHAR_PROP];
     let oldFormation = formationTable[oldC];
     let newFormation = formationTable[c];
     if (!newFormation) { return; }
@@ -248,7 +368,7 @@ function _changeStyle(c) { // @bind this
     } else {
         diffFormation = newFormation;
     }
-    [].forEach.call(this[DOM_PROP].childNodes, (node, idx) => {
+    [].forEach.call(this[_DOM_PROP].childNodes, (node, idx) => {
         if (!diffFormation[idx]) { return; }
         let pos;
         // fix for '/'
@@ -259,16 +379,16 @@ function _changeStyle(c) { // @bind this
         }
         node.className = `${ diffFormation[idx] } ${ pos }`;
         if (node.classList.contains('arc')) { return; }
-        node.classList.add(ROTATE_TABLE[Math.random() * 4 | 0]);
+        node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
     });
 }
 
 function _updateTransitionConfig() { // @bind this
     let val = TRANSITION_PROPS.reduce((str, prop, idx) => {
-        return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[DURATION_PROP] }ms ${ this[EASING_PROP] }`;
+        return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[_DURATION_PROP] }ms ${ this[EASING_PROP] }`;
     }, '');
 
-    _updateStyle(this[DOM_PROP].childNodes);
+    _updateStyle(this[_DOM_PROP].childNodes);
 
     function _updateStyle(list) {
         [].forEach.call(list, node => {
@@ -279,9 +399,9 @@ function _updateTransitionConfig() { // @bind this
 }
 
 /*
- * original of emblem dom.
+ *
  */
-const BASE_DOM = (() => {
+const _BASE_DOM = (() => {
     let wrapper      = document.createElement('div');
     let part         = document.createElement('div');
     let whiteCircleW = document.createElement('div');
@@ -309,7 +429,7 @@ const BASE_DOM = (() => {
 })();
 
 
-const ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
+const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
 
 /*
  * parts className table.

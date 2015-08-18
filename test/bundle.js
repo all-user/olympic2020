@@ -19439,15 +19439,15 @@ var _Symbol = require('babel-runtime/core-js/symbol')['default'];
 var _Promise = require('babel-runtime/core-js/promise')['default'];
 var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
 Object.defineProperty(exports, '__esModule', { value: true });
-var CHAR_PROP = _Symbol();
-var DOM_PROP = _Symbol();
-var DISPLAY_TIME_PROP = _Symbol();
-var DURATION_PROP = _Symbol();
+var _CHAR_PROP = _Symbol();
+var _DOM_PROP = _Symbol();
+var _DISPLAY_TIME_PROP = _Symbol();
+var _DURATION_PROP = _Symbol();
 var EASING_PROP = _Symbol();
 var IS_ANIMATING_PROP = _Symbol();
 var RESUME_PROP = _Symbol();
 var LOOP_PROP = _Symbol();
-var RANDOM_PROP = _Symbol();
+var RAN_DOM_PROP = _Symbol();
 var PEDAL_PROP = _Symbol();
 var Olympic2020 = function () {
     function Olympic2020(c, opt) {
@@ -19461,15 +19461,15 @@ var Olympic2020 = function () {
             var random = opt.random;
             var pedal = opt.pedal;
         }
-        this[CHAR_PROP] = null;
-        this[DOM_PROP] = _createDom();
-        this[DISPLAY_TIME_PROP] = displayTime || 1500;
-        this[DURATION_PROP] = duration || 1000;
+        this[_CHAR_PROP] = null;
+        this[_DOM_PROP] = _createDom();
+        this[_DISPLAY_TIME_PROP] = displayTime || 1500;
+        this[_DURATION_PROP] = duration || 1000;
         this[EASING_PROP] = easing || 'cubic-bezier(.26,.92,.41,.98)';
         this[IS_ANIMATING_PROP] = false;
         this[RESUME_PROP] = null;
         this[LOOP_PROP] = roop || false;
-        this[RANDOM_PROP] = random || false;
+        this[RAN_DOM_PROP] = random || false;
         this[PEDAL_PROP] = pedal == null ? true : pedal;
         _updateTransitionConfig.call(this);
         if (typeof size === 'number' && size > 0) {
@@ -19487,18 +19487,18 @@ var Olympic2020 = function () {
                 if (!formationTable[_c]) {
                     return false;
                 }
-                if (this[CHAR_PROP] === _c) {
+                if (this[_CHAR_PROP] === _c) {
                     return false;
                 }
                 _changeStyle.call(this, _c);
-                this[CHAR_PROP] = _c;
+                this[_CHAR_PROP] = _c;
                 return true;
             }
         },
         {
             key: 'appendTo',
             value: function appendTo(parent) {
-                parent.appendChild(this[DOM_PROP]);
+                parent.appendChild(this[_DOM_PROP]);
             }
         },
         {
@@ -19529,12 +19529,12 @@ var Olympic2020 = function () {
                     this[LOOP_PROP] = loop;
                 }
                 if (random != null) {
-                    this[RANDOM_PROP] = random;
+                    this[RAN_DOM_PROP] = random;
                 }
                 if (typeof displayTime === 'number' && displayTime > 0) {
-                    this[DISPLAY_TIME_PROP] = displayTime;
+                    this[_DISPLAY_TIME_PROP] = displayTime;
                 } else {
-                    displayTime = this[DISPLAY_TIME_PROP];
+                    displayTime = this[_DISPLAY_TIME_PROP];
                 }
                 [].reduce.call(str, function (p, c, idx) {
                     var isLast = idx === str.length - 1;
@@ -19544,7 +19544,7 @@ var Olympic2020 = function () {
                                 _this[RESUME_PROP] = resolve;
                                 return;
                             }
-                            if (_this[RANDOM_PROP]) {
+                            if (_this[RAN_DOM_PROP]) {
                                 var _c = str[Math.random() * str.length | 0];
                                 _this.to(_c);
                             } else {
@@ -19555,14 +19555,14 @@ var Olympic2020 = function () {
                                     setTimeout(function () {
                                         _this.animateFromString.call(_this, str);
                                         resolve();
-                                    }, _this[DISPLAY_TIME_PROP]);
+                                    }, _this[_DISPLAY_TIME_PROP]);
                                     return;
                                 } else {
-                                    setTimeout(reject, _this[DISPLAY_TIME_PROP]);
+                                    setTimeout(reject, _this[_DISPLAY_TIME_PROP]);
                                     return;
                                 }
                             }
-                            setTimeout(resolve, _this[DISPLAY_TIME_PROP]);
+                            setTimeout(resolve, _this[_DISPLAY_TIME_PROP]);
                         });
                     });
                 }, _Promise.resolve())['catch'](function () {
@@ -19572,30 +19572,30 @@ var Olympic2020 = function () {
         },
         {
             key: 'option',
-            set: function set(opt) {
-                var size = opt.size;
-                var displayTime = opt.displayTime;
-                var duration = opt.duration;
-                var easing = opt.easing;
-                var loop = opt.loop;
-                var random = opt.random;
-                var pedal = opt.pedal;
+            set: function set(_ref) {
+                var size = _ref.size;
+                var displayTime = _ref.displayTime;
+                var duration = _ref.duration;
+                var loop = _ref.loop;
+                var random = _ref.random;
+                var pedal = _ref.pedal;
+                var easing = _ref.easing;
                 this.size = size;
-                this[DISPLAY_TIME_PROP] = displayTime;
-                this[DURATION_PROP] = duration;
+                this[_DISPLAY_TIME_PROP] = displayTime;
+                this[_DURATION_PROP] = duration;
                 this.easing = easing;
                 this[LOOP_PROP] = loop;
-                this[RANDOM_PROP] = random;
+                this[RAN_DOM_PROP] = random;
                 this[PEDAL_PROP] = pedal;
             },
             get: function get() {
                 return {
                     size: this.size,
-                    displaytime: this[DISPLAY_TIME_PROP],
-                    duration: this[DURATION_PROP],
+                    displaytime: this[_DISPLAY_TIME_PROP],
+                    duration: this[_DURATION_PROP],
                     easing: this[EASING_PROP],
                     loop: this[LOOP_PROP],
-                    random: this[RANDOM_PROP],
+                    random: this[RAN_DOM_PROP],
                     pedal: this[PEDAL_PROP]
                 };
             }
@@ -19603,13 +19603,13 @@ var Olympic2020 = function () {
         {
             key: 'dom',
             get: function get() {
-                return this[DOM_PROP];
+                return this[_DOM_PROP];
             }
         },
         {
             key: 'char',
             get: function get() {
-                return this[CHAR_PROP];
+                return this[_CHAR_PROP];
             }
         },
         {
@@ -19620,26 +19620,26 @@ var Olympic2020 = function () {
                 domStyle.height = size + 'px';
             },
             get: function get() {
-                return +this[DOM_PROP].style.width.replace('px', '');
+                return +this[_DOM_PROP].style.width.replace('px', '');
             }
         },
         {
             key: 'displayTime',
             set: function set(time) {
-                this[DISPLAY_TIME_PROP] = time;
+                this[_DISPLAY_TIME_PROP] = time;
             },
             get: function get() {
-                return this[DISPLAY_TIME_PROP];
+                return this[_DISPLAY_TIME_PROP];
             }
         },
         {
             key: 'duration',
             set: function set(time) {
-                this[DURATION_PROP] = time;
+                this[_DURATION_PROP] = time;
                 _updateTransitionConfig.call(this);
             },
             get: function get() {
-                return this[DURATION_PROP];
+                return this[_DURATION_PROP];
             }
         },
         {
@@ -19670,10 +19670,10 @@ var Olympic2020 = function () {
         {
             key: 'random',
             set: function set(bool) {
-                this[RANDOM_PROP] = bool;
+                this[RAN_DOM_PROP] = bool;
             },
             get: function get() {
-                return this[RANDOM_PROP];
+                return this[RAN_DOM_PROP];
             }
         },
         {
@@ -19694,10 +19694,10 @@ var Olympic2020 = function () {
     return Olympic2020;
 }();
 function _createDom() {
-    return BASE_DOM.cloneNode(true);
+    return _BASE_DOM.cloneNode(true);
 }
 function _changeStyle(c) {
-    var oldC = this[CHAR_PROP];
+    var oldC = this[_CHAR_PROP];
     var oldFormation = formationTable[oldC];
     var newFormation = formationTable[c];
     if (!newFormation) {
@@ -19712,7 +19712,7 @@ function _changeStyle(c) {
     } else {
         diffFormation = newFormation;
     }
-    [].forEach.call(this[DOM_PROP].childNodes, function (node, idx) {
+    [].forEach.call(this[_DOM_PROP].childNodes, function (node, idx) {
         if (!diffFormation[idx]) {
             return;
         }
@@ -19726,15 +19726,15 @@ function _changeStyle(c) {
         if (node.classList.contains('arc')) {
             return;
         }
-        node.classList.add(ROTATE_TABLE[Math.random() * 4 | 0]);
+        node.classList.add(_ROTATE_TABLE[Math.random() * 4 | 0]);
     });
 }
 function _updateTransitionConfig() {
     var _this2 = this;
     var val = TRANSITION_PROPS.reduce(function (str, prop, idx) {
-        return '' + str + (idx ? ',' : '') + ' ' + prop + ' ' + _this2[DURATION_PROP] + 'ms ' + _this2[EASING_PROP];
+        return '' + str + (idx ? ',' : '') + ' ' + prop + ' ' + _this2[_DURATION_PROP] + 'ms ' + _this2[EASING_PROP];
     }, '');
-    _updateStyle(this[DOM_PROP].childNodes);
+    _updateStyle(this[_DOM_PROP].childNodes);
     function _updateStyle(list) {
         [].forEach.call(list, function (node) {
             node.style.transition = val;
@@ -19744,7 +19744,7 @@ function _updateTransitionConfig() {
         });
     }
 }
-var BASE_DOM = function () {
+var _BASE_DOM = function () {
     var wrapper = document.createElement('div');
     var part = document.createElement('div');
     var whiteCircleW = document.createElement('div');
@@ -19764,7 +19764,7 @@ var BASE_DOM = function () {
     wrapper.appendChild(docFrag);
     return wrapper;
 }();
-var ROTATE_TABLE = [
+var _ROTATE_TABLE = [
     'rotate0',
     'rotate90',
     'rotate180',
