@@ -2,9 +2,33 @@
 
 エンブレム１文字を表現するクラス
 
-## _Olympic2020 Constructor_
+## Usage
 
-### `constructor(c, opt)`
+```javascript
+var olm = Olympic2020('t', { size: 300 }); // initial charactor and size in px.
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    olm.appendTo(document.body);
+    // or other way.
+    // document.body.appendChild(olm.dom);
+    // olm.dom is instance of DOMElement.
+
+    olm.to('z'); // change to another charactor.
+
+    olm.animateFromString('tokyo olympic 2020'); // animate from string.
+
+    // grouping
+    var group = new EmblemGroup('tokyo 2020');
+
+    group.appendTo(document.body);
+});
+```
+
+
+## Olympic2020 Constructor
+
+### `Olympic2020(c, opt)`
 
 #### Arguments
 
@@ -18,9 +42,9 @@
   - __`[opt.pedal=true]`__ _(boolean)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない
   - __`[opt.easing='cubic-bezier(.26,.92,.41,.98)']`__ _(string)_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function
 
-## _Olympic2020 Instance Method_
+## Olympic2020 Instance Method
 
-### `Olympic2020#to(c)`
+### `olm.to(c)`
 
 エンブレムを別の文字に変化させる
 
