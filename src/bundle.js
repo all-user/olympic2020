@@ -1577,12 +1577,11 @@ var Olympic2020 = (function () {
             });
         }
 
-        /*
-         * setter and getter of properties
+        /**
+         * Setter and Getter
          */
 
-        // --- option object asignment ---
-
+        // --- option ---
     }, {
         key: 'option',
         set: function set(_ref) {
@@ -1615,7 +1614,6 @@ var Olympic2020 = (function () {
         }
 
         // --- size ---
-
     }, {
         key: 'size',
         set: function set(size) {
@@ -1627,21 +1625,11 @@ var Olympic2020 = (function () {
                 console.error('Olympic2020.size should be type of zero or positive number.');
             }
         },
-
-        /**
-         * エンブレムの大きさ、単位はpx
-         * @type {number}
-         */
         get: function get() {
             return +this[_DOM_PROP].style.width.replace('px', '');
         }
 
         // --- displayTime ---
-
-        /**
-         * アニメーション時、durationの時間を含めて一文字が表示され続けている時間を設定する、単位は1/1000秒
-         * @type {number}
-         */
     }, {
         key: 'displayTime',
         set: function set(time) {
@@ -1651,11 +1639,6 @@ var Olympic2020 = (function () {
                 console.error('Olympic2020.displayTime should be type of positive number.');
             }
         },
-
-        /**
-         * アニメーション時、durationの時間を含めて一文字が表示され続けている時間、単位は1/1000秒
-         * @type {number}
-         */
         get: function get() {
             return this[_DISPLAY_TIME_PROP];
         }
@@ -1709,7 +1692,7 @@ var Olympic2020 = (function () {
         // --- loop ---
 
         /**
-         * {@link Olympic2020#animateFromString}実行時、アニメーションをループさせるかどうかを設定する
+         * {@link Olympic2020#animateFromString}実行時、アニメ���ションをループさせるかどうかを設定する
          * @type {boolean}
          */
     }, {

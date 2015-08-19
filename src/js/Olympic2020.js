@@ -100,12 +100,12 @@ class Olympic2020 {
         }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
     }
 
-    /*
-     * setter and getter of properties
+
+    /**
+     * Setter and Getter
      */
 
-    // --- option object asignment ---
-
+    // --- option ---
     set option({ size, displayTime, duration, loop, random, pedal, easing }) {
         this.size        = size;
         this.displayTime = displayTime;
@@ -127,9 +127,7 @@ class Olympic2020 {
         }
     }
 
-
     // --- size ---
-
     set size(size) {
         if (typeof size === 'number' && size >= 0) {
             let domStyle = this.dom.style;
@@ -139,19 +137,10 @@ class Olympic2020 {
             console.error('Olympic2020.size should be type of zero or positive number.');
         }
     }
-    /**
-     * エンブレムの大きさ、単位はpx
-     * @type {number}
-     */
     get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
 
 
     // --- displayTime ---
-
-    /**
-     * アニメーション時、durationの時間を含めて一文字が表示され続けている時間を設定する、単位は1/1000秒
-     * @type {number}
-     */
     set displayTime(time) {
         if (typeof time === 'number' && time > 0) {
             this[_DISPLAY_TIME_PROP] = time;
@@ -159,11 +148,6 @@ class Olympic2020 {
             console.error('Olympic2020.displayTime should be type of positive number.');
         }
     }
-
-    /**
-     * アニメーション時、durationの時間を含めて一文字が表示され続けている時間、単位は1/1000秒
-     * @type {number}
-     */
     get displayTime()     { return this[_DISPLAY_TIME_PROP]; }
 
 
