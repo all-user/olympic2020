@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 ```
 
+------------------------------
 
 ## `Olympic2020` Constructor
 
@@ -37,7 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
   - __`[opt.pedal=true]`__ _(boolean)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない。
   - __`[opt.easing='cubic-bezier(.26,.92,.41,.98)']`__ _(string)_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function。
 
+------------------------------
+
 ## `Olympic2020` Instance Method
+
+------------------------------
 
 ### `Olympic2020.prototype.to(c)`
 
@@ -51,6 +56,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不正もしくは変化しない場合falseを返す。
 
+------------------------------
+
 ### `Olympic2020.prototype.appendTo(parent)`
 
 与えられた要素にエンブレムを追加する
@@ -59,6 +66,7 @@ _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不�
 
 1. __`parent`__ _(ParentNode)_ : エンブレムを追加する親要素。
 
+------------------------------
 
 ### `Olympic2020.prototype.animateFromString(str, opt)`
 
@@ -76,15 +84,22 @@ _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不�
   - __`[opt.pedal]`__ _(boolean)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない。
   - __`[opt.easing]`__ _(string)_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function。
 
+------------------------------
+
 ### `Olympic2020.prototype.stopAnimate()`
 
 `Olympic2020.prototype.animateFromString()`の実行を中断する。
+
+------------------------------
 
 ### `Olympic2020.prototype.resumeAnimate()`
 
 `Olympic2020.prototype.stopAnimate()`で中断したアニメーションを再開する。
 
+------------------------------
+
 ## `Olympic2020` Instance Properties
+
 
 ### `option`
 
