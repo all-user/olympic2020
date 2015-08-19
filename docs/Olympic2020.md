@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
 #### `Olympic2020 Constructor`
 - [constructor](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020-constructor-1)
 
+#### `Olympic2020 Instance Methods`
+- [to](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020.prototype.to)
+- [appendTo](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020.prototype.appendto)
+
 ------------------------------
 
 ## _Olympic2020 Constructor_
@@ -44,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 ------------------------------
 
-## _Olympic2020 Instance Method_
+## _Olympic2020 Instance Methods_
 
 ### `Olympic2020.prototype.to(c)`
 
@@ -215,7 +219,7 @@ _(boolean)_
 
 ------------------------------
 
-## _Olympic2020 Class Properties Getter_
+## _Olympic2020 Class Getter Properties_
 
 ### `allValidChars`
 
@@ -228,7 +232,7 @@ _(`Array`)_
 
 ------------------------------
 
-## _Olympic2020 Instance Properties Getter_
+## _Olympic2020 Instance Getter Properties_
 
 ### `dom`
 
