@@ -21,6 +21,10 @@ document.addEventListener('DOMContentLoaded', function() {
 ```
 
 ------------------------------
+#### `Olympic2020 Constructor`
+- [constructor](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020-constructor)
+
+------------------------------
 
 ## _Olympic2020 Constructor_
 
