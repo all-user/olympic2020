@@ -2,57 +2,38 @@ const _CHAR_PROP         = Symbol();
 const _DOM_PROP          = Symbol();
 const _DISPLAY_TIME_PROP = Symbol();
 const _DURATION_PROP     = Symbol();
-const EASING_PROP       = Symbol();
-const IS_ANIMATING_PROP = Symbol();
-const RESUME_PROP       = Symbol();
-const LOOP_PROP         = Symbol();
-const RAN_DOM_PROP       = Symbol();
-const PEDAL_PROP        = Symbol();
+const _EASING_PROP       = Symbol();
+const _IS_ANIMATING_PROP = Symbol();
+const _RESUME_PROP       = Symbol();
+const _LOOP_PROP         = Symbol();
+const _RAN_DOM_PROP      = Symbol();
+const _PEDAL_PROP        = Symbol();
 
-/**
- * エンブレム１文字を表現するクラス
- */
 class Olympic2020 {
-    /**
-     * @param {string}  [c=null]                - エンブレムが表す文字の初期値
-     * @param {Object}  [opt]                   - その他のオプション
-     * @param {number}  [opt.size=100]          - エンブレムの大きさ、単位はpx
-     * @param {number}  [opt.displayTime=1500]  - アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間
-     * @param {number}  [opt.duration=1000]     - アニメーション時、次の文字に変化するのに掛かる時間
-     * @param {boolean} [opt.loop=false]        - animateFromString実行時、アニメーションをループさせるかどうか
-     * @param {boolean} [opt.random=false]      - animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ
-     * @param {boolean} [opt.pedal=true]        - エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない
-     * @param {number}  [opt.easing='cubic-bezier(.26,.92,.41,.98)'] - 次の文字に変化するアニメーションのイージング、CSS3timing-function
-     */
     constructor(c, opt) {
         if (typeof opt === 'object') {
             var { size, displayTime, duration, easing, roop, random, pedal } = opt;
         }
+
         this[_CHAR_PROP]          =   null;
         this[_DOM_PROP]           =   _createDom();
         this[_DISPLAY_TIME_PROP]  =   displayTime    || 1500;
         this[_DURATION_PROP]      =   duration       || 1000;
-        /** @access private */
-        this[EASING_PROP]        =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
-        /** @access private */
-        this[IS_ANIMATING_PROP]  =   false;
-        /** @access private */
-        this[RESUME_PROP]        =   null;
-        /** @access private */
-        this[LOOP_PROP]          =   roop           || false;
-        /** @access private */
-        this[RAN_DOM_PROP]        =   random         || false;
-        /** @access private */
-        this[PEDAL_PROP]         =   pedal == null  ?  true    :  pedal;
+        this[_EASING_PROP]        =   easing         || 'cubic-bezier(.26,.92,.41,.98)';
+        this[_IS_ANIMATING_PROP]  =   false;
+        this[_RESUME_PROP]        =   null;
+        this[_LOOP_PROP]          =   roop           || false;
+        this[_RAN_DOM_PROP]       =   random         || false;
+        this[_PEDAL_PROP]         =   pedal == null  ?  true    :  pedal;
 
         _updateTransitionConfig.call(this);
+
         if (typeof size === 'number' && size > 0) {
-            /** @ignore size */
             this.size = size;
         } else {
-            /** @ignore size */
             this.size = 100;
         }
+
         this.to(c);
     }
 
@@ -63,7 +44,7 @@ class Olympic2020 {
      */
     to(c) {
         let _c = c && c.toLowerCase && c.toLowerCase();
-        if (!formationTable[_c])    { return false; }
+        if (!_formationTable[_c])    { return false; }
         if (this[_CHAR_PROP] === _c) { return false; }
         _changeStyle.call(this, _c);
         this[_CHAR_PROP] = _c;
@@ -82,15 +63,15 @@ class Olympic2020 {
      * animateFromStringの実行を中断する
      */
     stopAnimate() {
-        this[IS_ANIMATING_PROP] = false;
+        this[_IS_ANIMATING_PROP] = false;
     }
 
     /**
      * stopAnimateで中断したアニメーションを再開する
      */
     resumeAnimate() {
-        this[IS_ANIMATING_PROP] = true;
-        this[RESUME_PROP]();
+        this[_IS_ANIMATING_PROP] = true;
+        this[_RESUME_PROP]();
     }
 
     /**
@@ -101,13 +82,13 @@ class Olympic2020 {
         if (typeof opt === 'object') {
             var { displayTime, loop, random } = opt;
         }
-        this[IS_ANIMATING_PROP] = true;
-        this[RESUME_PROP]       = null;
+        this[_IS_ANIMATING_PROP] = true;
+        this[_RESUME_PROP]       = null;
         if (loop != null) {
-            this[LOOP_PROP] = loop;
+            this[_LOOP_PROP] = loop;
         }
         if (random != null) {
-            this[RAN_DOM_PROP] = random;
+            this[_RAN_DOM_PROP] = random;
         }
         if (typeof displayTime === 'number' && displayTime > 0) {
             this[_DISPLAY_TIME_PROP] = displayTime;
@@ -119,18 +100,18 @@ class Olympic2020 {
             let isLast = idx === str.length - 1;
             return p.then(() => {
                 return new Promise((resolve, reject) => {
-                    if (!this[IS_ANIMATING_PROP]) {
-                        this[RESUME_PROP] = resolve;
+                    if (!this[_IS_ANIMATING_PROP]) {
+                        this[_RESUME_PROP] = resolve;
                         return;
                     }
-                    if (this[RAN_DOM_PROP]) {
+                    if (this[_RAN_DOM_PROP]) {
                         let _c = str[Math.random() * str.length | 0];
                         this.to(_c);
                     } else {
                         this.to(c);
                     }
                     if (isLast) {
-                        if (this[LOOP_PROP]) {
+                        if (this[_LOOP_PROP]) {
                             setTimeout(() => {
                                 this.animateFromString.call(this, str);
                                 resolve();
@@ -144,7 +125,7 @@ class Olympic2020 {
                     setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
                 });
             });
-        }, Promise.resolve()).catch(() => { this[IS_ANIMATING_PROP] = false; });
+        }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
     }
 
     /*
@@ -168,17 +149,15 @@ class Olympic2020 {
      * @property {number}  [easing]      - 次の文字に変化するアニメーションのイージング、CSS3timing-function
      */
     set option({ size, displayTime, duration, loop, random, pedal, easing }) {
-        /** @ignore size */
-        this.size               = size;    // use setter
+        this.size                = size;    // use setter
         this[_DISPLAY_TIME_PROP] = displayTime;
         // call _updateTransitionConfig after assign parms.
         this[_DURATION_PROP]     = duration;
-        /** @ignore size */
-        this.easing             = easing;  // use setter
+        this.easing              = easing;  // use setter
         // ---
-        this[LOOP_PROP]         = loop;
-        this[RAN_DOM_PROP]       = random;
-        this[PEDAL_PROP]        = pedal;
+        this[_LOOP_PROP]         = loop;
+        this[_RAN_DOM_PROP]      = random;
+        this[_PEDAL_PROP]        = pedal;
     }
     /**
      * 現在のオプション設定を取得する
@@ -201,12 +180,124 @@ class Olympic2020 {
             size:        this.size,
             displaytime: this[_DISPLAY_TIME_PROP],
             duration:    this[_DURATION_PROP],
-            easing:      this[EASING_PROP],
-            loop:        this[LOOP_PROP],
-            random:      this[RAN_DOM_PROP],
-            pedal:       this[PEDAL_PROP],
+            easing:      this[_EASING_PROP],
+            loop:        this[_LOOP_PROP],
+            random:      this[_RAN_DOM_PROP],
+            pedal:       this[_PEDAL_PROP],
         }
     }
+
+
+    // --- size ---
+
+    /**
+     * エンブレムの大きさを設定する、単位はpx
+     * @type {number}
+     */
+    set size(size) {
+        let domStyle = this.dom.style;
+        domStyle.width  = `${ size }px`;
+        domStyle.height = `${ size }px`;
+    }
+    /**
+     * エンブレムの大きさ、単位はpx
+     * @type {number}
+     */
+    get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
+
+
+    // --- displayTime ---
+
+    /**
+     * アニメーション時、durationの時間を含めて一文字が表示され続けている時間を設定する、単位は1/1000秒
+     * @type {number}
+     */
+    set displayTime(time) { this[_DISPLAY_TIME_PROP] = time; }
+
+    /**
+     * アニメーション時、durationの時間を含めて一文字が表示され続けている時間、単位は1/1000秒
+     * @type {number}
+     */
+    get displayTime()     { return this[_DISPLAY_TIME_PROP]; }
+
+
+    // --- duration ---
+
+    /**
+     * 次の文字に変化するアニメーションの時間を設定する、単位は1/1000秒
+     * @type {number}
+     */
+    set duration(time) {
+        this[_DURATION_PROP] = time;
+        _updateTransitionConfig.call(this);
+    }
+    /**
+     * 次の文字に変化するアニメーションの時間、単位は1/1000秒
+     * @type {number}
+     */
+    get duration() { return this[_DURATION_PROP]; }
+
+
+    // --- easing ---
+
+    /**
+     * 次の文字に変化するアニメーションの動き・イージングを設定する、CSS3timing-functionに準拠した文字列
+     * @type {string}
+     */
+    set easing(val) {
+        this[_EASING_PROP] = val;
+        _updateTransitionConfig.call(this);
+    }
+    /**
+     * 次の文字に変化するアニメーションの動き・イージング、CSS3timing-functionに準拠した文字列
+     * @type {string}
+     */
+    get easing() { return this[_EASING_PROP]; }
+
+
+    // --- loop ---
+
+    /**
+     * {@link Olympic2020#animateFromString}実行時、アニメーションをループさせるかどうかを設定する
+     * @type {boolean}
+     */
+    set loop(bool) { this[_LOOP_PROP] = bool; }
+    /**
+     * {@link Olympic2020#animateFromString}実行時、アニメーションをループさせるかどうか
+     * @type {boolean}
+     */
+    get loop()     { return this[_LOOP_PROP]; }
+
+
+    // --- random ---
+
+    /**
+     * このオプションが有効の時{@link Olympic2020#animateFromString}を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @type {boolean}
+     */
+    set random(bool) { this[_RAN_DOM_PROP] = bool; }
+
+    /**
+     * このオプションが有効の時{@link Olympic2020#animateFromString}を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
+     * @type {boolean}
+     */
+    get random()     { return this[_RAN_DOM_PROP]; }
+
+
+    // --- pedal ---
+
+    /**
+     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
+     * @type {boolean} bool
+     */
+    set pedal(bool) { this[_PEDAL_PROP] = bool; }
+
+    /**
+     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
+     * @type {boolean} bool
+     */
+    get pedal()     { return this[_PEDAL_PROP]; }
+
 
     // --- dom ---
 
@@ -216,81 +307,15 @@ class Olympic2020 {
      */
     get dom() { return this[_DOM_PROP]; }
 
+
     // --- char ---
 
     /**
-     * 現在のエンブレムの文字
-     * 未定義の場合はnull
+     * 現在のエンブレムの文字、未定義の場合はnull
      * @type {string|null}
      */
     get char() { return this[_CHAR_PROP]; }
 
-    // --- size ---
-
-    /**
-     * エンブレムの大きさを設定する
-     * 単位はpx
-     * @type {number}
-     */
-    set size(size) {
-        let domStyle = this.dom.style;
-        domStyle.width  = `${ size }px`;
-        domStyle.height = `${ size }px`;
-    }
-    /**
-     * 現在のエンブレムの大きさ
-     * 単位はpx
-     * @type {number}
-     */
-    get size() { return +this[_DOM_PROP].style.width.replace('px', ''); }
-
-    // --- displayTime ---
-
-    /**
-     * アニメーション時、durationの時間を含めて一文字が表示され続けている時間を設定する
-     * 単位は1/1000秒
-     * @type {number}
-     */
-    set displayTime(time) { this[_DISPLAY_TIME_PROP] = time; }
-    /**
-     * durationの時間を含めて一文字が表示され続けている時間
-     * 単位は1/1000秒
-     * @type {number}
-     */
-    get displayTime()     { return this[_DISPLAY_TIME_PROP]; }
-
-    // --- duration ---
-
-    /**
-     * 次の文字に変化するアニメーションの時間を設定する
-     * 単位は1/1000秒
-     * @type {number}
-     */
-    set duration(time) {
-        this[_DURATION_PROP] = time;
-        _updateTransitionConfig.call(this);
-    }
-    /**
-     * 次の文字に変化するアニメーションの時間
-     * @type {number}
-     */
-    get duration() { return this[_DURATION_PROP]; }
-
-    // --- easing ---
-
-    /**
-     * 次の文字に変化するアニメーションの動き、イージングを設定する、CSS3timing-functionに準拠した文字列
-     * @type {string}
-     */
-    set easing(val) {
-        this[EASING_PROP] = val;
-        _updateTransitionConfig.call(this);
-    }
-    /**
-     * 次の文字に変化するアニメーションのイージングを表す文字列、CSS3timing-functionに準拠した文字列
-     * @type {string}
-     */
-    get easing() { return this[EASING_PROP]; }
 
     // --- isAnimating ---
 
@@ -298,55 +323,18 @@ class Olympic2020 {
      * 現在animateFromStringが実行中かどうか
      * @type {boolean}
      */
-    get isAnimating() { return this[IS_ANIMATING_PROP]; }
+    get isAnimating() { return this[_IS_ANIMATING_PROP]; }
 
-    // --- loop ---
-
-    /**
-     * animateFromString実行時、アニメーションをループさせるかどうかを設定する
-     * @type {boolean}
-     */
-    set loop(bool) { this[LOOP_PROP] = bool; }
-    /**
-     * animateFromString実行時、アニメーションのループが有効かどうか
-     * @type {boolean}
-     */
-    get loop()     { return this[LOOP_PROP]; }
-
-    // --- random ---
-
-    /**
-     * このオプションが有効の時animateFromStringを実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
-     * @type {boolean}
-     */
-    set random(bool) { this[RAN_DOM_PROP] = bool; }
-    /**
-     * このオプションが有効の時animateFromStringを実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
-     * @type {boolean}
-     */
-    get random()     { return this[RAN_DOM_PROP]; }
-
-    // --- pedal ---
-
-    /**
-     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
-     * @type {boolean} bool
-     */
-    set pedal(bool) { this[PEDAL_PROP] = bool; }
-    /**
-     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
-     * @type {boolean}
-     */
-    get pedal()     { return this[PEDAL_PROP]; }
 
     // --- allValidChars ---
 
     /**
-     * 現在エンブレムが変更可能な全ての文字
-     * 変更可能な文字を格納した配列
+     * 現在エンブレムが変更可能な全ての文字を取得する、変更可能な文字を格納した配列
      * @type {[string]}
      */
-    static get allValidChars() { return Object.keys(formationTable); }
+    static get allValidChars() { return Object.keys(_formationTable); }
+
+
 }
 
 
@@ -356,8 +344,8 @@ function _createDom() {
 
 function _changeStyle(c) { // @bind this
     let oldC         = this[_CHAR_PROP];
-    let oldFormation = formationTable[oldC];
-    let newFormation = formationTable[c];
+    let oldFormation = _formationTable[oldC];
+    let newFormation = _formationTable[c];
     if (!newFormation) { return; }
     let diffFormation;
     if (oldC) {
@@ -384,8 +372,8 @@ function _changeStyle(c) { // @bind this
 }
 
 function _updateTransitionConfig() { // @bind this
-    let val = TRANSITION_PROPS.reduce((str, prop, idx) => {
-        return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[_DURATION_PROP] }ms ${ this[EASING_PROP] }`;
+    let val = _TRANSITION_PROPS.reduce((str, prop, idx) => {
+        return `${ str }${ idx ? ',' : '' } ${ prop } ${ this[_DURATION_PROP] }ms ${ this[_EASING_PROP] }`;
     }, '');
 
     _updateStyle(this[_DOM_PROP].childNodes);
@@ -431,249 +419,250 @@ const _BASE_DOM = (() => {
 
 const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
 
+
 /*
  * parts className table.
  */
-const G_R0   = "part arc gold rotate0";
-const G_R90  = "part arc gold rotate90";
-const G_R180 = "part arc gold rotate180";
-const G_R270 = "part arc gold rotate270";
-const S_R0   = "part arc silver rotate0";
-const S_R90  = "part arc silver rotate90";
-const S_R180 = "part arc silver rotate180";
-const S_R270 = "part arc silver rotate270";
-const P1     = "part pole1 gray";
-const P2_V   = "part pole2_v gray";
-const P2_H   = "part pole2_h gray";
-const P3_V   = "part pole3_v gray";
-const P3_H   = "part pole3_h gray";
-const C_S    = "part circle_s red";
-const C_L    = "part circle_l red";
-const BL     = "part blank";
+const _G_R0   = "part arc gold rotate0";
+const _G_R90  = "part arc gold rotate90";
+const _G_R180 = "part arc gold rotate180";
+const _G_R270 = "part arc gold rotate270";
+const _S_R0   = "part arc silver rotate0";
+const _S_R90  = "part arc silver rotate90";
+const _S_R180 = "part arc silver rotate180";
+const _S_R270 = "part arc silver rotate270";
+const _P1     = "part pole1 gray";
+const _P2_V   = "part pole2_v gray";
+const _P2_H   = "part pole2_h gray";
+const _P3_V   = "part pole3_v gray";
+const _P3_H   = "part pole3_h gray";
+const _C_S    = "part circle_s red";
+const _C_L    = "part circle_l red";
+const _BL     = "part blank";
 
 /*
  * formation settings of all characters.
  */
-let formationTable = {
+let _formationTable = {
     "a": [
-        G_R180, P1,     G_R270,
-        S_R0,   C_S,    S_R90,
-        P1,     BL,     P1
+        _G_R180, _P1,     _G_R270,
+        _S_R0,   _C_S,    _S_R90,
+        _P1,     _BL,     _P1
     ],
     "b": [
-        BL,     P3_V,   G_R90,
-        BL,     BL,     S_R90,
-        BL,     BL,     S_R180
+        _BL,     _P3_V,   _G_R90,
+        _BL,     _BL,     _S_R90,
+        _BL,     _BL,     _S_R180
     ],
     "c": [
-        S_R180, P1,     G_R90,
-        P1,     BL,     BL,
-        G_R90,  P1,     S_R180
+        _S_R180, _P1,     _G_R90,
+        _P1,     _BL,     _BL,
+        _G_R90,  _P1,     _S_R180
     ],
     "d": [
-        P3_V,   S_R90,  G_R270,
-        BL,     BL,     P1,
-        BL,     G_R180, S_R0
+        _P3_V,   _S_R90,  _G_R270,
+        _BL,     _BL,     _P1,
+        _BL,     _G_R180, _S_R0
     ],
     "e": [
-        BL,     P3_V,   G_R90,
-        BL,     BL,     C_S,
-        BL,     BL,     S_R180
+        _BL,     _P3_V,   _G_R90,
+        _BL,     _BL,     _C_S,
+        _BL,     _BL,     _S_R180
     ],
     "f": [
-        BL,     P3_V,   S_R90,
-        BL,     BL,     C_S,
-        BL,     BL,     BL
+        _BL,     _P3_V,   _S_R90,
+        _BL,     _BL,     _C_S,
+        _BL,     _BL,     _BL
     ],
     "g": [
-        P3_V,   G_R0,   BL,
-        BL,     BL,     S_R90,
-        BL,     C_S,    G_R180
+        _P3_V,   _G_R0,   _BL,
+        _BL,     _BL,     _S_R90,
+        _BL,     _C_S,    _G_R180
     ],
     "h": [
-        P3_V,   BL,     P3_V,
-        BL,     C_S,    BL,
-        BL,     BL,     BL
+        _P3_V,   _BL,     _P3_V,
+        _BL,     _C_S,    _BL,
+        _BL,     _BL,     _BL
     ],
     "i": [
-        BL,     C_S,    BL,
-        BL,     P2_V,   BL,
-        BL,     BL,     BL
+        _BL,     _C_S,    _BL,
+        _BL,     _P2_V,   _BL,
+        _BL,     _BL,     _BL
     ],
     "j": [
-        BL,     BL,     P2_V,
-        BL,     BL,     BL,
-        S_R90,  C_S,    G_R180
+        _BL,     _BL,     _P2_V,
+        _BL,     _BL,     _BL,
+        _S_R90,  _C_S,    _G_R180
     ],
     "k": [
-        P3_V,   BL,     G_R0,
-        BL,     C_S,    BL,
-        BL,     BL,     S_R270
+        _P3_V,   _BL,     _G_R0,
+        _BL,     _C_S,    _BL,
+        _BL,     _BL,     _S_R270
     ],
     "l": [
-        P3_V,   BL,     BL,
-        BL,     BL,     BL,
-        BL,     C_S,    G_R180
+        _P3_V,   _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _BL,     _C_S,    _G_R180
     ],
     "m": [
-        G_R270, BL,     S_R180,
-        P2_V,   C_S,    P2_V,
-        BL,     BL,     BL
+        _G_R270, _BL,     _S_R180,
+        _P2_V,   _C_S,    _P2_V,
+        _BL,     _BL,     _BL
     ],
     "n": [
-        P3_V,   G_R270, P3_V,
-        BL,     C_S,    BL,
-        BL,     S_R90,  BL
+        _P3_V,   _G_R270, _P3_V,
+        _BL,     _C_S,    _BL,
+        _BL,     _S_R90,  _BL
     ],
     "o": [
-        S_R180, P1,     G_R270,
-        P1,     BL,     P1,
-        G_R90,  P1,     S_R0
+        _S_R180, _P1,     _G_R270,
+        _P1,     _BL,     _P1,
+        _G_R90,  _P1,     _S_R0
     ],
     "p": [
-        P3_V,   C_S,    G_R90,
-        BL,     S_R270, BL,
-        BL,     BL,     BL
+        _P3_V,   _C_S,    _G_R90,
+        _BL,     _S_R270, _BL,
+        _BL,     _BL,     _BL
     ],
     "q": [
-        S_R180, P1,     G_R270,
-        P1,     BL,     P1,
-        G_R90,  P1,     C_S
+        _S_R180, _P1,     _G_R270,
+        _P1,     _BL,     _P1,
+        _G_R90,  _P1,     _C_S
     ],
     "r": [
-        P3_V,   C_S,    S_R90,
-        BL,     P1,     S_R180,
-        BL,     BL,     G_R270
+        _P3_V,   _C_S,    _S_R90,
+        _BL,     _P1,     _S_R180,
+        _BL,     _BL,     _G_R270
     ],
     "s": [
-        G_R180, P3_V,   S_R90,
-        S_R90,  BL,     BL,
-        G_R270, BL,     C_S
+        _G_R180, _P3_V,   _S_R90,
+        _S_R90,  _BL,     _BL,
+        _G_R270, _BL,     _C_S
     ],
     "t": [
-        G_R0,   P3_V,   C_S,
-        BL,     BL,     BL,
-        BL,     BL,     S_R180
+        _G_R0,   _P3_V,   _C_S,
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _S_R180
     ],
     "u":  [
-        P2_V,   BL,     C_S,
-        P1,     BL,     P1,
-        G_R90,  P1,     S_R0
+        _P2_V,   _BL,     _C_S,
+        _P1,     _BL,     _P1,
+        _G_R90,  _P1,     _S_R0
     ],
     "v": [
-        S_R270, BL,     S_R180,
-        G_R90,  BL,     G_R0,
-        BL,     P1,     BL
+        _S_R270, _BL,     _S_R180,
+        _G_R90,  _BL,     _G_R0,
+        _BL,     _P1,     _BL
     ],
     "w": [
-        S_R270, BL,     G_R180,
-        S_R270, P1,     G_R180,
-        G_R90,  BL,     S_R0
+        _S_R270, _BL,     _G_R180,
+        _S_R270, _P1,     _G_R180,
+        _G_R90,  _BL,     _S_R0
     ],
     "x": [
-        G_R90,  BL,     S_R0,
-        BL,     P1,     BL,
-        S_R180, BL,     G_R270
+        _G_R90,  _BL,     _S_R0,
+        _BL,     _P1,     _BL,
+        _S_R180, _BL,     _G_R270
     ],
     "y": [
-        G_R270, BL,     S_R180,
-        BL,     C_S,    BL,
-        BL,     P1,     BL
+        _G_R270, _BL,     _S_R180,
+        _BL,     _C_S,    _BL,
+        _BL,     _P1,     _BL
     ],
     "z": [
-        G_R0,   P1,     S_R0,
-        BL,     C_S,    BL,
-        S_R180, P1,     S_R180
+        _G_R0,   _P1,     _S_R0,
+        _BL,     _C_S,    _BL,
+        _S_R180, _P1,     _S_R180
     ],
     "1": [
-        G_R180, P3_V,   BL,
-        BL,     BL,     BL,
-        BL,     BL,     BL
+        _G_R180, _P3_V,   _BL,
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL
     ],
     "2": [
-        S_R0,   P3_V,   G_R270,
-        BL,     BL,     S_R0,
-        C_S,    BL,     G_R180
+        _S_R0,   _P3_V,   _G_R270,
+        _BL,     _BL,     _S_R0,
+        _C_S,    _BL,     _G_R180
     ],
     "3": [
-        G_R0,   P1,     G_R270,
-        BL,     C_S,    BL,
-        S_R270, P1,     S_R0
+        _G_R0,   _P1,     _G_R270,
+        _BL,     _C_S,    _BL,
+        _S_R270, _P1,     _S_R0
     ],
     "4": [
-        BL,     S_R180, BL,
-        G_R180, C_S,    P1,
-        BL,     P1,     BL
+        _BL,     _S_R180, _BL,
+        _G_R180, _C_S,    _P1,
+        _BL,     _P1,     _BL
     ],
     "5": [
-        BL,     P1,     S_R0,
-        BL,     G_R90,  P1,
-        BL,     C_S,    S_R180
+        _BL,     _P1,     _S_R0,
+        _BL,     _G_R90,  _P1,
+        _BL,     _C_S,    _S_R180
     ],
     "6": [
-        BL,     S_R0,   BL,
-        BL,     P2_V,   G_R90,
-        BL,     BL,     S_R180
+        _BL,     _S_R0,   _BL,
+        _BL,     _P2_V,   _G_R90,
+        _BL,     _BL,     _S_R180
     ],
     "7": [
-        G_R0,   C_S,    P3_V,
-        BL,     BL,     BL,
-        BL,     BL,     BL
+        _G_R0,   _C_S,    _P3_V,
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL
     ],
     "8": [
-        S_R0,   C_S,    S_R90,
-        G_R0,   BL,     G_R90,
-        S_R270, BL,     S_R180
+        _S_R0,   _C_S,    _S_R90,
+        _G_R0,   _BL,     _G_R90,
+        _S_R270, _BL,     _S_R180
     ],
     "9": [
-        G_R0,   P2_V,   BL,
-        S_R270, BL,     BL,
-        BL,     G_R180, BL
+        _G_R0,   _P2_V,   _BL,
+        _S_R270, _BL,     _BL,
+        _BL,     _G_R180, _BL
     ],
     "0": [
-        C_L,    BL,     BL,
-        BL,     BL,     BL,
-        BL,     BL,     BL
+        _C_L,    _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL
     ],
     "!": [
-        P2_V,   BL,     BL,
-        BL,     BL,     BL,
-        C_S,    BL,     BL
+        _P2_V,   _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _C_S,    _BL,     _BL
     ],
     ".": [
-        BL,     BL,     BL,
-        BL,     BL,     BL,
-        P1,     BL,     BL
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _P1,     _BL,     _BL
     ],
     "'": [
-        P1,     BL,     BL,
-        G_R0,   BL,     BL,
-        BL,     BL,     BL
+        _P1,     _BL,     _BL,
+        _G_R0,   _BL,     _BL,
+        _BL,     _BL,     _BL
     ],
     ":": [
-        P1,     BL,     BL,
-        BL,     BL,     BL,
-        P1,     BL,     BL
+        _P1,     _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _P1,     _BL,     _BL
     ],
     ";": [
-        P1,     BL,     BL,
-        BL,     BL,     BL,
-        C_S,    BL,     BL
+        _P1,     _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _C_S,    _BL,     _BL
     ],
     "/": [
-        G_R0,   BL,     S_R180,
-        BL,     S_R180, G_R0,
-        S_R180, G_R0,   BL
+        _G_R0,   _BL,     _S_R180,
+        _BL,     _S_R180, _G_R0,
+        _S_R180, _G_R0,   _BL
     ],
     "_": [
-        BL,     BL,     BL,
-        BL,     BL,     BL,
-        P2_H,   BL,     BL
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _P2_H,   _BL,     _BL
     ],
     " ": [
-        BL,     BL,     BL,
-        BL,     BL,     BL,
-        BL,     BL,     BL
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL,
+        _BL,     _BL,     _BL
     ],
 };
 
@@ -681,7 +670,7 @@ let formationTable = {
 /*
  * transition settings.
  */
-const TRANSITION_PROPS = [
+const _TRANSITION_PROPS = [
     'top',
     'left',
     'background-color',
