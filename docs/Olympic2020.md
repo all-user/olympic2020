@@ -5,8 +5,8 @@
 ### `constructor(c, opt)`
 
 #### Arguments
-1. `[c=null]` _(string)_ : エンブレムが表す文字の初期値
-2. `[opt]` _(Object)_ : その他のオプション
+1. __`[c=null]`__ _(string)_ : エンブレムが表す文字の初期値
+2. __`[opt]`__ _(Object)_ : その他のオプション
   - `[opt.size=100]` _(number)_ : エンブレムの大きさ、単位はpx
   - `[opt.displayTime=1500]` _(number)_ : アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間
   - `[opt.duration=1000]` _(number)_ : アニメーション時、次の文字に変化するのに掛かる時間
