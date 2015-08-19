@@ -212,8 +212,6 @@ class Olympic2020 {
 
     // --- allValidChars ---
     static get allValidChars() { return Object.keys(_formationTable); }
-
-
 }
 
 
