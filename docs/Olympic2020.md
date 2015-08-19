@@ -42,8 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 ## `Olympic2020` Instance Method
 
-------------------------------
-
 ### `Olympic2020.prototype.to(c)`
 
 エンブレムを別の文字に変化させる。
@@ -106,10 +104,6 @@ _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不�
 オブジェクトを代入することでオプションをまとめて設定出来る。
 また、参照することでオプション設定をオブジェクトで取得出来る。
 
-#### Type
-
-_(Object)_ : 設定をまとめたオブジェクト。
-
 #### Example
 ```javascript
 let olm = new Olympic2020({ size: 5000, displayTime: 12000 })
@@ -136,6 +130,8 @@ console.log(olm.option);
 //     easing     : 'cubic-bezier(.26,.92,.41,.98)'
 // }
 ```
+
+------------------------------
 
 ### `size`
 
