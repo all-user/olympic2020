@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', function() {
 #### `Olympic2020 Instance Methods`
 - [to](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypetoc)
 - [appendTo](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypeappendtoparent)
+- [animateFromString](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypeanimatefromstringstropt)
+- [stopAnimate](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypestopanimate)
+- [resumeAnimate](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototyperesumeanimate)
 
 ------------------------------
 
