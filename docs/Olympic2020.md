@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 ------------------------------
 
-## `Olympic2020` Constructor
+## _Olympic2020 Constructor_
 
 ### `Olympic2020(c, opt)`
 
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 ------------------------------
 
-## `Olympic2020` Instance Method
+## _Olympic2020 Instance Method_
 
 ### `Olympic2020.prototype.to(c)`
 
@@ -96,7 +96,7 @@ _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不�
 
 ------------------------------
 
-## `Olympic2020` Instance Properties
+## _Olympic2020 Instance Properties_
 
 
 ### `option`
