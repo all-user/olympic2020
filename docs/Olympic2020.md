@@ -17,16 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
     olm.to('z'); // change to another charactor.
 
     olm.animateFromString('tokyo olympic 2020'); // animate from string.
-
-    // grouping
-    var group = new EmblemGroup('tokyo 2020');
-
-    group.appendTo(document.body);
 });
 ```
 
 
-## Olympic2020 Constructor
+## `Olympic2020` Constructor
 
 ### `Olympic2020(c, opt)`
 
@@ -42,9 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
   - __`[opt.pedal=true]`__ _(boolean)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない
   - __`[opt.easing='cubic-bezier(.26,.92,.41,.98)']`__ _(string)_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function
 
-## Olympic2020 Instance Method
+## `Olympic2020` Instance Method
 
-### `olm.to(c)`
+### `Olympic2020.prototype.to(c)`
 
 エンブレムを別の文字に変化させる
 
@@ -56,3 +51,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不正もしくは変化しない場合falseを返す
 
+### `Olympic2020.prototype.appendTo(parent)`
+
+与えられた要素にエンブレムを追加する
+
+#### Arguments
+
+1. __`paretn`__ _(ParentNode)_ : エンブレムを追加する親要素
