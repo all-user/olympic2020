@@ -7,7 +7,7 @@
 ```javascript
 var olm = Olympic2020('t', { size: 300 }); // initial charactor and size in px.
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', e => {
 
     olm.appendTo(document.body);
     // or other way.
