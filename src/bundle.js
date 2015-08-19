@@ -1644,11 +1644,6 @@ var Olympic2020 = (function () {
         }
 
         // --- duration ---
-
-        /**
-         * 次の文字に変化するアニメーションの時間を設定する、単位は1/1000秒
-         * @type {number}
-         */
     }, {
         key: 'duration',
         set: function set(time) {
@@ -1659,42 +1654,22 @@ var Olympic2020 = (function () {
                 console.error('Olympic2020.duration should be type of zero or positive number.');
             }
         },
-
-        /**
-         * 次の文字に変化するアニメーションの時間、単位は1/1000秒
-         * @type {number}
-         */
         get: function get() {
             return this[_DURATION_PROP];
         }
 
         // --- easing ---
-
-        /**
-         * 次の文字に変化するアニメーションの動き・イージングを設定する、CSS3timing-functionに準拠した文字列
-         * @type {string}
-         */
     }, {
         key: 'easing',
         set: function set(val) {
             this[_EASING_PROP] = val;
             _updateTransitionConfig.call(this);
         },
-
-        /**
-         * 次の文字に変化するアニメーションの動き・イージング、CSS3timing-functionに準拠した文字列
-         * @type {string}
-         */
         get: function get() {
             return this[_EASING_PROP];
         }
 
         // --- loop ---
-
-        /**
-         * {@link Olympic2020#animateFromString}実行時、アニメ���ションをループさせるかどうかを設定する
-         * @type {boolean}
-         */
     }, {
         key: 'loop',
         set: function set(bool) {
@@ -1702,21 +1677,11 @@ var Olympic2020 = (function () {
                 this[_LOOP_PROP] = bool;
             }
         },
-
-        /**
-         * {@link Olympic2020#animateFromString}実行時、アニメーションをループさせるかどうか
-         * @type {boolean}
-         */
         get: function get() {
             return this[_LOOP_PROP];
         }
 
         // --- random ---
-
-        /**
-         * このオプションが有効の時{@link Olympic2020#animateFromString}を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
-         * @type {boolean}
-         */
     }, {
         key: 'random',
         set: function set(bool) {
@@ -1724,21 +1689,11 @@ var Olympic2020 = (function () {
                 this[_RANDOM_PROP] = bool;
             }
         },
-
-        /**
-         * このオプションが有効の時{@link Olympic2020#animateFromString}を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
-         * @type {boolean}
-         */
         get: function get() {
             return this[_RANDOM_PROP];
         }
 
         // --- pedal ---
-
-        /**
-         * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
-         * @type {boolean} bool
-         */
     }, {
         key: 'pedal',
         set: function set(bool) {
@@ -1746,21 +1701,11 @@ var Olympic2020 = (function () {
                 this[_PEDAL_PROP] = bool;
             }
         },
-
-        /**
-         * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
-         * @type {boolean} bool
-         */
         get: function get() {
             return this[_PEDAL_PROP];
         }
 
         // --- dom ---
-
-        /**
-         * エンブレムを構成するDOMエレメント
-         * @type {HTMLDivElement}
-         */
     }, {
         key: 'dom',
         get: function get() {
@@ -1768,11 +1713,6 @@ var Olympic2020 = (function () {
         }
 
         // --- char ---
-
-        /**
-         * 現在のエンブレムの文字、未定義の場合はnull
-         * @type {string|null}
-         */
     }, {
         key: 'char',
         get: function get() {
@@ -1780,11 +1720,6 @@ var Olympic2020 = (function () {
         }
 
         // --- isAnimating ---
-
-        /**
-         * 現在animateFromStringが実行中かどうか
-         * @type {boolean}
-         */
     }, {
         key: 'isAnimating',
         get: function get() {
@@ -1792,11 +1727,6 @@ var Olympic2020 = (function () {
         }
 
         // --- allValidChars ---
-
-        /**
-         * 現在エンブレムが変更可能な全ての文字を取得する、変更可能な文字を格納した配列
-         * @type {[string]}
-         */
     }], [{
         key: 'allValidChars',
         get: function get() {
@@ -1868,7 +1798,7 @@ function _updateTransitionConfig() {
 }
 
 /*
- *
+ * DOM in instance of Olympic2020.
  */
 var _BASE_DOM = (function () {
     var wrapper = document.createElement('div');
@@ -1900,7 +1830,7 @@ var _BASE_DOM = (function () {
 var _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
 
 /*
- * parts className table.
+ * Parts className table.
  */
 var _G_R0 = "part arc gold rotate0";
 var _G_R90 = "part arc gold rotate90";
@@ -1920,7 +1850,7 @@ var _C_L = "part circle_l red";
 var _BL = "part blank";
 
 /*
- * formation settings of all characters.
+ * Formation settings of all characters.
  */
 var _formationTable = {
     "a": [_G_R180, _P1, _G_R270, _S_R0, _C_S, _S_R90, _P1, _BL, _P1],
@@ -1970,7 +1900,7 @@ var _formationTable = {
 };
 
 /*
- * transition settings.
+ * Transition settings.
  */
 var _TRANSITION_PROPS = ['top', 'left', 'background-color', 'border-radius'];
 

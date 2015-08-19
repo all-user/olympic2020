@@ -152,11 +152,6 @@ class Olympic2020 {
 
 
     // --- duration ---
-
-    /**
-     * 次の文字に変化するアニメーションの時間を設定する、単位は1/1000秒
-     * @type {number}
-     */
     set duration(time) {
         if (typeof time === 'number' && time >= 0) {
             this[_DURATION_PROP] = time;
@@ -165,119 +160,57 @@ class Olympic2020 {
             console.error('Olympic2020.duration should be type of zero or positive number.');
         }
     }
-    /**
-     * 次の文字に変化するアニメーションの時間、単位は1/1000秒
-     * @type {number}
-     */
     get duration() { return this[_DURATION_PROP]; }
 
 
     // --- easing ---
-
-    /**
-     * 次の文字に変化するアニメーションの動き・イージングを設定する、CSS3timing-functionに準拠した文字列
-     * @type {string}
-     */
     set easing(val) {
         this[_EASING_PROP] = val;
         _updateTransitionConfig.call(this);
     }
-    /**
-     * 次の文字に変化するアニメーションの動き・イージング、CSS3timing-functionに準拠した文字列
-     * @type {string}
-     */
     get easing() { return this[_EASING_PROP]; }
 
 
     // --- loop ---
-
-    /**
-     * {@link Olympic2020#animateFromString}実行時、アニメーションをループさせるかどうかを設定する
-     * @type {boolean}
-     */
     set loop(bool) {
         if (bool != null) {
             this[_LOOP_PROP] = bool;
         }
     }
-    /**
-     * {@link Olympic2020#animateFromString}実行時、アニメーションをループさせるかどうか
-     * @type {boolean}
-     */
     get loop() { return this[_LOOP_PROP]; }
 
 
     // --- random ---
-
-    /**
-     * このオプションが有効の時{@link Olympic2020#animateFromString}を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
-     * @type {boolean}
-     */
     set random(bool) {
         if (bool != null) {
             this[_RANDOM_PROP] = bool;
         }
     }
-
-    /**
-     * このオプションが有効の時{@link Olympic2020#animateFromString}を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶ
-     * @type {boolean}
-     */
     get random() { return this[_RANDOM_PROP]; }
 
 
     // --- pedal ---
-
-    /**
-     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
-     * @type {boolean} bool
-     */
     set pedal(bool) {
         if (bool != null) {
             this[_PEDAL_PROP] = bool;
         }
     }
-
-    /**
-     * このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない
-     * @type {boolean} bool
-     */
     get pedal() { return this[_PEDAL_PROP]; }
 
 
     // --- dom ---
-
-    /**
-     * エンブレムを構成するDOMエレメント
-     * @type {HTMLDivElement}
-     */
     get dom() { return this[_DOM_PROP]; }
 
 
     // --- char ---
-
-    /**
-     * 現在のエンブレムの文字、未定義の場合はnull
-     * @type {string|null}
-     */
     get char() { return this[_CHAR_PROP]; }
 
 
     // --- isAnimating ---
-
-    /**
-     * 現在animateFromStringが実行中かどうか
-     * @type {boolean}
-     */
     get isAnimating() { return this[_IS_ANIMATING_PROP]; }
 
 
     // --- allValidChars ---
-
-    /**
-     * 現在エンブレムが変更可能な全ての文字を取得する、変更可能な文字を格納した配列
-     * @type {[string]}
-     */
     static get allValidChars() { return Object.keys(_formationTable); }
 
 
@@ -333,7 +266,7 @@ function _updateTransitionConfig() { // @bind this
 }
 
 /*
- *
+ * DOM in instance of Olympic2020.
  */
 const _BASE_DOM = (() => {
     let wrapper      = document.createElement('div');
@@ -365,9 +298,8 @@ const _BASE_DOM = (() => {
 
 const _ROTATE_TABLE = ['rotate0', 'rotate90', 'rotate180', 'rotate270'];
 
-
 /*
- * parts className table.
+ * Parts className table.
  */
 const _G_R0   = "part arc gold rotate0";
 const _G_R90  = "part arc gold rotate90";
@@ -387,7 +319,7 @@ const _C_L    = "part circle_l red";
 const _BL     = "part blank";
 
 /*
- * formation settings of all characters.
+ * Formation settings of all characters.
  */
 let _formationTable = {
     "a": [
@@ -614,7 +546,7 @@ let _formationTable = {
 
 
 /*
- * transition settings.
+ * Transition settings.
  */
 const _TRANSITION_PROPS = [
     'top',

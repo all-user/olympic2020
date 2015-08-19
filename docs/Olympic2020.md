@@ -30,13 +30,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 1. __`[c=null]`__ _(string)_ : エンブレムが表す文字の初期値。
 2. __`[opt]`__ _(Object)_ : その他のオプション。
-  - __`[opt.size=100]`__ _(number)_ : エンブレムの大きさ、単位はpx。
-  - __`[opt.displayTime=1500]`__ _(number)_ : アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間。
-  - __`[opt.duration=1000]`__ _(number)_ : アニメーション時、次の文字に変化するのに掛かる時間。
-  - __`[opt.loop=false]`__ _(boolean)_ : animateFromString実行時、アニメーションをループさせるかどうか。
-  - __`[opt.random=false]`__ _(boolean)_ : animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ。
-  - __`[opt.pedal=true]`__ _(boolean)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない。
-  - __`[opt.easing='cubic-bezier(.26,.92,.41,.98)']`__ _(string)_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function。
+  - __`[opt.size]`__ _(number=100)_ : エンブレムの大きさ、単位はpx。
+  - __`[opt.displayTime]`__ _(number=1500)_ : アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間。
+  - __`[opt.duration]`__ _(number=1000)_ : アニメーション時、次の文字に変化するのに掛かる時間。
+  - __`[opt.loop]`__ _(boolean=false)_ : animateFromString実行時、アニメーションをループさせるかどうか。
+  - __`[opt.random]`__ _(boolean=false)_ : animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ。
+  - __`[opt.pedal]`__ _(boolean=true)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない。
+  - __`[opt.easing]`__ _(string='cubic-bezier(.26,.92,.41,.98)')_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function。
 
 ------------------------------
 
@@ -139,7 +139,7 @@ console.log(olm.option);
 
 ### `size`
 
-エンブレムの大きさを設定、あるいは取得する。<br>
+エンブレムの大きさ。<br>
 単位はpx。
 
 #### Type
@@ -150,9 +150,108 @@ _(number)_
 
 ### `displayTime`
 
-アニメーション時、durationの時間を含めて一文字が表示され続けている時間を設定、あるいは取得する。<br>
+アニメーション時、durationの時間を含めて一文字が表示され続けている時間。<br>
 単位は1/1000秒。
 
+#### Type
+
 _(number)_
+
+------------------------------
+
+### `duration`
+
+次の文字に変化するアニメーションの時間。<br>
+単位は1/1000秒。
+
+#### Type
+
+_(number)_
+
+------------------------------
+
+### `easing`
+
+次の文字に変化するアニメーションの動き・イージング。<br>
+フォーマットはCSS3timing-functionに準拠した文字列。
+
+#### Type
+
+_(string)_
+
+------------------------------
+
+### `loop`
+
+`Olympic2020.prototype.animateFromString`実行時、アニメーションをループさせるかどうか。
+
+#### Type
+
+_(boolean)_
+
+------------------------------
+
+### `random`
+
+このオプションが有効の時`Olympic2020.prototype.animateFromString`を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶようになる。
+
+#### Type
+
+_(boolean)_
+
+------------------------------
+
+### `pedal`
+
+このオプションが有効の時、次にエンブレムに設定された文字が現在と同じなら何もしない。
+
+#### Type
+
+_(boolean)_
+
+------------------------------
+
+## _Olympic2020 Class Properties Getter_
+
+### `allValidChars`
+
+現在エンブレムが変更可能な全ての文字の配列。
+
+#### Type
+
+_(`Array`)_
+
+
+------------------------------
+
+## _Olympic2020 Instance Properties Getter_
+
+### `dom`
+
+エンブレムを構成するDOMエレメント。
+
+#### Type
+
+_(HTMLDivElement)_
+
+------------------------------
+
+### `char`
+
+現在のエンブレムの文字、未定義の場合はnull。
+
+#### Type
+
+_(string|null)_
+
+------------------------------
+
+### `isAnimating`
+
+現在`Olympic2020.prototype.animateFromString`が実行中かどうか。
+
+#### Type
+
+_(boolean)_
 
 ------------------------------
