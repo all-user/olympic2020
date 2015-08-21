@@ -19,6 +19,8 @@ class EmblemGroup {
             } else if (length != null && chars.length > length) {
                 chars = chars.slice(0, length);
             }
+        } else {
+            console.error('EmblemGroup constructor first argument should be string.');
         }
 
         let emblems = _transfromToOlympic2020Array(chars, { size: size, duration: duration });
@@ -65,15 +67,17 @@ class EmblemGroup {
         _asignOption.call(this, opt);
 
         let strArr;
-        if (Array.isArray(str) && str.every(c => typeof c === 'string')) {
-            strArr = str;
-        } else {
+        if (typeof str === 'string') {
             let len = this.emblems.length;
             strArr = [].reduce.call(str, (arr, s, idx) => {
                 if (idx % len === 0) { arr.push(''); }
                 arr[idx / len | 0] += s;
                 return arr;
             }, []);
+        } else if (Array.isArray(str) && str.every(s => typeof s === 'string')) {
+            strArr = str;
+        } else {
+            console.error('EmblemGroup#animateFromString first argument should be string or array of string.');
         }
 
         _animateFromStringArray.call(this, strArr);

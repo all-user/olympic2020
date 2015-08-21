@@ -55,15 +55,17 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ### `Olympic2020(c, opt)`
 
+`Olympic2020`のインスタンスを生成する。
+
 #### Arguments
 
-1. __`[c=null]`__ _(string)_ : エンブレムが表す文字の初期値。
+1. __`[c]`__ _(string|null=null)_ : エンブレムが表す文字の初期値。
 2. __`[opt]`__ _(Object)_ : その他のオプション。
   - __`[opt.size]`__ _(number=100)_ : エンブレムの大きさ、単位はpx。
   - __`[opt.displayTime]`__ _(number=1500)_ : アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間。
   - __`[opt.duration]`__ _(number=1000)_ : アニメーション時、次の文字に変化するのに掛かる時間。
   - __`[opt.loop]`__ _(boolean=false)_ : animateFromString実行時、アニメーションをループさせるかどうか。
-  - __`[opt.random]`__ _(boolean=false)_ : animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ。
+  - __`[opt.random]`__ _(boolean=false)_ : animateFromString実行時、受け取った文字列から次に変化する文字をランダムで選ぶ。
   - __`[opt.pedal]`__ _(boolean=true)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない。
   - __`[opt.easing]`__ _(string='cubic-bezier(.26,.92,.41,.98)')_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function。
 
@@ -81,13 +83,13 @@ document.addEventListener('DOMContentLoaded', e => {
 
 #### Returns
 
-_(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不正もしくは変化しない場合falseを返す。
+_(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不正もしくは変化しない場合falseを返す。
 
 ------------------------------
 
 ### `Olympic2020.prototype.appendTo(parent)`
 
-与えられた要素にエンブレムを追加する
+引数として受け取った要素にエンブレムを追加する。
 
 #### Arguments
 
@@ -97,7 +99,7 @@ _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不�
 
 ### `Olympic2020.prototype.animateFromString(str, opt)`
 
-与えられた文字列に沿って順に文字を変化せていく。
+受け取った文字列に沿って順に文字を変化せていく。
 
 #### Arguments
 
@@ -107,7 +109,7 @@ _(boolean)_ : 与えられた文字に変化した場合はtrue、文字が不�
   - __`[opt.displayTime]`__ _(number)_ : アニメーション時、opt.durationの時間を含めて一文字が表示され続けている時間。
   - __`[opt.duration]`__ _(number)_ : アニメーション時、次の文字に変化するのに掛かる時間。
   - __`[opt.loop]`__ _(boolean)_ : animateFromString実行時、アニメーションをループさせるかどうか。
-  - __`[opt.random]`__ _(boolean)_ : animateFromString実行時、与えられた文字列から次に変化する文字をランダムで選ぶ
+  - __`[opt.random]`__ _(boolean)_ : animateFromString実行時、受け取った文字列から次に変化する文字をランダムで選ぶ
   - __`[opt.pedal]`__ _(boolean)_ : エンブレムに文字が設定された際、その文字が現在と同じ場合何もしない。
   - __`[opt.easing]`__ _(string)_ : 次の文字に変化するアニメーションのイージング、CSS3timing-function。
 
@@ -222,7 +224,7 @@ _(boolean)_
 
 ### `random`
 
-このオプションが有効の時`Olympic2020.prototype.animateFromString`を実行すると、与えられた文字列から次に変化する文字をランダムで選ぶようになる。
+このオプションが有効の時`Olympic2020.prototype.animateFromString`を実行すると、受け取った文字列から次に変化する文字をランダムで選ぶようになる。
 
 #### Type
 
