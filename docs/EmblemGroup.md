@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', e => {
 #### `EmblemGroup Instance Properties`
 
 - [options](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#options)
-- [length](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#displaytime)
+- [length](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#length)
 - [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#displaytime)
 - [loop](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#loop)
 - [random](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#random)
@@ -180,6 +180,15 @@ console.log(olm.options);
 
 ------------------------------
 
+### `length`
+
+グループが表現する文字列の長さ、`Olympic2020`インスタンスの数。
+
+#### Type
+
+_(number)_
+
+------------------------------
 
 ### `displayTime`
 
