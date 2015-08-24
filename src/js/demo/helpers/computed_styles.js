@@ -1,3 +1,5 @@
+'use strict'
+
 function computedStyles() {
     const WIDTH   = +getComputedStyle(document.querySelector('.container')).width.replace('px', '');
     const PADDING = +getComputedStyle(document.querySelector('.container')).paddingLeft.replace('px', '');

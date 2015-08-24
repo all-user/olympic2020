@@ -1,3 +1,5 @@
+'use strict';
+
 const _CHAR_PROP         = Symbol();
 const _DOM_PROP          = Symbol();
 const _DISPLAY_TIME_PROP = Symbol();

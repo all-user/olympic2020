@@ -1,3 +1,5 @@
+'use strict';
+
 import { clickButtonHandler } from './helpers/embed_helper.js';
 
 document.addEventListener('DOMContentLoaded', () => {

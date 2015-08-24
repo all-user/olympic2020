@@ -1,3 +1,5 @@
+'use strict';
+
 import Olympic2020 from './Olympic2020.js';
 
 const _EMBLEMS_PROP      = Symbol();

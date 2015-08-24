@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', e => {
 - [resumeAnimate](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototyperesumeanimate)
 
 #### `Olympic2020 Instance Properties`
-- [option](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#option)
+- [options](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#options)
 - [size](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#size)
 - [displayTime](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#displaytime)
 - [duration](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#duration)
@@ -130,7 +130,7 @@ _(boolean)_ : 受け取った文字に変化した場合はtrue、文字が不�
 ## _Olympic2020 Instance Properties_
 
 
-### `option`
+### `options`
 
 オブジェクトを代入することでオプションをまとめて設定出来る。<br>
 また、参照することでオプション設定をオブジェクトで取得出来る。
@@ -142,7 +142,7 @@ _(Object)_
 #### Example
 ```javascript
 let olm = new Olympic2020('a' , { size: 5000, displayTime: 12000 });
-console.log(olm.option);
+console.log(olm.options);
 // {
 //     size       : 5000,
 //     displayTime: 12000,
@@ -154,7 +154,7 @@ console.log(olm.option);
 // }
 
 olm.opttion = { loop: true, random: true };
-console.log(olm.option);
+console.log(olm.options);
 // {
 //     size       : 5000,
 //     displayTime: 12000,

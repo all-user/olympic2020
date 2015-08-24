@@ -1,3 +1,5 @@
+'use strict'
+
 import { computedStyles } from './computed_styles.js';
 
 let forms = {};

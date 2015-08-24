@@ -1,3 +1,5 @@
+'use strict'
+
 import { computedStyles } from './helpers/computed_styles.js';
 
 document.addEventListener('DOMContentLoaded', () => {

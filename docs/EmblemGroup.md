@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
 #### `EmblemGroup Instance Properties`
 
-- [option]()
+- [options]()
 - [length]()
 - [displayTime]()
 - [loop]()
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ## _EmblemGroup Instance Properties_
 
-### `option`
+### `options`
 
 オブジェクトを代入することでオプションをまとめて設定出来る。<br>
 また、参照することでオプション設定をオブジェクトで取得出来る。
@@ -160,7 +160,7 @@ _(Object)_
 #### Example
 ```javascript
 let group = new EmblemGroup('some message', { length: 30, displayTime: 12000 });
-console.log(olm.option);
+console.log(olm.options);
 // {
 //     length     : 30,
 //     displayTime: 12000,
@@ -169,7 +169,7 @@ console.log(olm.option);
 // }
 
 olm.opttion = { loop: true, random: true };
-console.log(olm.option);
+console.log(olm.options);
 // {
 //     length     : 30,
 //     displayTime: 12000,
