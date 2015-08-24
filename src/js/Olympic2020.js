@@ -16,7 +16,7 @@ class Olympic2020 {
         this[_CHAR_PROP]          =   null;
         this[_DOM_PROP]           =   _createDom();
 
-        // --- option ---
+        // --- options ---
         this.displayTime          =   (displayTime | 0) || 1500;
         this.duration             =   (duration    | 0) || 800;
         this.loop                 =   loop;
@@ -57,7 +57,7 @@ class Olympic2020 {
 
     animateFromString(str, opt) {
         if (typeof opt === 'object') {
-            this.option = opt;
+            this.options = opt;
         }
 
         this[_IS_ANIMATING_PROP] = true;
@@ -100,8 +100,8 @@ class Olympic2020 {
      * Setter and Getter
      */
 
-    // --- option ---
-    set option({ size, displayTime, duration, loop, random, pedal, easing } = {}) {
+    // --- options ---
+    set options({ size, displayTime, duration, loop, random, pedal, easing } = {}) {
         this.size        = size;
         this.displayTime = displayTime;
         this.duration    = duration;
@@ -110,10 +110,10 @@ class Olympic2020 {
         this.random      = random;
         this.pedal       = pedal;
     }
-    get option() {
+    get options() {
         return {
             size:        this.size,
-            displaytime: this.displayTime,
+            displayTime: this.displayTime,
             duration:    this.duration,
             easing:      this.easing,
             loop:        this.loop,

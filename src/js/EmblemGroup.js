@@ -12,7 +12,7 @@ class EmblemGroup {
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
 
-        // --- option ---
+        // --- options ---
         this.displayTime          =   (displayTime | 0) || 1500;
         this.loop                 =   loop;
         this.random               =   random;
@@ -70,7 +70,7 @@ class EmblemGroup {
     animateFromString(str, opt) {
         this[_IS_ANIMATING_PROP] = true;
         this[_RESUME_PROP]       = null;
-        this.option              = opt;
+        this.options             = opt;
 
         let strArr;
         if (typeof str === 'string') {
@@ -92,7 +92,7 @@ class EmblemGroup {
     animateFromStringArray(strArr, opt) {
         this[_IS_ANIMATING_PROP] = true;
         this[_RESUME_PROP]       = null;
-        this.option              = opt;
+        this.options             = opt;
 
         _animateFromStringArray.call(this, strArr);
     }
@@ -101,27 +101,27 @@ class EmblemGroup {
      * Setter and Getter
      */
 
-    // --- option ---
-    set option({ length, displayTime, loop, random, size, duration, easing, pedal } = {}) {
+    // --- options ---
+    set options({ length, displayTime, loop, random, size, duration, easing, pedal } = {}) {
         this.length      = length
         this.displayTime = displayTime;
         this.loop        = loop;
         this.random      = random;
 
-        // change emblems option
+        // change emblems options
         this.size        = size;
         this.duration    = duration;
         this.easing      = easing;
         this.pedal       = pedal;
     }
-    get option() {
+    get options() {
         return {
             length:      this.length,
-            displaytime: this.displayTime,
+            displayTime: this.displayTime,
             loop:        this.loop,
             random:      this.random,
 
-            // emblems option
+            // emblems options
             size:        this.size,
             duration:    this.duration,
             easing:      this.easing,
@@ -136,7 +136,7 @@ class EmblemGroup {
         let lenOld  = emblems.length;
 
         if (lenNew > lenOld) {
-            let blankArr = Array.from({ length: lenNew - lenOld }, () => ' ');
+            let blankArr = Array.from({ length: lenNew - lenOld }, () => new Olympic2020(' '));
             this[_EMBLEMS_PROP] = emblems.concat(blankArr);
         } else if (lenNew < lenOld) {
             this[_EMBLEMS_PROP] = emblems.slice(0, lenNew);
@@ -179,7 +179,7 @@ class EmblemGroup {
 
     // --- easing ---
     set easing(val)    { this[_EMBLEMS_PROP].forEach(emb => emb.easing = val); }
-    get easign()       { return this[_EMBLEMS_PROP].map(emb => emb.easing); }
+    get easing()       { return this[_EMBLEMS_PROP].map(emb => emb.easing); }
 
     // --- pedal ---
     set pedal(val)     { this[_EMBLEMS_PROP].forEach(emb => emb.pedal = val); }

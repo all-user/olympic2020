@@ -80,31 +80,33 @@ describe('Olympic2020 test', () => {
                     done();
                 });
 
-                it('olympic2020.optionにオブジェクトを渡して設定', done => {
-                    let size        = 800;
-                    let displayTime = 3000;
-                    let duration    = 1200;
-                    let easing      = 'cubic-bezier(.1,.8,.5,.9)';
-                    let loop        = false;
-                    let random      = true;
-                    let pedal       = false;
+                describe('olympic2020.optionsにオブジェクトを渡して設定', () => {
                     let opt = {
-                        size,
-                        displayTime,
-                        duration,
-                        easing,
-                        loop,
-                        random,
-                        pedal,
+                        size:        800,
+                        displayTime: 3000,
+                        duration:    1200,
+                        easing:      'cubic-bezier(.1,.8,.5,.9)',
+                        loop:        false,
+                        random:      true,
+                        pedal:       false,
                     };
-                    o.option = opt;
-                    assert.equal(o.displayTime, displayTime);
-                    assert.equal(o.duration,    duration);
-                    assert.equal(o.easing,      easing);
-                    assert.equal(o.loop,        loop);
-                    assert.equal(o.random,      random);
-                    assert.equal(o.pedal,       pedal);
-                    done();
+
+                    it('オプションの各パラメータが正しく設定されているか', done => {
+                        o.options = opt;
+                        assert.equal(o.displayTime, opt.displayTime);
+                        assert.equal(o.duration,    opt.duration);
+                        assert.equal(o.easing,      opt.easing);
+                        assert.equal(o.loop,        opt.loop);
+                        assert.equal(o.random,      opt.random);
+                        assert.equal(o.pedal,       opt.pedal);
+                        done();
+                    });
+
+                    it('o.optionsが返すオブジェクトが正しいか', done => {
+                        o.options = opt;
+                        assert.deepEqual(o.options, opt);
+                        done();
+                    });
                 });
             });
         });
@@ -162,6 +164,35 @@ describe('Olympic2020 test', () => {
                       return o;
                     }, o);
                     done();
+                });
+
+                describe('olympic2020.optionsにオブジェクトを渡して設定', () => {
+                    let opt = {
+                        size:        800,
+                        displayTime: 3000,
+                        duration:    1200,
+                        easing:      'cubic-bezier(.1,.8,.5,.9)',
+                        loop:        false,
+                        random:      true,
+                        pedal:       false,
+                    };
+
+                    it('オプションの各パラメータが正しく設定されているか', done => {
+                        o.options = opt;
+                        assert.equal(o.displayTime, opt.displayTime);
+                        assert.equal(o.duration,    opt.duration);
+                        assert.equal(o.easing,      opt.easing);
+                        assert.equal(o.loop,        opt.loop);
+                        assert.equal(o.random,      opt.random);
+                        assert.equal(o.pedal,       opt.pedal);
+                        done();
+                    });
+
+                    it('o.optionsが返すオブジェクトが正しいか', done => {
+                        o.options = opt;
+                        assert.deepEqual(o.options, opt);
+                        done();
+                    });
                 });
             });
         });
