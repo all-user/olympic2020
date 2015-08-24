@@ -18,7 +18,7 @@ class Olympic2020 {
 
         // --- options ---
         this.displayTime          =   (displayTime | 0) || 1500;
-        this.duration             =   (duration    | 0) || 800;
+        this.duration             =   (duration    | 0) || 1000;
         this.loop                 =   loop;
         this.random               =   random;
         this.easing               =   easing            || 'cubic-bezier(.26,.92,.41,.98)';
