@@ -8,11 +8,13 @@ const _IS_ANIMATING_PROP = Symbol();
 const _RESUME_PROP       = Symbol();
 const _LOOP_PROP         = Symbol();
 const _RANDOM_PROP       = Symbol();
+const _CANSELLER_PROP    = Symbol();
 
 class EmblemGroup {
     constructor(chars, { length, displayTime, loop = false, random = false, size, duration, easing, pedal = true } = {}) {
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
+        this[_CANSELLER_PROP]     =   () => {};
 
         // --- options ---
         this.displayTime          =   (displayTime | 0) || 1500;
@@ -70,10 +72,6 @@ class EmblemGroup {
     }
 
     animateFromString(str, opt) {
-        this[_IS_ANIMATING_PROP] = true;
-        this[_RESUME_PROP]       = null;
-        this.options             = opt;
-
         let strArr;
         if (typeof str === 'string') {
             let len = this.emblems.length;
@@ -88,15 +86,11 @@ class EmblemGroup {
             console.error('EmblemGroup#animateFromString first argument should be string or array of string.');
         }
 
-        _animateFromStringArray.call(this, strArr);
+        _animateFromStringArray.call(this, strArr, opt);
     }
 
     animateFromStringArray(strArr, opt) {
-        this[_IS_ANIMATING_PROP] = true;
-        this[_RESUME_PROP]       = null;
-        this.options             = opt;
-
-        _animateFromStringArray.call(this, strArr);
+        _animateFromStringArray.call(this, strArr, opt);
     }
 
     /*
@@ -215,16 +209,24 @@ function _transfromToOlympic2020Array(arg, opt) { // (string | [Olympic2020]) =>
     return res;
 }
 
-function _animateFromStringArray(strArr) {
+function _animateFromStringArray(strArr,opt) {
+    this[_CANSELLER_PROP](); // cansel before animation.
+
+    this[_IS_ANIMATING_PROP] = true;
+    this[_RESUME_PROP]       = null;
+    this.options             = opt;
+
     strArr.reduce((p, s, idx) => {
         let isLast = idx === strArr.length - 1;
         return p.then(() => {
             return new Promise((resolve, reject) => {
-                if (!this.isAnimating) {
-                    this[_RESUME_PROP] = resolve;
-                    return;
+                this[_CANSELLER_PROP] = reject;
+                if (this[_RANDOM_PROP]) {
+                    let _s = strArr[Math.random() * strArr.length | 0]
+                    this.map(_s);
+                } else {
+                    this.map(s);
                 }
-                this.map(s);
                 if (isLast) {
                     if (this.loop) {
                         setTimeout(() => {
@@ -233,14 +235,18 @@ function _animateFromStringArray(strArr) {
                         }, this.displayTime);
                         return;
                     } else {
-                        setTimeout(reject, this.displayTime);
+                        this[_IS_ANIMATING_PROP] = false;
                         return;
                     }
                 }
-                setTimeout(resolve, this.displayTime);
+                if (!this[_IS_ANIMATING_PROP]) {
+                    this[_RESUME_PROP] = resolve;
+                } else {
+                    setTimeout(resolve, this.displayTime);
+                }
             });
         });
-    }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
+    }, Promise.resolve()).catch(() => { console.log('cansel before animation.') });
 }
 
 

@@ -26,22 +26,22 @@ document.addEventListener('DOMContentLoaded', e => {
 
 #### `EmblemGroup Constructor`
 
-- [constructor]()
+- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupchars-opt)
 
 #### `EmblemGroup Instance Methods`
 
-- [map]()
-- [appendTo]()
-- [animateFromString]()
-- [animateFromStringArray]()
-- [stopAnimate]()
-- [resumeAnimate]()
-- [toString]()
+- [map](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypemapstr)
+- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypeappendtoparent)
+- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypeanimatefromstringstr-opt)
+- [animateFromStringArray](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypeanimatefromstringarraystrarr-opt)
+- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypestopanimate)
+- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototyperesumeanimate)
+- [toString](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblemgroupprototypetostring)
 
 #### `EmblemGroup Instance Properties`
 
-- [options]()
-- [length]()
+- [options](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#options)
+- [length](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#displaytime)
 - [displayTime]()
 - [loop]()
 - [random]()
@@ -192,10 +192,32 @@ _(number)_
 
 ------------------------------
 
-## _EmblemGroup Instance Getter Properties_
+### `loop`
 
-現在`EmblemGroup.prototype.animateFromString`、あるいは`EmblemGroup.prototype.animateFromStringArray`が実行中かどうか。
+`EmblemGroup.prototype.animateFromString`、あるいは`EmblemGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
 
 #### Type
 
 _(boolean)_
+
+------------------------------
+
+### `random`
+
+このオプションが有効の時`EmblemGroup.prototype.animateFromString`、あるいは`EmblemGroup.prototype.animateFromStringArray`を実行すると、受け取った文字列、配列から次に変化する文字列をランダムで選ぶようになる。
+
+#### Type
+
+_(boolean)_
+
+------------------------------
+
+## _EmblemGroup Instance Getter Properties_
+
+### `emblems`
+
+`Olympic2020`のインスタンスの配列。
+
+#### Type
+
+_(Array)_

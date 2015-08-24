@@ -10,6 +10,7 @@ const _RESUME_PROP       = Symbol();
 const _LOOP_PROP         = Symbol();
 const _RANDOM_PROP       = Symbol();
 const _PEDAL_PROP        = Symbol();
+const _CANSELLER_PROP    = Symbol();
 
 class Olympic2020 {
     constructor(c, { size, displayTime, duration, easing, loop = false, random = false, pedal = true } = {}) {
@@ -17,6 +18,7 @@ class Olympic2020 {
         this[_RESUME_PROP]        =   null;
         this[_CHAR_PROP]          =   null;
         this[_DOM_PROP]           =   _createDom();
+        this[_CANSELLER_PROP]     =   () => {};
 
         // --- options ---
         this.displayTime          =   (displayTime | 0) || 1500;
@@ -58,21 +60,16 @@ class Olympic2020 {
     }
 
     animateFromString(str, opt) {
-        if (typeof opt === 'object') {
-            this.options = opt;
-        }
 
         this[_IS_ANIMATING_PROP] = true;
         this[_RESUME_PROP]       = null;
+        this.options             = opt;
 
         [].reduce.call(str, (p, c, idx) => {  // p = Promise.resolve(); c = str[idx];
             let isLast = idx === str.length - 1;
             return p.then(() => {
                 return new Promise((resolve, reject) => {
-                    if (!this[_IS_ANIMATING_PROP]) {
-                        this[_RESUME_PROP] = resolve;
-                        return;
-                    }
+                    this[_CANSELLER_PROP] = reject;
                     if (this[_RANDOM_PROP]) {
                         let _c = str[Math.random() * str.length | 0];
                         this.to(_c);
@@ -91,7 +88,11 @@ class Olympic2020 {
                             return;
                         }
                     }
-                    setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
+                    if (!this[_IS_ANIMATING_PROP]) {
+                        this[_RESUME_PROP] = resolve;
+                    } else {
+                        setTimeout(resolve, this[_DISPLAY_TIME_PROP]);
+                    }
                 });
             });
         }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
