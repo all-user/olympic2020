@@ -42,14 +42,14 @@ document.addEventListener('DOMContentLoaded', e => {
 
 - [options](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#options)
 - [length](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#displaytime)
-- [displayTime]()
-- [loop]()
-- [random]()
+- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#displaytime)
+- [loop](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#loop)
+- [random](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#random)
 
 #### `EmblemGroup Instance Getter Properties`
 
-- [emblems]()
-- [isAnimating]()
+- [emblems](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#emblems)
+- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md#isanimating)
 
 ------------------------------
 
