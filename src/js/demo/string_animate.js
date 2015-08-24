@@ -14,14 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
         TITLE_COPY,
         LONG_COPY,
         SHORT_COPY,
-        BLANK_COPY,
-        BLANK_COPY,
         '1234567890    ',
         BLANK_COPY,
         DATE_COPY,
         'happy     day!',
-        BLANK_COPY,
-        BLANK_COPY,
         BLANK_COPY,
         'hello  world!!',
         BLANK_COPY,
@@ -43,5 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    group.animateFromString(COPYS.join(''), { loop: true });
+    group.animateFromString(COPYS, { loop: true });
+
+    window.group = group;
 });

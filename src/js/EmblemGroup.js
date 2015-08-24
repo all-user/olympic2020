@@ -1,18 +1,24 @@
 import Olympic2020 from './Olympic2020.js';
 
-class EmblemGroup {
+const _EMBLEMS_PROP      = Symbol();
+const _DISPLAY_TIME_PROP = Symbol();
+const _IS_ANIMATING_PROP = Symbol();
+const _RESUME_PROP       = Symbol();
+const _LOOP_PROP         = Symbol();
+const _RANDOM_PROP       = Symbol();
 
-    constructor(chars, opt) {
-        if (typeof opt === 'object') {
-            var { length, size, displayTime, duration } = opt;
-        }
-        this._isAnimating = false;
-        this._resume      = null;
-        this._displayTime = displayTime || 1000;
-        this._duration    = duration || 800;
+class EmblemGroup {
+    constructor(chars, { length, displayTime, loop = false, random = false, size, duration, easing, pedal = true } = {}) {
+        this[_IS_ANIMATING_PROP]  =   false;
+        this[_RESUME_PROP]        =   null;
+
+        // --- option ---
+        this.displayTime          =   (displayTime | 0) || 1500;
+        this.loop                 =   loop;
+        this.random               =   random;
 
         if (typeof chars === 'string') {
-            if (chars.length < length) {
+            if (typeof length !== 'number' ||  chars.length < length) {
                 for (var i = chars.length; i < length; i++) {
                     chars += ' ';
                 }
@@ -23,10 +29,10 @@ class EmblemGroup {
             console.error('EmblemGroup constructor first argument should be string.');
         }
 
-        let emblems = _transfromToOlympic2020Array(chars, { size: size, duration: duration });
+        let emblems = _transfromToOlympic2020Array(chars, { size: size, duration: duration, easing: easing, pedal: pedal });
 
         if (emblems) {
-            this.emblems = emblems;
+            this[_EMBLEMS_PROP] = emblems;
         } else {
             throw new Error('EmblemGroup arguments expect string or array of Olympic2020.')
         }
@@ -53,18 +59,18 @@ class EmblemGroup {
     }
 
     stopAnimate() {
-        this._isAnimating = false;
+        this[_IS_ANIMATING_PROP] = false;
     }
 
     resumeAnimate() {
-        this._isAnimating = true;
-        this._resume();
+        this[_IS_ANIMATING_PROP] = true;
+        this[_RESUME_PROP]();
     }
 
     animateFromString(str, opt) {
-        this._isAnimating = true;
-        this._resume      = null;
-        _asignOption.call(this, opt);
+        this[_IS_ANIMATING_PROP] = true;
+        this[_RESUME_PROP]       = null;
+        this.option              = opt;
 
         let strArr;
         if (typeof str === 'string') {
@@ -84,19 +90,106 @@ class EmblemGroup {
     }
 
     animateFromStringArray(strArr, opt) {
-        this._isAnimating = true;
-        this._resume      = null;
-        _asignOption.call(this, opt);
+        this[_IS_ANIMATING_PROP] = true;
+        this[_RESUME_PROP]       = null;
+        this.option              = opt;
+
         _animateFromStringArray.call(this, strArr);
     }
 
     /*
-     * seter and geter of propertys
+     * Setter and Getter
      */
-    set displayTime(time) { this._displayTime = time; }
-    get displayTime()     { return this._displayTime; }
 
-    get isAnimating() { return this._isAnimating; }
+    // --- option ---
+    set option({ length, displayTime, loop, random, size, duration, easing, pedal } = {}) {
+        this.length      = length
+        this.displayTime = displayTime;
+        this.loop        = loop;
+        this.random      = random;
+
+        // change emblems option
+        this.size        = size;
+        this.duration    = duration;
+        this.easing      = easing;
+        this.pedal       = pedal;
+    }
+    get option() {
+        return {
+            length:      this.length,
+            displaytime: this.displayTime,
+            loop:        this.loop,
+            random:      this.random,
+
+            // emblems option
+            size:        this.size,
+            duration:    this.duration,
+            easing:      this.easing,
+            pedal:       this.pedal,
+        }
+    }
+
+    // --- length ---
+    set length(lenNew) {
+        if (lenNew == null) { return; }
+        let emblems = this[_EMBLEMS_PROP];
+        let lenOld  = emblems.length;
+
+        if (lenNew > lenOld) {
+            let blankArr = Array.from({ length: lenNew - lenOld }, () => ' ');
+            this[_EMBLEMS_PROP] = emblems.concat(blankArr);
+        } else if (lenNew < lenOld) {
+            this[_EMBLEMS_PROP] = emblems.slice(0, lenNew);
+        }
+    }
+    get length() { return this[_EMBLEMS_PROP].length; }
+
+    // --- displayTime ---
+    set displayTime(time) {
+        if (time == null) { return; }
+        if (typeof time === 'number' && time > 0) {
+            this[_DISPLAY_TIME_PROP] = time;
+        } else {
+            console.error('EmblemGroup.displayTime should be type of positive number.');
+        }
+    }
+    get displayTime() { return this[_DISPLAY_TIME_PROP]; }
+
+    // --- loop ---
+    set loop(bool) {
+        if (bool == null) { return; }
+        this[_LOOP_PROP] = bool;
+    }
+    get loop() { return this[_LOOP_PROP]; }
+
+    // --- random ---
+    set random(bool) {
+        if (bool == null) { return; }
+        this[_RANDOM_PROP] = bool;
+    }
+    get random() { return this[_RANDOM_PROP]; }
+
+    // --- size ---
+    set size(size)     { this[_EMBLEMS_PROP].forEach(emb => emb.size = size); }
+    get size()         { return this[_EMBLEMS_PROP].map(emb => emb.size); }
+
+    // --- duration ---
+    set duration(time) { this[_EMBLEMS_PROP].forEach(emb => emb.duration = time); }
+    get duration()     { return this[_EMBLEMS_PROP].map(emb => emb.duration); }
+
+    // --- easing ---
+    set easing(val)    { this[_EMBLEMS_PROP].forEach(emb => emb.easing = val); }
+    get easign()       { return this[_EMBLEMS_PROP].map(emb => emb.easing); }
+
+    // --- pedal ---
+    set pedal(val)     { this[_EMBLEMS_PROP].forEach(emb => emb.pedal = val); }
+    get pedal()        { return this[_EMBLEMS_PROP].map(emb => emb.pedal); }
+
+    // --- emblems ---
+    get emblems() { return this[_EMBLEMS_PROP] }
+
+    // --- isAnimating ---
+    get isAnimating() { return this[_IS_ANIMATING_PROP]; }
 }
 
 function _transfromToOlympic2020Array(arg, opt) { // (string | [Olympic2020]) => [Olympic2020] | false
@@ -120,48 +213,32 @@ function _transfromToOlympic2020Array(arg, opt) { // (string | [Olympic2020]) =>
     return res;
 }
 
-function _asignOption(opt) {
-    if (typeof opt === 'object') {
-        var { displayTime, loop } = opt;
-    }
-    if (loop != null) {
-        this._loop = loop;
-    }
-    if (typeof displayTime === 'number' && displayTime > 0) {
-        this._displayTime = displayTime;
-    } else {
-        displayTime = this._displayTime;
-    }
-}
-
-
-
 function _animateFromStringArray(strArr) {
     strArr.reduce((p, s, idx) => {
         let isLast = idx === strArr.length - 1;
         return p.then(() => {
             return new Promise((resolve, reject) => {
-                if (!this._isAnimating) {
-                    this._resume = resolve;
+                if (!this.isAnimating) {
+                    this[_RESUME_PROP] = resolve;
                     return;
                 }
                 this.map(s);
                 if (isLast) {
-                    if (this._loop) {
+                    if (this.loop) {
                         setTimeout(() => {
                             _animateFromStringArray.call(this, strArr);
                             resolve();
-                        }, this._displayTime);
+                        }, this.displayTime);
                         return;
                     } else {
-                        setTimeout(reject, this._displayTime);
+                        setTimeout(reject, this.displayTime);
                         return;
                     }
                 }
-                setTimeout(resolve, this._displayTime);
+                setTimeout(resolve, this.displayTime);
             });
         });
-    }, Promise.resolve()).catch(() => { this._isAnimating = false; });
+    }, Promise.resolve()).catch(() => { this[_IS_ANIMATING_PROP] = false; });
 }
 
 

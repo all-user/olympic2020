@@ -40,10 +40,15 @@ document.addEventListener('DOMContentLoaded', e => {
 
 #### `EmblemGroup Instance Properties`
 
+- [option]()
+- [length]()
 - [displayTime]()
+- [loop]()
+- [random]()
 
 #### `EmblemGroup Instance Getter Properties`
 
+- [emblems]()
 - [isAnimating]()
 
 ------------------------------
@@ -61,7 +66,7 @@ document.addEventListener('DOMContentLoaded', e => {
 2. __`[opt]`__ _(Object)_ : その他のオプション。
   - __`[opt.length]`__ _(number)_ : 内部的に保持する`Olympic2020`インスタンスの数を指定する。
   - __`[opt.size]`__ _(number)_ : 内部に保持する`Olympic2020`のインスタンスに対してまとめてサイズを指定する、[`Olympic2020`のオプション](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#arguments)を参照。
-  - __`[opt.displayTime]`__ _(number)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるまでの`opt.duration`を含めた表示時間。
+  - __`[opt.displayTime]`__ _(number=1500)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるまでの`opt.duration`を含めた表示時間。
   - __`[opt.duration]`__ _(number)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、次のパターンへ切り替わるアニメーションに掛かる時間。
   - __`[opt.loop]`__ _(boolean)_ : `EmblemGroup.prototype.animateFromString`、`EmblemGroup.prototype.animateFromStringArray`実行時、アニメーションをループさせるかどうか。
 
@@ -142,6 +147,39 @@ document.addEventListener('DOMContentLoaded', e => {
 ------------------------------
 
 ## _EmblemGroup Instance Properties_
+
+### `option`
+
+オブジェクトを代入することでオプションをまとめて設定出来る。<br>
+また、参照することでオプション設定をオブジェクトで取得出来る。
+
+#### Type
+
+_(Object)_
+
+#### Example
+```javascript
+let group = new EmblemGroup('some message', { length: 30, displayTime: 12000 });
+console.log(olm.option);
+// {
+//     length     : 30,
+//     displayTime: 12000,
+//     loop       : false,
+//     random     : false,
+// }
+
+olm.opttion = { loop: true, random: true };
+console.log(olm.option);
+// {
+//     length     : 30,
+//     displayTime: 12000,
+//     loop       : true,
+//     random     : true,
+// }
+```
+
+------------------------------
+
 
 ### `displayTime`
 

@@ -10,11 +10,7 @@ const _RANDOM_PROP       = Symbol();
 const _PEDAL_PROP        = Symbol();
 
 class Olympic2020 {
-    constructor(c, opt) {
-        if (typeof opt === 'object') {
-            var { size, displayTime, duration, easing, loop, random, pedal } = opt;
-        }
-
+    constructor(c, { size, displayTime, duration, easing, loop = false, random = false, pedal = true } = {}) {
         this[_IS_ANIMATING_PROP]  =   false;
         this[_RESUME_PROP]        =   null;
         this[_CHAR_PROP]          =   null;
@@ -22,16 +18,15 @@ class Olympic2020 {
 
         // --- option ---
         this.displayTime          =   (displayTime | 0) || 1500;
-        this.duration             =   (duration    | 0) || 1000;
-        this.loop                 =   loop              || false;
-        this.random               =   random            || false;
+        this.duration             =   (duration    | 0) || 800;
+        this.loop                 =   loop;
+        this.random               =   random;
         this.easing               =   easing            || 'cubic-bezier(.26,.92,.41,.98)';
-        this.pedal                =   pedal == null ? true : pedal;
+        this.pedal                =   pedal;
 
         if (typeof size === 'number' && size >= 0) {
             this.size = size;
         } else {
-            console.error('Olympic2020.size should be type of zero or positive number.');
             this.size = 100;
         }
 
@@ -106,7 +101,7 @@ class Olympic2020 {
      */
 
     // --- option ---
-    set option({ size, displayTime, duration, loop, random, pedal, easing }) {
+    set option({ size, displayTime, duration, loop, random, pedal, easing } = {}) {
         this.size        = size;
         this.displayTime = displayTime;
         this.duration    = duration;
@@ -129,8 +124,9 @@ class Olympic2020 {
 
     // --- size ---
     set size(size) {
+        if (size == null) { return; }
         if (typeof size === 'number' && size >= 0) {
-            let domStyle = this.dom.style;
+            let domStyle = this[_DOM_PROP].style;
             domStyle.width  = `${ size }px`;
             domStyle.height = `${ size }px`;
         } else {
@@ -142,17 +138,19 @@ class Olympic2020 {
 
     // --- displayTime ---
     set displayTime(time) {
+        if (time == null) { return; }
         if (typeof time === 'number' && time > 0) {
             this[_DISPLAY_TIME_PROP] = time;
         } else {
             console.error('Olympic2020.displayTime should be type of positive number.');
         }
     }
-    get displayTime()     { return this[_DISPLAY_TIME_PROP]; }
+    get displayTime() { return this[_DISPLAY_TIME_PROP]; }
 
 
     // --- duration ---
     set duration(time) {
+        if (time == null) { return; }
         if (typeof time === 'number' && time >= 0) {
             this[_DURATION_PROP] = time;
             _updateTransitionConfig.call(this);
@@ -165,6 +163,7 @@ class Olympic2020 {
 
     // --- easing ---
     set easing(val) {
+        if (val == null) { return; }
         this[_EASING_PROP] = val;
         _updateTransitionConfig.call(this);
     }
@@ -173,27 +172,24 @@ class Olympic2020 {
 
     // --- loop ---
     set loop(bool) {
-        if (bool != null) {
-            this[_LOOP_PROP] = bool;
-        }
+        if (bool == null) { return; }
+        this[_LOOP_PROP] = bool;
     }
     get loop() { return this[_LOOP_PROP]; }
 
 
     // --- random ---
     set random(bool) {
-        if (bool != null) {
-            this[_RANDOM_PROP] = bool;
-        }
+        if (bool == null) { return; }
+        this[_RANDOM_PROP] = bool;
     }
     get random() { return this[_RANDOM_PROP]; }
 
 
     // --- pedal ---
     set pedal(bool) {
-        if (bool != null) {
-            this[_PEDAL_PROP] = bool;
-        }
+        if (bool == null) { return; }
+        this[_PEDAL_PROP] = bool;
     }
     get pedal() { return this[_PEDAL_PROP]; }
 

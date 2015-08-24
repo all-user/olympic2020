@@ -93,26 +93,31 @@ describe('EmblemGroup test', () => {
             });
         })
 
-        describe('サイズを指定', () => {
-            let group = new EmblemGroup(TITLE_COPY, { length: SHORT_COPY.length });
+        describe('オプション設定', () => {
 
-            it('文字列から生成', done => {
-                assert.equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
-                done();
-            });
+            describe('サイズを指定', () => {
+                let group = new EmblemGroup(TITLE_COPY, { length: SHORT_COPY.length });
 
-            it('長い文字列を与えて変換', done => {
-                group.map(LONG_COPY);
-                assert.equal(group.toString(), LONG_COPY.slice(0, SHORT_COPY.length));
-                done();
-            });
+                it('文字列から生成', done => {
+                    assert.equal(group.toString(), TITLE_COPY.slice(0, SHORT_COPY.length));
+                    done();
+                });
 
-            it('短い文字列を与えて変換', done => {
-                group.map(SHORT_COPY);
-                assert.equal(group.toString(), SHORT_COPY);
-                done();
-            });
-        })
+                it('長い文字列を与えて変換', done => {
+                    group.map(LONG_COPY);
+                    assert.equal(group.toString(), LONG_COPY.slice(0, SHORT_COPY.length));
+                    done();
+                });
+
+                it('短い文字列を与えて変換', done => {
+                    group.map(SHORT_COPY);
+                    assert.equal(group.toString(), SHORT_COPY);
+                    done();
+                });
+            })
+
+        });
+
     });
 
     describe('DOM', () => {

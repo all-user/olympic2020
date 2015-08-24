@@ -141,7 +141,7 @@ _(Object)_
 
 #### Example
 ```javascript
-let olm = new Olympic2020({ size: 5000, displayTime: 12000 })
+let olm = new Olympic2020('a' , { size: 5000, displayTime: 12000 });
 console.log(olm.option);
 // {
 //     size       : 5000,

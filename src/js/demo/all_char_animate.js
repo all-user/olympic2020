@@ -35,6 +35,4 @@ document.addEventListener('DOMContentLoaded', () => {
             olm.animateFromString(allValidChars, { loop: true });
         }, 1000);
     });
-
-
 });
