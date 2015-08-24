@@ -221,3 +221,13 @@ _(boolean)_
 #### Type
 
 _(Array)_
+
+------------------------------
+
+### `isAnimating`
+
+現在`EmblemGroup.prototype.animateFromString`が実行中かどうか。
+
+#### Type
+
+_(boolean)_
