@@ -36,3 +36,8 @@ npm i @all-user/olympic2020
     </script>
 </body>
 ```
+
+## Documentation
+
+- [__`Olympic2020`__](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md)
+- [__`EmblemGroup`__](https://github.com/all-user/olympic2020/blob/master/docs/EmblemGroup.md)
