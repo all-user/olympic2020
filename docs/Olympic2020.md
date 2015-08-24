@@ -22,32 +22,32 @@ document.addEventListener('DOMContentLoaded', e => {
 
 ------------------------------
 #### `Olympic2020 Constructor`
-- [constructor](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020-constructor-1)
+- [constructor](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020-constructor-1)
 
 #### `Olympic2020 Instance Methods`
-- [to](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypetoc)
-- [appendTo](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypeappendtoparent)
-- [animateFromString](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypeanimatefromstringstr-opt)
-- [stopAnimate](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototypestopanimate)
-- [resumeAnimate](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#olympic2020prototyperesumeanimate)
+- [to](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypetoc)
+- [appendTo](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypeappendtoparent)
+- [animateFromString](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypeanimatefromstringstr-opt)
+- [stopAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototypestopanimate)
+- [resumeAnimate](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#olympic2020prototyperesumeanimate)
 
 #### `Olympic2020 Instance Properties`
-- [options](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#options)
-- [size](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#size)
-- [displayTime](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#displaytime)
-- [duration](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#duration)
-- [easing](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#easing)
-- [loop](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#loop)
-- [random](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#random)
-- [pedal](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#pedal)
+- [options](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#options)
+- [size](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#size)
+- [displayTime](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#displaytime)
+- [duration](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#duration)
+- [easing](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#easing)
+- [loop](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#loop)
+- [random](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#random)
+- [pedal](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#pedal)
 
 #### `Olympic2020 Class Getter Properties`
-- [allValidChars](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#allvalidchars)
+- [allValidChars](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#allvalidchars)
 
 #### `Olympic2020 Instance Getter Properties`
-- [dom](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#dom)
-- [char](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#char)
-- [isAnimating](https://github.com/all-user/olympic2020/blob/docs/docs/Olympic2020.md#isanimating)
+- [dom](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#dom)
+- [char](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#char)
+- [isAnimating](https://github.com/all-user/olympic2020/blob/master/docs/Olympic2020.md#isanimating)
 
 ------------------------------
 
